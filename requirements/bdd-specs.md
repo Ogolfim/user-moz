@@ -95,13 +95,13 @@ Quero que o sistema processe o pagamento do plano pago que o usuário deseja usa
 ### Cenários 
 ```
   Dado que o cliente esta usando a endpoint de pagamento de planos pagos
-    Tendo selecionado a forma de pagamento
-    Tendo os dados necessários para forma de pagamento selecionada
+    E o cliente tem a forma de pagamento que deve ser usada
+    E o cliente tem os dados necessários para forma de pagamento selecionada
 Quando o cliente solicitar fazer o pagamento do plano do usuário
   Então o sistema deve salvar a forma de pagamento escolhida
     E o sistema deve salvar os dados da forma de pagamento
-    E o sistema deve criar e enviar uma fatura por email para o cliente
-    E o sistema deve retornar ao cliente com o processo de pagamento iniciado
+    E o sistema deve criar e enviar uma fatura por email para o usuário
+    E o sistema deve retornar ao cliente um estado de pagamento pendente
   
   Dado que o plano escolhido incluí uso da API
 Quando o processo de pagamento for concluído
@@ -110,7 +110,7 @@ Quando o processo de pagamento for concluído
     E o sistema deve criar uma APIkey para o usuário 
     E o sistema deve salvar APIkey
     E o sistema deve enviar APIKey para o microserviço EconomicExpert
-    E o sistema deve enviar um email de fatura paga para o usuário
+    E o sistema deve enviar um email com a fatura paga para o usuário
 
   Dado que o plano escolhido não incluí uso da API
 Quando o processo de pagamento for concluído

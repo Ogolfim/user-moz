@@ -1,7 +1,7 @@
 Feature: Faz entrar na conta
 
   Scenario: Validar e autenticar o usuário
-    Given: Cliente esta usando a endpoint de login
+    Given: Cliente esta user a endpoint de login
     When: Cliente solicitar ID Token para logar o usuário
     Then: Sistema deve validar parâmentros da requisição
     And: Sistema deve autenticar usuário

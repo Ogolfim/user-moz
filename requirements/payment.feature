@@ -1,7 +1,7 @@
 Feature: Pagar um plano
 
   Scenario: Validar e autenticar usuário
-    Given: Cliente esta usando a endpoint de pagamento de serviços
+    Given: Cliente esta user a endpoint de pagamento de serviços
     When: Cliente solicitar pagar um serviço para o usuário
     Then: Sistema deve validar parâmentros da requisição
     And: Sistema deve autenticar usuário

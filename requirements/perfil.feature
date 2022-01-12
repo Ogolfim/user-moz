@@ -1,7 +1,7 @@
 Feature: Consulta de dados de perfil
 
   Scenario: Validar e autenticar usuário
-    Given: Cliente esta usando a endpoint de consulta de perfil
+    Given: Cliente esta user a endpoint de consulta de perfil
     When: Cliente solicitar perfil do usuário
     Then: Sistema deve validar parâmentros da requisição
     And: Sistema deve autenticar usuário

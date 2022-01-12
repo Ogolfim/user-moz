@@ -1,7 +1,7 @@
 Feature: Criar conta
 
   Scenario: Validar dados do usuário
-    Given: Cliente esta usando a endpoint de criar conta
+    Given: Cliente esta user a endpoint de criar conta
     When: Cliente solicitar criar conta do usuário
     Then: Sistema deve validar parâmentros da requisição
 

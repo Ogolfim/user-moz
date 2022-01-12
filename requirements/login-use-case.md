@@ -11,6 +11,6 @@
 1. Sistema interrompe o processo
 2. Sistema retorna o erro
 
-> ## Excepção - Validação dos  dados
+> ## Excepção - Erro de validação dos  dados
 1. Sistema interrompe o processo
 2. Sistema retorna o erro

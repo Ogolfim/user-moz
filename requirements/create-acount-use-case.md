@@ -9,14 +9,14 @@
 
 
 > ## Exceção - Atualizações por email
-1. Sistema verifica se o usuário selecionou tags de informação
+1. Sistema verifica se o usuário selecionou tags das informações
 2. Sistema verifica se o usuário escolheu ser atualizado 
-3. Sistema envia as tags junto com o nome e o email do usuário
+3. Sistema envia para o EmailService as tags junto com o nome e o email do usuário
 
 > ## Exceção - Usuário já tem conta
 1. Sistema interrompe o processo
 2. Sistema retorna o erro
 
-> ## Excepção - Validação dos  dados
+> ## Excepção - Erro de validação dos  dados
 1. Sistema interrompe o processo
 2. Sistema retorna o erro

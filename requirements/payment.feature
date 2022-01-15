@@ -9,14 +9,25 @@ Feature: Pagar um plano
   Scenario: Salvar dados
     Given: Autenticação e validação teve sucesso
     Then: Sistema deve salvar forma de pagamento escolhida
-    And: Sitema deve salvar dados da forma de pagamento
+    And: Sitema deve salvar dados de pagamento fornecidos
+  
+  Scenario: Pagamento por mês
+    Given: Usuário está pagar um número menor 12 de meses
+    Then: Sistema deve multiplicar o valor do plano pelo número de meses
+    And: Sistema deve salva o valor
+
+  Scenario: Pagamento por ano
+    Given: Usuário está pagar o plano por 12
+    Then: Sistema deve multiplicar o valor do plano por 12
+    And: Sitema deve deve subtrair a percentagem de desconto
+    And: Sistema deve salva o valor
 
   Scenario: Criar e enviar fatura
     Given: Dados estão salvos no banco de dados
     Then: Sistema deve criar fatura
     And: Sitema deve enviar fatura o usuário por email
     And: Sitema deve retornar cliente um estado de pagamento pendente, com os dados para proceguir o pagamento se for necessário
-    And: Sistema inicia o processo de pagamento. Processo será diferente dependo da forma de pagamento escolhida
+    And: Sistema faz o pagamento
 
   Scenario: Fatura paga
     Given: Fatura foi paga com sucesso

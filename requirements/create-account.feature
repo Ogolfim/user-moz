@@ -14,10 +14,10 @@ Feature: Criar conta
     Then: Sistema deve salvar tags selecionadas
     And: Sistema deve enviar tags selecionadas, nome e email para o EmailService
 
-  Scenario: Criar ID Token
+  Scenario: Dados de login
     Given: Dados foram salvos com sucesso
-    Then: Sistema deve criar ID Token, com dados e perrmições do usuário
-    And: Sitema deve retornar o ID Token
+    Then: Sistema deve criar ID Token
+    And: Sitema deve retornar ID Token, nome e permições do usuário
   
   Scenario: Usuário já tem conta
     Given: Foi encontrado uma conta ja existente do usuário

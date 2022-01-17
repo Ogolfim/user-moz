@@ -1,4 +1,4 @@
-Feature: Como cliente quero criar conta do usuário usando OAuth2 
+Feature: Como cliente quero criar conta do usuário usando servidores de autorização
 
   Scenario: Autorizar acesso
     Given: Estou na endpoint criar conta usando servidores de autorização

@@ -1,17 +1,17 @@
-Feature: Consulta de dados de perfil
+Feature: Como cliente quero dados de perfil do usuário
 
   Scenario: Validar e autenticar usuário
-    Given: Cliente esta user a endpoint de consulta de perfil
-    When: Cliente solicitar perfil do usuário
-    Then: Sistema deve validar parâmentros da requisição
-    And: Sistema deve autenticar usuário
+    Dado que estou na endpoint de consulta de perfil
+    Quando eu solicitar perfil do usuário
+    Então o sistema deve validar parâmentros da requisição
+      E o sistema deve autenticar usuário
   
   Scenario: Dados de perfil
-    Given: Autenticação teve sucesso
-    Then: Sistema deve caregar os dados no banco de dados
-    And: Sitema deve retorna os dados para o cliente
+    Dados que autenticação teve sucesso
+    Então o sistema deve caregar os dados no banco de dados
+      E o sitema deve retorna os dados para o cliente
 
   Scenario: Erro de validação e autenticação
-    Given: Foi encontrado erros na validação ou autenticação
-    Then: Sistema interrompe o processo
-    And: Sitema retorna o erro
+    Dado que foi encontrado erros na validação ou autenticação
+    Então o sistema interrompe o processo
+      E o sistema retorna o erro

@@ -1,16 +1,16 @@
 Feature: Logout
 
   Scenario: Logout do usuário no cliente
-    Given: Cliente esta usar a endpoint de logout
-    When: Cliente solicitar logout do usuário
-    Then: Sistema deve validar parâmentros da requisição
+    Dado que estou na endpoint de logout
+    Quando eu solicitar logout do usuário
+    Então o sistema deve validar parâmentros da requisição
     And: Sistema deve autenticar usuário
   
   Scenario: Dados de perfil
-    Given: Validação e autenticação teve sucesso
-    Then: Sistema deve Remover o ID Token no cliente
+    Dado que validação e autenticação teve sucesso
+    Então o sistema deve Remover o ID Token no cliente
 
   Scenario: Erro de validação e autenticação
-    Given: Foi encontrado erros na validação ou autenticação
-    Then: Sistema interrompe o processo
-    And: Sitema retorna o erro
+    Dado que foi encontrado erro na validação ou autenticação
+    Então o sistema interrompe o processo
+      E o sistema retorna o erro

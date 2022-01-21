@@ -5,6 +5,10 @@ Feature: Como cliente quero criar conta do usuário usando servidores de autoriz
     Quando solicitar criar conta do usuário 
     Então o sistema deve me direcionar o usuário para a pagina de autorização de acesso
 
+  Scenario: Verificar o email
+    Given: Dado que email é valido
+    Então o sistema deve confirmar se email pertence ao usuário
+
   Scenario: Salvar name e email
     Given: Sistema tem acesso aos servidores dados do usuário
     Então o sistema deve solicitar nome e email do usuário

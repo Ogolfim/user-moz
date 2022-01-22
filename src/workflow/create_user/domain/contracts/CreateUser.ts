@@ -1,7 +1,9 @@
+import { Left, Right } from 'fp-ts/lib/Either'
 import { clientError, unauthorized, HttpResponse } from '../../../../core/infra/HttpResponse'
 
 import Email from './Email'
 
+type Either<Success, Error> = Right<Success> | Left<Error>
 
 interface UncreatedUser {
   name: Name
@@ -14,27 +16,10 @@ interface createdUser {
   email: Email
 }
 
+
 type CreationError<Error = clientError> = HttpResponse
 
 
-type CreateUser = (user: UncreatedUser) => Ether<createdUser, CreationError>
+type CreateUser = (user: UncreatedUser) => Either<createdUser, CreationError>
 
-Type input
-    UnvalidatedOrder
-
-    type OrderTakingCommand =
-    | Place of PlaceOrder
-    | Change of ChangeOrder
-    | Cancel of CancelOrder
-
-
-Type output
-
-    type PlaceOrderEvents = {
-        AcknowledgmentSent : AcknowledgmentSent
-        OrderPlaced : OrderPlaced
-        BillableOrderPlaced : BillableOrderPlaced
-    }
-
-    type ValidateOrder =
-        UnvalidatedOrder -> Result<ValidatedOrder,ValidationError list>
+export declare const chain: <E, A, B>(f: (email: Email) => Either<Email, Error>) => (ma: Either<E, A>) => Either<E, B>

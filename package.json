@@ -1,0 +1,48 @@
+{
+  "name": "user-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/main/server.ts",
+    "preprod": "npx prisma migrate deploy",
+    "prod": "node ./dist/main/server.js",
+    "migration:save": "npx prisma migrate dev --name create-tables",
+    "migration:reset": "npx prisma migrate reset",
+    "build": "npx prisma generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bboa3/user-service.git"
+  },
+  "keywords": [
+    "Mozeconomia"
+  ],
+  "author": "Arlindo Boa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bboa3/user-service/issues"
+  },
+  "homepage": "https://www.mozeconomia.co.mz/",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "dotenv-expand": "^5.1.0",
+    "express": "^4.17.2",
+    "fp-ts": "^2.11.8",
+    "helmet": "^4.6.0",
+    "io-ts": "^2.2.16",
+    "node-cron": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.12",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.10",
+    "@types/node-cron": "^2.0.3",
+    "prisma": "^3.8.1",
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
+  }
+}

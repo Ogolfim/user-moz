@@ -1,10 +1,9 @@
-import { fail, HttpResponse } from '../../../../core/infra/HttpResponse'
+import { pipe } from 'fp-ts/lib/function'
+import { clientError, HttpResponse } from '../../../../core/infra/HttpResponse'
 import { genPassword } from '../../services/password'
-import validateUser from '../../services/validation/validateUser'
+import { User } from '../requiredFields/User'
 
 import { Either } from './Result'
-import { isLeft } from 'fp-ts/lib/Either'
-import { leftTask } from 'fp-ts/lib/TaskEither'
 
 interface createdUser {
   name: string
@@ -12,28 +11,22 @@ interface createdUser {
 }
 
 
-type UnValidatedUser = {
-  name: string
-  email: string
-  password: string
+const createUser = (user: User): Either<createdUser, HttpResponse> => {
+
+  
+
+
+  const hashedPassword = genPassword(user.password)
+
+  
+
+  return {
+    _tag: "Right",
+    right: {
+      name: 'name',
+      email: 'email'
+  } }
 }
 
 
-const createUser = (user: UnValidatedUser): Either<createdUser, HttpResponse> => {
-
-  const validateResult = validateUser(user)
-
-  if(isLeft(validateResult)) {
-    return validateResult
-  }
-
-  const {validName, ValidEmail, validPassword} = validateResult.right
-
-  const hashedPassword = genPassword(validPassword)
-
-  
-  
-}
-
-
-
+export default createUser

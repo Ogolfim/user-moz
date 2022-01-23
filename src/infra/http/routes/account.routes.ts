@@ -7,6 +7,6 @@ import CreateAcountMiddleware from '../../Middleware/create_account'
 
 const router = Router()
 
-router.post('/create', CreateAcountMiddleware)
+router.get('/create', CreateAcountMiddleware)
 
 export default router

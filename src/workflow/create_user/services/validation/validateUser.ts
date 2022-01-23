@@ -1,17 +1,19 @@
-import { User } from '../../domain/contracts/requiredField'
+import { clientError, HttpResponse } from '../../../../core/infra/HttpResponse'
+import { unValidatedUser, ValidatedUser } from '../../domain/contracts/requiredField'
 import { Either } from '../../domain/contracts/Result'
 import isEmail from './isEmail'
 import isName from './isName'
 import isPassword from './isPassword'
 
 
-const validateUser = ({name, email, password}: User): Either<User, Error> => {
+
+const validateUser = ({name, email, password}: unValidatedUser): Either<ValidatedUser, HttpResponse> => {
 
   const nameResult = isName.create(name)
   if(nameResult instanceof Error) {
     return {
       _tag: 'Left',
-      left: nameResult
+      left: clientError(nameResult)
     }
   }
 
@@ -19,7 +21,7 @@ const validateUser = ({name, email, password}: User): Either<User, Error> => {
   if(emailResult instanceof Error) {
     return {
       _tag: 'Left',
-      left: emailResult
+      left: clientError(emailResult)
     }
   }
 
@@ -27,7 +29,7 @@ const validateUser = ({name, email, password}: User): Either<User, Error> => {
   if(passwordResult instanceof Error) {
     return {
       _tag: 'Left',
-      left: passwordResult
+      left: clientError(passwordResult)
     }
   }
 
@@ -35,9 +37,9 @@ const validateUser = ({name, email, password}: User): Either<User, Error> => {
   return {
     _tag: 'Right',
     right: {
-      name: nameResult, 
-      email: emailResult, 
-      password: passwordResult
+      validName: nameResult, 
+      ValidEmail: emailResult, 
+      validPassword: passwordResult
     }
   }
 }

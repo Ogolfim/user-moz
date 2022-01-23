@@ -1,11 +1,15 @@
 import { Either } from "./Result"
 
 
-export interface User {
-  name: string
-  email: string
-  password: string
+export interface ValidatedUser {
+  validName: string
+  ValidEmail: string
+  validPassword: string
 }
 
+export interface HashedPasswordValidatedUser {
+  validName: string
+  ValidEmail: string
+  HashedPassword: string
+}
 
-export type ValidateUser = ({ name, email, password }: User) => Either<User, Error>

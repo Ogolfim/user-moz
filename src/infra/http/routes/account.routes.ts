@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import CreateAcountMiddleware from '../../Middleware/create_account'
+import CreateAcountMiddleware from '../controller/create_account'
 
 
 

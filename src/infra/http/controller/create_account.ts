@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import * as E from 'fp-ts/lib/Either'
-import createUser from '../../workflow/create_user/domain/contracts/CreateUser'
-import { UserCodec } from '../../workflow/create_user/domain/requiredFields/User'
+import createUser from '../../../workflow/create_user/domain/contracts/CreateUser'
+import { UserCodec } from '../../../workflow/create_user/domain/requiredFields/User'
 
 
 const createAcount = (request: Request, response: Response) => {

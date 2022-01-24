@@ -1,9 +1,7 @@
+import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { clientError, HttpResponse } from '../../../../core/infra/HttpResponse'
 import { genPassword } from '../../services/password'
 import { User } from '../requiredFields/User'
-
-import { Either } from './Result'
 
 interface createdUser {
   name: string
@@ -11,7 +9,7 @@ interface createdUser {
 }
 
 
-const createUser = (user: User): Either<createdUser, HttpResponse> => {
+const createUser = (user: User): E.Either<Error, createdUser> => {
 
   
 

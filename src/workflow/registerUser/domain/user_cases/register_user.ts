@@ -1,33 +1,29 @@
-import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
+import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { genPassword } from '../../services/password'
 import { Email } from '../requiredFields/Email'
 import { Name } from '../requiredFields/Name'
 import { User } from '../requiredFields/User'
 
-import { fail } from '../../../../core/infra/HttpResponse'
 import { saveUser } from '../entities/saveUser'
-import { Password } from '../requiredFields/Password'
 
-interface createdUser {
+
+interface CreatedUser {
   name: Name
   email: Email
 }
 
-export const registerUser = ({name, email, password}: User): E.Either<Error, createdUser> => {
+export const registerUser = ({name, email, password}: User): E.Either<Error, CreatedUser> => {
 
-  pipe(
-    password,
-    genPassword,
-    TE.mapLeft(error => fail(error)),
-    TE.map(hash => pipe(
-      saveUser({
+  const user = TE.tryCatch(
+    async () => {
+      return await saveUser({
         name,
         email,
-        password: hash as Password
-      }),
-      TE.mapLeft(error => )
-    ))
+        password
+      })
+    },
+
+    (error) => error as Error
   )
 }

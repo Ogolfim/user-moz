@@ -1,17 +1,11 @@
 import bcrypt from 'bcrypt';
-import * as TE from 'fp-ts/lib/TaskEither'
 import { Password } from '../domain/requiredFields/Password';
 
 
-export const genPassword = (password: Password): TE.TaskEither<Error, string> => {
+export const genPassword = async (password: Password): Promise<string> => {
 
-  const hash =  TE.tryCatch(
-    async () => {
-      const salt = await bcrypt.genSalt(10)
-      return bcrypt.hash(password, salt)
-    },
-    () => new Error('Ops! Hash não foi gerada')
-  )
+  const salt = await bcrypt.genSalt(10)
+  const  hash = await bcrypt.hash(password, salt)
 
   return hash
 }

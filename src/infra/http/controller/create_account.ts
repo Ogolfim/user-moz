@@ -1,12 +1,13 @@
 import { Request, Response } from 'express'
 import * as E from 'fp-ts/lib/Either'
+import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { clientError } from '../../../core/infra/HttpResponse'
-import registerUser from '../../../workflow/registerUser/domain/user_cases/register_user'
+import { registerUser } from '../../../workflow/registerUser/domain/user_cases/register_user'
 import { validateUser } from '../validate/validate_user'
 
 
-export const createAccount = (request: Request, response: Response) => {
+export const CreateAccountMiddleware = (request: Request, response: Response) => {
   const { name, email, password } = request.body
 
   const user = { name, email,password }
@@ -25,8 +26,8 @@ export const createAccount = (request: Request, response: Response) => {
       pipe(
         user,
         registerUser,
-        E.mapLeft(error => response.json(error.message)),
-        E.map(user => response.json(user))
+        TE.mapLeft(error => console.log(error)),
+        TE.map(user => console.log(user))
       )
     })
   )

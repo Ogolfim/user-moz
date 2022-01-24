@@ -13,17 +13,23 @@ interface CreatedUser {
   email: Email
 }
 
-export const registerUser = ({name, email, password}: User): E.Either<Error, CreatedUser> => {
+export const registerUser = async ({name, email, password}: User): Promise<E.Either<Error, CreatedUser>> => {
 
-  const user = TE.tryCatch(
-    async () => {
-      return await saveUser({
-        name,
-        email,
-        password
-      })
-    },
+  const user = await saveUser({
+    name,
+    email,
+    password
+  })
 
-    (error) => error as Error
-  )
+  if(E.isRight(user)) {
+    return {
+      _tag: "Right",
+      right: {name, email}
+    }
+  }
+
+  return {
+    _tag: "Left",
+    left: user.left
+  }
 }

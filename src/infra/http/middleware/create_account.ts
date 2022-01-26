@@ -23,32 +23,25 @@ export const CreateAccountMiddleware = (request: Request, response: Response) =>
       .json(httpResponse.body)
     }),
     E.map(user => {
-      TE.tryCatch(
-        async () => {
-          const newUser = await registerUser(user)
-
-          if(E.isLeft(newUser)) {
-            const httpResponse = clientError(newUser.left)
       
-            return response
-            .status(httpResponse.statusCode)
-            .json(httpResponse.body)
-          }
-
+      pipe(
+        user,
+        registerUser,
+        TE.mapLeft(error => {
+          const httpResponse = clientError(error)
+      
+          response
+          .status(httpResponse.statusCode)
+          .json(httpResponse.body)
+        }),
+        TE.map(() => {
           const httpResponse = created()
       
           response
           .status(httpResponse.statusCode)
           .json(httpResponse.body)
-        },
-        () => {
-          const httpResponse = clientError(new Error('Ops! Não foi possível criar conta'))
-      
-            response
-            .status(httpResponse.statusCode)
-            .json(httpResponse.body)
-        }
-      )
+        })
+      )()
     })
   )
 }

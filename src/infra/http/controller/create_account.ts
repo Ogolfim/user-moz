@@ -1,27 +1,54 @@
 import { Request, Response } from 'express'
 import * as E from 'fp-ts/lib/Either'
-import createUser from '../../../workflow/create_user/domain/contracts/CreateUser'
-import { UserCodec } from '../../../workflow/create_user/domain/requiredFields/User'
+import * as TE from 'fp-ts/lib/TaskEither'
+import { pipe } from 'fp-ts/lib/function'
+import { clientError, created } from '../../../core/infra/HttpResponse'
+import { registerUser } from '../../../workflow/registerUser/domain/user_cases/register_user'
+import { validateUser } from '../validate/validate_user'
 
 
-const createAcount = (request: Request, response: Response) => {
+export const CreateAccountMiddleware = (request: Request, response: Response) => {
+  const { name, email, password } = request.body
 
-  const validatedUser = UserCodec.decode({
-    name: 'Arli',
-    email: 'arlindoboa@gmail.com',
-    password: 'A1Gj?'
-  })
+  const user = { name, email,password }
+  
+  pipe(
+    user,
+    validateUser,
+    E.mapLeft(error => {
+      const httpResponse = clientError(new Error(error.message))
+      
+      response
+      .status(httpResponse.statusCode)
+      .json(httpResponse.body)
+    }),
+    E.map(user => {
+      TE.tryCatch(
+        async () => {
+          const newUser = await registerUser(user)
 
-  if(E.isLeft(validatedUser)) {
-    console.log(validatedUser.left[0].message)  
+          if(E.isLeft(newUser)) {
+            const httpResponse = clientError(newUser.left)
+      
+            return response
+            .status(httpResponse.statusCode)
+            .json(httpResponse.body)
+          }
 
-    response.json('Error')
-    return
-  }
-
-  createUser(validatedUser.right)
-  response.json('Success')
+          const httpResponse = created()
+      
+          response
+          .status(httpResponse.statusCode)
+          .json(httpResponse.body)
+        },
+        () => {
+          const httpResponse = clientError(new Error('Ops! Não foi possível criar conta'))
+      
+            response
+            .status(httpResponse.statusCode)
+            .json(httpResponse.body)
+        }
+      )
+    })
+  )
 }
-
-
-export default createAcount

@@ -1,12 +1,12 @@
 import { Router } from 'express'
 
-import AcountRouter from './account.routes'
+import AccountRouter from './account.routes'
 
 
 
 
 const router = Router()
 
-router.use('/account', AcountRouter)
+router.use('/account', AccountRouter)
 
 export default router

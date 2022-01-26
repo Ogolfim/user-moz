@@ -1,8 +1,9 @@
 import cors from 'cors'
 import express from 'express'
-import helmet from 'helmet';
-import { config } from 'dotenv';
-import dotenvExpand from 'dotenv-expand';
+import cookieParser from 'cookie-parser'
+import helmet from 'helmet'
+import { config } from 'dotenv'
+import dotenvExpand from 'dotenv-expand'
 
 dotenvExpand(config());
 
@@ -16,13 +17,15 @@ app.use(
   })
 )
 
-app.use(helmet());
+app.use(helmet())
 
 app.use(
   express.json({
     type: ['application/json', 'text/plain'],
   })
 )
+
+app.use(cookieParser())
 
 app.use(router)
 

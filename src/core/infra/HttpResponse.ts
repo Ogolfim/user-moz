@@ -10,10 +10,10 @@ export function ok<T>(dto?: T): HttpResponse {
   }
 }
 
-export function created(): HttpResponse {
+export function created<T>(dto?: T): HttpResponse {
   return {
     statusCode: 201,
-    body: undefined,
+    body: dto,
   }
 }
 

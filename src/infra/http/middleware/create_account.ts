@@ -5,6 +5,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { clientError, created } from '../../../core/infra/HttpResponse'
 import { registerUser } from '../../../workflow/registerUser/domain/user_cases/register_user'
 import { validateUser } from '../validate/validate_user'
+import { sendRefreshToken } from './sendRefreshToken'
 
 
 export const CreateAccountMiddleware = (request: Request, response: Response) => {
@@ -35,8 +36,12 @@ export const CreateAccountMiddleware = (request: Request, response: Response) =>
           .json(httpResponse.body)
         }),
         TE.map(user => {
-          const httpResponse = created()
+
+          const { name, id_token } = user
+          const httpResponse = created({ name })
       
+          sendRefreshToken(response, id_token)
+
           response
           .status(httpResponse.statusCode)
           .json(httpResponse.body)

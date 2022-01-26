@@ -29,17 +29,17 @@ Feature: Como cliente quero criar conta do usuário usando dados do formulário
       E o sistema deve salvar os dados do usuário
 
   Scenario: Dados de login
-    Given: Dados foram salvos com sucesso
+    Dado que os dados foram salvos com sucesso
     Então o sistema deve criar ID Token
       E o sitema deve retornar ID Token, nome e permições do usuário
   
   Scenario: Usuário já tem conta
-    Given: Foi encontrado uma conta ja existente do usuário
+    Dado que foi encontrado uma conta ja existente do usuário
     Então o sistema interrompe o processo
       E o sitema deve retornar o erro com mensagem "Oops!, já existe uma conta com este email."
 
   Scenario: Erro de validação
-    Given: Foi encontrado erros na validação
+    Dado que foi encontrado erro na validação
     Então o sistema deve interromper o processo
       E o sitema deve retornar o erro
 

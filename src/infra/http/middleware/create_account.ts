@@ -34,7 +34,7 @@ export const CreateAccountMiddleware = (request: Request, response: Response) =>
           .status(httpResponse.statusCode)
           .json(httpResponse.body)
         }),
-        TE.map(() => {
+        TE.map(user => {
           const httpResponse = created()
       
           response

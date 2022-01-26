@@ -5,10 +5,11 @@ import { User } from '../requiredFields/User'
 
 import { saveUser } from '../entities/saveUser'
 import { pipe } from 'fp-ts/lib/function'
+import { createAccessToken } from '../../services/id_token'
 
 interface CreatedUser {
   name: Name
-  email: Email
+  id_token: string
 }
 
 export const registerUser = ({name, email, password}: User): TE.TaskEither<Error, CreatedUser> => {
@@ -19,7 +20,15 @@ export const registerUser = ({name, email, password}: User): TE.TaskEither<Error
       email,
       password
     }),
-    TE.map(() => ({ name, email }))
+    TE.map(user => {
+
+      const id_token = createAccessToken({id: user.id})
+
+      return {
+        name,
+        id_token
+      }
+    })
   )
 
   return newUser

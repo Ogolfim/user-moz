@@ -1,23 +1,29 @@
-export type HttpResponse = {
+import { Name } from "../../register_user/domain/requiredFields/Name"
+
+export type AccountHttpResponse = {
   statusCode: number
   body: any
 }
 
-export function ok<T>(dto?: T): HttpResponse {
+export type LogUser = {
+  name: Name
+}
+
+export function ok<T>(dto?: T): AccountHttpResponse {
   return {
     statusCode: 200,
     body: dto,
   }
 }
 
-export function created<T>(dto?: T): HttpResponse {
+export function created(dto?: LogUser): AccountHttpResponse {
   return {
     statusCode: 201,
     body: dto,
   }
 }
 
-export function clientError(error: Error): HttpResponse {
+export function clientError(error: Error): AccountHttpResponse {
   return {
     statusCode: 400,
     body: {
@@ -26,7 +32,7 @@ export function clientError(error: Error): HttpResponse {
   }
 }
 
-export function unauthorized(error: Error): HttpResponse {
+export function unauthorized(error: Error): AccountHttpResponse {
   return {
     statusCode: 401,
     body: {
@@ -35,7 +41,7 @@ export function unauthorized(error: Error): HttpResponse {
   }
 }
 
-export function forbidden(error: Error): HttpResponse {
+export function forbidden(error: Error): AccountHttpResponse {
   return {
     statusCode: 403,
     body: {
@@ -44,7 +50,7 @@ export function forbidden(error: Error): HttpResponse {
   }
 }
 
-export function notFound(error: Error): HttpResponse {
+export function notFound(error: Error): AccountHttpResponse {
   return {
     statusCode: 404,
     body: {
@@ -53,7 +59,7 @@ export function notFound(error: Error): HttpResponse {
   }
 }
 
-export function conflict(error: Error): HttpResponse {
+export function conflict(error: Error): AccountHttpResponse {
   return {
     statusCode: 409,
     body: {
@@ -62,7 +68,7 @@ export function conflict(error: Error): HttpResponse {
   }
 }
 
-export function tooMany(error: Error): HttpResponse {
+export function tooMany(error: Error): AccountHttpResponse {
   return {
     statusCode: 429,
     body: {
@@ -71,7 +77,7 @@ export function tooMany(error: Error): HttpResponse {
   }
 }
 
-export function fail(error: Error) {
+export function fail(error: Error): AccountHttpResponse {
   console.log(error)
 
   return {

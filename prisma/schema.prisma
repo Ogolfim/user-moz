@@ -14,7 +14,7 @@ datasource db {
 model users {
   id                  String         @id @default(uuid())
   name                String 
-  password            String  
+  hash            String  
   email               String         @unique   
   payment             payments[]
   created_at          DateTime      @default(now())

@@ -1,8 +1,9 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { prisma } from "../../../../infra/prisma/client";
-import { genPassword } from '../../services/password';
-import { User } from "../requiredFields/User";
-import { UserSchema } from '../../../../infra/prisma/schemas';
+import { prisma } from "../../../infra/prisma/client";
+import { UserSchema } from '../../../infra/prisma/schemas';
+import { hashPassword } from '../../services/hash_password';
+import { User } from '../requiredFields/User';
+
  
 export const saveUser =  (user: User): TE.TaskEither<Error, UserSchema> => {
   const { name, email, password } = user
@@ -20,12 +21,12 @@ export const saveUser =  (user: User): TE.TaskEither<Error, UserSchema> => {
         throw new Error(`Ops! Email ${email} já tem conta`)
       }
 
-      const hash = await genPassword(password)
+      const hash = await hashPassword(password)
 
       return prisma.users.create({
         data: {
           name,
-          password: hash,
+          hash,
           email
         }
       }) 

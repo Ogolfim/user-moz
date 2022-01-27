@@ -5,9 +5,9 @@
   "main": "server.js",
   "scripts": {
     "test": "test",
-    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/infra/http/server.ts",
+    "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/core/infra/http/server.ts",
     "preprod": "npx prisma migrate deploy",
-    "prod": "node ./dist/infra/http/server.js",
+    "prod": "node ./dist/core/infra/http/server.js",
     "migration:save": "npx prisma migrate dev --name create-tables",
     "migration:reset": "npx prisma migrate reset",
     "build": "npx prisma generate"
@@ -40,7 +40,8 @@
     "jsonwebtoken": "^8.5.1",
     "monocle-ts": "^2.3.12",
     "newtype-ts": "^0.3.5",
-    "node-cron": "^3.0.0"
+    "node-cron": "^3.0.0",
+    "passport-google-oauth2": "^0.2.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

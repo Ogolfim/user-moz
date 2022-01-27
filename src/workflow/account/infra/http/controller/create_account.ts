@@ -2,13 +2,13 @@ import { Request, Response } from 'express'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { clientError, created } from '../../../core/infra/HttpResponse'
-import { registerUser } from '../../../workflow/registerUser/domain/user_cases/register_user'
-import { validateUser } from '../validate/validate_user'
-import { sendRefreshToken } from './sendRefreshToken'
+import { clientError, created } from '../AccountHttpResponse'
+import { registerUser } from '../../../register_user/services/register_user'
+import { validateUser } from '../../validate/validate_user'
+import { sendRefreshToken } from '../OAuth/sendRefreshToken'
 
 
-export const CreateAccountMiddleware = (request: Request, response: Response) => {
+export const CreateAccountController = (request: Request, response: Response) => {
   const { name, email, password } = request.body
 
   const user = { name, email,password }

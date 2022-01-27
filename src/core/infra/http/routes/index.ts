@@ -1,6 +1,6 @@
 import { Router } from 'express'
 
-import AccountRouter from './account.routes'
+import AccountRouter from '../../../../workflow/account/infra/http/routes'
 
 
 

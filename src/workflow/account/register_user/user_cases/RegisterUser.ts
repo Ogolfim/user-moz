@@ -1,6 +1,6 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { Name } from '../requiredFields/Name'
-import { User } from '../requiredFields/User'
+import { Name } from '../domain/requiredFields/Name'
+import { User } from '../domain/requiredFields/User'
 
 export interface CreatedUser {
   name: Name

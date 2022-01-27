@@ -1,12 +1,10 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { prisma } from "../../../infra/prisma/client";
-import { UserSchema } from '../../../infra/prisma/schemas';
 import { hashPassword } from '../../services/hash_password';
-import { User } from '../requiredFields/User';
+import { SaveUser } from '../contracts/SaveUser';
 
  
-export const saveUser =  (user: User): TE.TaskEither<Error, UserSchema> => {
-  const { name, email, password } = user
+export const saveUser: SaveUser =  ({ name, email, password }) => {
 
   const newUser =  TE.tryCatch(
     

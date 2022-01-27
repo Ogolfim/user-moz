@@ -2,7 +2,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { saveUser } from '../domain/entities/saveUser'
 import { pipe } from 'fp-ts/lib/function'
 import { createAccessToken } from './create_id_token'
-import { RegisterUser } from '../domain/user_cases/RegisterUser'
+import { RegisterUser } from '../user_cases/RegisterUser'
 
 export const registerUser: RegisterUser = ({name, email, password}) => {
 

@@ -1,29 +1,23 @@
-import { Name } from "../../register_user/domain/requiredFields/Name"
-
-export type AccountHttpResponse = {
+export type HttpResponse = {
   statusCode: number
   body: any
 }
 
-export type LogUser = {
-  name: Name
-}
-
-export function ok<T>(dto?: T): AccountHttpResponse {
+export function ok<T>(dto?: T): HttpResponse {
   return {
     statusCode: 200,
     body: dto,
   }
 }
 
-export function created(dto?: LogUser): AccountHttpResponse {
+export function created<T>(dto?: T): HttpResponse {
   return {
     statusCode: 201,
     body: dto,
   }
 }
 
-export function clientError(error: Error): AccountHttpResponse {
+export function clientError(error: Error): HttpResponse {
   return {
     statusCode: 400,
     body: {
@@ -32,7 +26,7 @@ export function clientError(error: Error): AccountHttpResponse {
   }
 }
 
-export function unauthorized(error: Error): AccountHttpResponse {
+export function unauthorized(error: Error): HttpResponse {
   return {
     statusCode: 401,
     body: {
@@ -41,7 +35,7 @@ export function unauthorized(error: Error): AccountHttpResponse {
   }
 }
 
-export function forbidden(error: Error): AccountHttpResponse {
+export function forbidden(error: Error): HttpResponse {
   return {
     statusCode: 403,
     body: {
@@ -50,7 +44,7 @@ export function forbidden(error: Error): AccountHttpResponse {
   }
 }
 
-export function notFound(error: Error): AccountHttpResponse {
+export function notFound(error: Error): HttpResponse {
   return {
     statusCode: 404,
     body: {
@@ -59,7 +53,7 @@ export function notFound(error: Error): AccountHttpResponse {
   }
 }
 
-export function conflict(error: Error): AccountHttpResponse {
+export function conflict(error: Error): HttpResponse {
   return {
     statusCode: 409,
     body: {
@@ -68,7 +62,7 @@ export function conflict(error: Error): AccountHttpResponse {
   }
 }
 
-export function tooMany(error: Error): AccountHttpResponse {
+export function tooMany(error: Error): HttpResponse {
   return {
     statusCode: 429,
     body: {
@@ -77,7 +71,7 @@ export function tooMany(error: Error): AccountHttpResponse {
   }
 }
 
-export function fail(error: Error): AccountHttpResponse {
+export function fail(error: Error) {
   console.log(error)
 
   return {

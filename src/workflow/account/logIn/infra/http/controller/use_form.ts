@@ -2,16 +2,16 @@ import { Request, Response } from 'express'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { clientError, created } from '../AccountHttpResponse'
-import { registerUser } from '../../../register_user/services/register_user'
+import { clientError, ok } from '../../../../../../core/infra/HttpResponse'
+import { logUser } from '../../../use_form/services/log_user'
 import { validateUser } from '../../validate/validate_user'
-import { sendRefreshToken } from '../OAuth/sendRefreshToken'
+import { sendRefreshToken } from '../../../../infra/http/OAuth/sendRefreshToken'
 
 
-export const CreateAccountController = (request: Request, response: Response) => {
-  const { name, email, password } = request.body
+export const LoginUsingFormController = (request: Request, response: Response) => {
+  const { email, password } = request.body
 
-  const user = { name, email,password }
+  const user = { email, password }
   
   pipe(
     user,
@@ -27,7 +27,7 @@ export const CreateAccountController = (request: Request, response: Response) =>
       
       pipe(
         user,
-        registerUser,
+        logUser,
         TE.mapLeft(error => {
           const httpResponse = clientError(error)
       
@@ -38,7 +38,7 @@ export const CreateAccountController = (request: Request, response: Response) =>
         TE.map(user => {
 
           const { name, id_token } = user
-          const httpResponse = created({ name })
+          const httpResponse = ok({ name })
       
           sendRefreshToken(response, id_token)
 

@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { HashPassword } from '../domain/user_cases/HashPassword';
+import { HashPassword } from '../domain/contracts/HashPassword';
 
 
 export const hashPassword: HashPassword = async (password) => {

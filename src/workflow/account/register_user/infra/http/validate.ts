@@ -1,7 +1,7 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { ValidationError } from 'io-ts'
-import { User, UserCodec } from '../../register_user/domain/requiredFields/User'
+import { User, UserCodec } from '../../domain/requiredFields/User'
 
 interface unValidatedUser {
   name: string

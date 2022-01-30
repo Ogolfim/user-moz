@@ -4,7 +4,7 @@ Feature: Logout
     Dado que estou na endpoint de logout
     Quando eu solicitar logout do usuário
     Então o sistema deve validar parâmentros da requisição
-    And: Sistema deve autenticar usuário
+      E Sistema deve autenticar usuário
   
   Scenario: Dados de perfil
     Dado que validação e autenticação teve sucesso

@@ -1,11 +1,13 @@
 import { Router } from 'express'
-import { LogInRouter } from '../../logIn/infra/http/routes'
-import { CreateRouter } from '../../register_user/infra/http/routes'
-
+import { userLoggerByOauthontroller } from './controller/userLoggerByOauth'
+import { userLoggerByPasswordController } from './controller/userLoggerByPassword'
+import { userRegisterController } from './controller/userRegister'
 
 const AccountRouter = Router()
 
-AccountRouter.use('/login', LogInRouter)
-AccountRouter.use('/create', CreateRouter)
+AccountRouter.use('/login/form', userLoggerByPasswordController)
+AccountRouter.use('/login/oauth', userLoggerByOauthontroller)
+AccountRouter.post('/create', userRegisterController)
+
 
 export default AccountRouter

@@ -11,12 +11,6 @@ import router from './routes'
 
 const app = express()
 
-app.use(
-  cors({
-    exposedHeaders: ['x-total-count', 'Content-Type', 'Content-Length'],
-  })
-)
-
 app.use(helmet())
 
 app.use(
@@ -26,6 +20,14 @@ app.use(
 )
 
 app.use(cookieParser())
+
+
+app.use(
+  cors({
+    exposedHeaders: ['x-total-count', 'Content-Type', 'Content-Length'],
+  })
+)
+
 
 app.use(router)
 

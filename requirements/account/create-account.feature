@@ -6,16 +6,16 @@ Feature: Como cliente quero criar conta do usuário usando servidores de autoriz
     Então o sistema deve me direcionar o usuário para a pagina de autorização de acesso
 
   Scenario: Verificar o email
-    Given: Dado que email é valido
+    Dado que email é valido
     Então o sistema deve confirmar se email pertence ao usuário
 
   Scenario: Salvar name e email
-    Given: Sistema tem acesso aos servidores dados do usuário
+    Dado que o sistema tem acesso aos servidores dados do usuário
     Então o sistema deve solicitar nome e email do usuário
       E o sitema deve salvar o nome email do usuário
   
   Scenario: Dados de login
-    Given: Sistema tem acesso aos servidores dados do usuário
+    Dado que o sistema tem acesso aos servidores dados do usuário
     Então o sistema deve criar ID Token
       E o sitema deve me retornar ID Token, nome e permições do usuário
 

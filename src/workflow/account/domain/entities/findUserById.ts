@@ -1,17 +1,20 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '../../../../core/infra/HttpErrorResponse';
 import { prisma } from "../../infra/prisma/client";
-import { FindUserByEmail } from '../contracts/FindUserByEmail';
+import { FindUserById } from '../contracts/FindUserById';
 
  
-export const findUserByEmail: FindUserByEmail =  (email) => {
+export const findUserById: FindUserById =  (id) => {
 
   const user =  TE.tryCatch(
+    
     async () => {
 
-      return await prisma.users.findUnique({
-        where: { email },
+      const user = await prisma.users.findUnique({
+        where: { id },
       }) 
+
+      return user
     },
 
     (err) => {

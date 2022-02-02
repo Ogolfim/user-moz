@@ -1,33 +1,46 @@
+import { pipe } from 'fp-ts/lib/function';
 import * as TE from 'fp-ts/lib/TaskEither'
-import { prisma } from "../../infra/prisma/client";
-import { UserSaver } from '../contracts/UserSaver';
+import { clientError, fail } from '../../../../core/infra/HttpErrorResponse'
+import { prisma } from "../../infra/prisma/client"
+import { UserSaver } from '../contracts/UserSaver'
+import { findUserByEmail } from './findUserByEmail'
 
  
 export const userSaver: UserSaver =  ({ name, email, hash }) => {
 
-  const newUser =  TE.tryCatch(
-    
-    async () => {
+  const newUser = pipe(
+    email,
+    findUserByEmail,
+    TE.chain(user => {
+      return TE.tryCatch(
+        async () => {
+          if (user) {
+            throw new Error(`Oops! Já existe uma conta com o email ${email}`);
+          }
 
-      const user = await prisma.users.findUnique({
-        where: { email },
-        select: { email: true }
-      }) 
+          return { name, email, hash };
+        },
 
-      if(user) {
-        throw new Error(`Ops! Email ${email} já tem conta`)
+        userFoundError => clientError(userFoundError as Error)
+      )
+    }),
+
+    TE.chain(() => TE.tryCatch(
+      async () => {
+        return prisma.users.create({
+          data: {
+            name,
+            hash,
+            email
+          }
+        }) 
+      },
+  
+      (err) => {
+        console.log(err)
+        return fail(new Error('Oops! A sua conta não foi criada. Contacte suporte'))
       }
-
-      return prisma.users.create({
-        data: {
-          name,
-          hash,
-          email
-        }
-      }) 
-    },
-
-    (error) => error as Error
+    ))
   )
   
   return newUser

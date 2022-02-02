@@ -1,23 +1,10 @@
-export type HttpResponse = {
+export type HttpErrorResponse = {
   statusCode: number
   body: any
 }
 
-export function ok<T>(dto?: T): HttpResponse {
-  return {
-    statusCode: 200,
-    body: dto,
-  }
-}
 
-export function created<T>(dto?: T): HttpResponse {
-  return {
-    statusCode: 201,
-    body: dto,
-  }
-}
-
-export function clientError(error: Error): HttpResponse {
+export function clientError(error: Error): HttpErrorResponse {
   return {
     statusCode: 400,
     body: {
@@ -26,7 +13,7 @@ export function clientError(error: Error): HttpResponse {
   }
 }
 
-export function unauthorized(error: Error): HttpResponse {
+export function unauthorized(error: Error): HttpErrorResponse {
   return {
     statusCode: 401,
     body: {
@@ -35,7 +22,7 @@ export function unauthorized(error: Error): HttpResponse {
   }
 }
 
-export function forbidden(error: Error): HttpResponse {
+export function forbidden(error: Error): HttpErrorResponse {
   return {
     statusCode: 403,
     body: {
@@ -44,7 +31,7 @@ export function forbidden(error: Error): HttpResponse {
   }
 }
 
-export function notFound(error: Error): HttpResponse {
+export function notFound(error: Error): HttpErrorResponse {
   return {
     statusCode: 404,
     body: {
@@ -53,7 +40,7 @@ export function notFound(error: Error): HttpResponse {
   }
 }
 
-export function conflict(error: Error): HttpResponse {
+export function conflict(error: Error): HttpErrorResponse {
   return {
     statusCode: 409,
     body: {
@@ -62,7 +49,7 @@ export function conflict(error: Error): HttpResponse {
   }
 }
 
-export function tooMany(error: Error): HttpResponse {
+export function tooMany(error: Error): HttpErrorResponse {
   return {
     statusCode: 429,
     body: {

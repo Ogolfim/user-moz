@@ -1,5 +1,3 @@
-interface CreateAccessTokenUser {
-  id: string
-}
+import { UserSchema } from "../../infra/prisma/schemas";
 
-export type CreateAccessToken = (user: CreateAccessTokenUser) => string
+export type CreateAccessToken = (user: UserSchema) => string

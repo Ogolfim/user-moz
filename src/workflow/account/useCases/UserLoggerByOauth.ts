@@ -1,10 +1,42 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { Name } from '../domain/requiredFields/Name'
-import { UserLoggerByOauthProps } from '../domain/requiredFields/Users/UserLoggerByOauthProps'
+import * as E from 'fp-ts/lib/Either'
+import { findOrSaveUser } from '../domain/entities/findOrSaveOauthUser'
+import { pipe } from 'fp-ts/lib/function'
+import { Middleware } from '../../../core/infra/Middleware'
+import { UserLoggerByOauthPropsValidate } from '../services/validate/UserLoggerByOauthPropsValidate'
+import { clientError } from '../../../core/infra/HttpErrorResponse'
+import { ok } from '../../../core/infra/HttpSuccessResponse'
+import { createAccessToken } from '../infra/http/OAuth/create_id_token'
 
-export interface LogedUser {
-  name: Name
-  id_token: string
+
+
+export const userLoggerByOauth: Middleware = (_httpRequest, httpBody) => {
+  const { name, email, serverName } = httpBody
+
+  const unValidatedUser = { name, email, serverName }
+
+  const httpResponse = pipe(
+    unValidatedUser,
+    UserLoggerByOauthPropsValidate,
+    E.mapLeft(error => clientError(new Error(error.message))),
+    TE.fromEither,
+    TE.chain(validUser => {
+
+      return pipe(
+        validUser,
+        findOrSaveUser,
+        TE.map(user => {
+          
+          const token = createAccessToken(user)
+
+          return ok({ 
+            name: user.name,
+            token
+          })
+        })
+      )
+    })
+  )
+
+  return httpResponse
 }
-
-export type UserLoggerByOauth = (user: UserLoggerByOauthProps) => TE.TaskEither<Error, LogedUser>

@@ -1,4 +1,5 @@
 import * as TE from 'fp-ts/TaskEither'
+import { HttpErrorResponse } from '../../../../core/infra/HttpErrorResponse';
 import { UserSchema } from '../../infra/prisma/schemas';
 import { Email } from '../requiredFields/Email';
 import { Name } from '../requiredFields/Name';
@@ -12,4 +13,4 @@ interface FindOrSaveUserProps {
 }
 
 
-export type FindOrSaveUser = (user: FindOrSaveUserProps) => TE.TaskEither<Error, UserSchema>
+export type FindOrSaveUser = (user: FindOrSaveUserProps) => TE.TaskEither<HttpErrorResponse, UserSchema>

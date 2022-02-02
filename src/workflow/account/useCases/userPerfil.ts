@@ -4,21 +4,19 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { created } from '../../../core/infra/HttpSuccessResponse'
-import { UserAdderToTagsPropsValidate } from '../services/validate/userAdderToTagsProps'
 import { findUserById } from '../domain/entities/findUserById'
+import { UserPerfilPropsValidate } from '../services/validate/userPerfilProps'
 
-export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
+export const userPerfil: Middleware = (_httpRequest, httpBody) => {
 
-  const { userId, tags} = httpBody
-
-  const unValidatedUser = { userId, tags}
+  const { userId } = httpBody
 
   const httpResponse = pipe(
-    unValidatedUser,
-    UserAdderToTagsPropsValidate,
+    userId,
+    UserPerfilPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
-    TE.chain(({userId, tags}) => {
+    TE.chain((userId) => {
 
       return pipe(
         userId,
@@ -40,11 +38,6 @@ export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
 
           const { name, email } = user
 
-          const event = {
-            name,
-            email,
-            tags
-          }
 
           return created()
         })

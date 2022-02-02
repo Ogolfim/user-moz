@@ -1,23 +1,20 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
-import { findOrSaveUser } from '../domain/entities/findOrSaveOauthUser'
 import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../core/infra/Middleware'
-import { UserLoggerByOauthPropsValidate } from '../services/validate/UserLoggerByOauthPropsValidate'
-import { clientError } from '../../../core/infra/HttpErrorResponse'
+import { clientError, fail } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { createAccessToken } from '../infra/http/OAuth/create_id_token'
-import { userRegisterPropsValidate } from '../services/validate/userRegisterPropsValidate'
+import { userRegisterPropsValidate } from '../services/validate/userRegisterProps'
 import { userSaver } from '../domain/entities/userSaver'
 import { hashPassword } from '../services/password/hash'
-import { fail } from 'assert'
 
 
 
 export const userRegister: Middleware = (_httpRequest, httpBody) => {
   const {name, email, password} = httpBody
 
-  const unValidatedUser = {name, email, password}
+  const unValidatedUser = {name, email, password} 
 
   const httpResponse = pipe(
     unValidatedUser,
@@ -26,7 +23,7 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
     TE.fromEither,
     TE.chain(validUser => {
 
-      return pipe(
+      return pipe(  
         TE.tryCatch(
           async () => {
             const { name, email, password } = validUser

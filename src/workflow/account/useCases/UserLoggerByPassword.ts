@@ -5,7 +5,7 @@ import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { createAccessToken } from '../infra/http/OAuth/create_id_token'
-import { UserLoggerByPasswordPropsValidate } from '../services/validate/UserLoggerByPasswordPropsValidate'
+import { UserLoggerByPasswordPropsValidate } from '../services/validate/UserLoggerByPasswordProps'
 import { findUserByEmail } from '../domain/entities/findUserByEmail'
 import { verifyPassword } from '../services/password/verify'
 
@@ -13,7 +13,7 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
 
   const { email, password} = httpBody
 
-  const unValidatedUser = { email, password}
+  const unValidatedUser = { email, password} 
 
   const httpResponse = pipe(
     unValidatedUser,

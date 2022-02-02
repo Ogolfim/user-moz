@@ -29,7 +29,7 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
           return TE.tryCatch(
             async () => {
               if (!user) {
-                throw new Error(`Oops! Nenhuma conta com email ${email} encontrada`);
+                throw new Error(`Oops! Nenhuma conta com o email ${email} encontrada`);
               }
     
               return user;

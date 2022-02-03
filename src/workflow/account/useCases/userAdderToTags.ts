@@ -6,6 +6,7 @@ import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { created } from '../../../core/infra/HttpSuccessResponse'
 import { UserAdderToTagsPropsValidate } from '../services/validate/userAdderToTagsProps'
 import { findUserById } from '../domain/entities/findUserById'
+import { accountEventProducer } from '../../../core/infra/kafka/Event'
 
 export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
 
@@ -45,6 +46,12 @@ export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
             email,
             tags
           }
+
+          accountEventProducer({
+            topic: 'USER_TAGS',
+            key: 'user_added_to_tags',
+            value: JSON.stringify(event)
+          })
 
           return created()
         })

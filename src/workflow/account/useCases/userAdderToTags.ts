@@ -5,38 +5,25 @@ import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { created } from '../../../core/infra/HttpSuccessResponse'
 import { UserAdderToTagsPropsValidate } from '../services/validate/userAdderToTagsProps'
-import { findUserById } from '../domain/entities/findUserById'
 import { accountEventProducer } from '../../../core/infra/kafka/Event'
+import { addUserToTags } from '../domain/entities/addUserToTags'
 
 export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
 
   const { userId, tags} = httpBody
 
-  const unValidatedUser = { userId, tags}
+  const unValidatedUser = { userId: "81c8ea90-a2af-492f-996f-25f74057a69d", tags}
 
   const httpResponse = pipe(
     unValidatedUser,
     UserAdderToTagsPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
-    TE.chain(({userId, tags}) => {
+    TE.chain((user) => {
 
       return pipe(
-        userId,
-        findUserById,
-        TE.chain(user => {
-          return TE.tryCatch(
-            async () => {
-              if (!user) {
-                throw new Error(`Oops! Conta não encontrada`);
-              }
-    
-              return user;
-            },
-    
-            notFoundUserError => clientError(notFoundUserError as Error)
-          )
-        }),
+        user,
+        addUserToTags,
         TE.map(user => {
 
           const { name, email } = user
@@ -47,11 +34,11 @@ export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
             tags
           }
 
-          accountEventProducer({
-            topic: 'USER_TAGS',
-            key: 'user_added_to_tags',
-            value: JSON.stringify(event)
-          })
+          // accountEventProducer({
+          //   topic: 'USER_TAGS',
+          //   key: 'user_added_to_tags',
+          //   value: JSON.stringify(event)
+          // })
 
           return created()
         })

@@ -1,20 +1,20 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '../../../../core/infra/HttpErrorResponse';
 import { prisma } from "../../infra/prisma/client";
-import { FindUserById } from '../contracts/FindUserById';
+import { FindAdminById } from '../contracts/FindAdminById';
 
  
-export const findUserById: FindUserById =  (id) => {
+export const findAdminById: FindAdminById =  (id) => {
 
-  const user =  TE.tryCatch(
+  const admin =  TE.tryCatch(
     
     async () => {
 
-      const user = await prisma.users.findUnique({
+      const admin = await prisma.meAdmin.findUnique({
         where: { id },
       }) 
 
-      return user
+      return admin
     },
 
     (err) => {
@@ -23,5 +23,5 @@ export const findUserById: FindUserById =  (id) => {
     }
   )
   
-  return user
+  return admin
 }

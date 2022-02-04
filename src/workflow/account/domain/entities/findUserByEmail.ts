@@ -16,7 +16,7 @@ export const findUserByEmail: FindUserByEmail =  (email) => {
 
     (err) => {
       console.log(err)
-      return fail(new Error('A sua conta não foi encontrada. Por favor contacte suporte'))
+      return fail(new Error('Oops! Erro. Por favor contacte suporte'))
     }
   )
   

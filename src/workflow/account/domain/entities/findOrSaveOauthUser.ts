@@ -28,7 +28,7 @@ export const findOrSaveUser: FindOrSaveUser =  ({ name, email, serverName }) => 
 
     (error) => {
       console.log(error)
-      return fail(new Error('Não foi possível fazer login. Por favor contacte suporte'))
+      return fail(new Error('Oops! Erro. Por favor contacte suporte'))
     }
   )
   

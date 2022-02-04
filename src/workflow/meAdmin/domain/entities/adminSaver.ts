@@ -2,19 +2,19 @@ import { pipe } from 'fp-ts/lib/function';
 import * as TE from 'fp-ts/lib/TaskEither'
 import { clientError, fail } from '../../../../core/infra/HttpErrorResponse'
 import { prisma } from "../../infra/prisma/client"
-import { UserSaver } from '../contracts/UserSaver'
-import { findUserByEmail } from './findUserByEmail'
+import { AdminSaver } from '../contracts/AdminSaver'
+import { findAdminByEmail } from './findAdminByEmail'
 
  
-export const userSaver: UserSaver =  ({ name, email, hash }) => {
+export const adminSaver: AdminSaver =  ({ name, email, hash }) => {
 
-  const newUser = pipe(
+  const newAdmin = pipe(
     email,
-    findUserByEmail,
-    TE.chain(user => {
+    findAdminByEmail,
+    TE.chain(admin => {
       return TE.tryCatch(
         async () => {
-          if (user) {
+          if (admin) {
             throw new Error(`Oops! Já existe uma conta com o email ${email}`);
           }
 
@@ -27,7 +27,7 @@ export const userSaver: UserSaver =  ({ name, email, hash }) => {
 
     TE.chain(() => TE.tryCatch(
       async () => {
-        return prisma.users.create({
+        return prisma.meAdmin.create({
           data: {
             name,
             hash,
@@ -43,5 +43,5 @@ export const userSaver: UserSaver =  ({ name, email, hash }) => {
     ))
   )
   
-  return newUser
+  return newAdmin
 }

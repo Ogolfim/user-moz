@@ -18,12 +18,12 @@ model users {
   serverName          String?
   email               String         @unique   
   payment             payments[]
-  tags                tag_user[]
+  tags                tagUser[]
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @default(now())
 }
 
-model tag_user {
+model tagUser {
   id                  Int           @id   @default(autoincrement())
   user                users         @relation(fields: [userId], references: [id])
   userId              String
@@ -34,7 +34,7 @@ model tag_user {
 model tags {
   id                  String          @id
   title               String          @unique
-  users               tag_user[]
+  users               tagUser[]
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @default(now())
 }
@@ -43,4 +43,13 @@ model payments {
   id                Int         @id @default(autoincrement())
   user              users       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId            String
+}
+
+model meAdmin {
+  id                  String         @id @default(uuid())
+  name                String 
+  email               String         @unique  
+  hash                String 
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @default(now())
 }

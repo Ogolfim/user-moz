@@ -27,7 +27,7 @@ export const addUserToTags: AddUserToTags =  ({ userId, tags }) => {
     TE.chain((user) => TE.tryCatch(
       async () => {
         tags.map( async tag => {
-          await prisma.tag_user.create({
+          await prisma.tagUser.create({
             data: {
               user: {
                 connect: {
@@ -48,7 +48,7 @@ export const addUserToTags: AddUserToTags =  ({ userId, tags }) => {
   
       (err) => {
         console.log(err)
-        return fail(new Error('Oops! A sua conta não foi criada. Contacte suporte'))
+        return fail(new Error('Oops! Erro. Por favor contacte suporte'))
       }
     ))
   )

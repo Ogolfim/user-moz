@@ -6,7 +6,7 @@ import { tagCreatorController } from './controller/tagCreator'
 const MeAdminRouter = Router()
 
 MeAdminRouter.post('/create', meAdminRegisterController)
-MeAdminRouter.post('/create_tags', tagCreatorController)
+MeAdminRouter.post('/create_tag', tagCreatorController)
 
 
 

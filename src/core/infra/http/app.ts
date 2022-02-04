@@ -21,7 +21,6 @@ app.use(
 
 app.use(cookieParser())
 
-
 app.use(
   cors({
     exposedHeaders: ['x-total-count', 'Content-Type', 'Content-Length'],

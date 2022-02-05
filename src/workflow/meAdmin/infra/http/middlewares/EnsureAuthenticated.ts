@@ -27,7 +27,7 @@ export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody)
         () => {
           const decoded = verify(accessToken, process.env.ACCESS_TOKEN_SECRET!)
 
-          return ok({ ...httpBody, userId: decoded.sub })
+          return ok({ ...httpBody, adminId: decoded.sub })
         },
         (_err) => forbidden(new Error('Oops! Acesso recusado'))
       )

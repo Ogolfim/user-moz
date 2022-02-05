@@ -7,7 +7,7 @@ export const createAccessToken: CreateAccessToken = ({ id }) => {
     process.env.ACCESS_TOKEN_SECRET!,
     {
       subject: id,
-      expiresIn: '20m'
+      expiresIn: '10m'
     }
   )
 }

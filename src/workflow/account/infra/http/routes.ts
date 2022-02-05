@@ -17,5 +17,4 @@ AccountRouter.post('/tags', userAdderToTagsController)
 AccountRouter.get('/perfil', userPerfilController)
 AccountRouter.get('/token', refreshTokenController)
 
-
 export default AccountRouter

@@ -6,11 +6,10 @@ type PasswordBrand = {
   readonly Password: unique symbol
 }
 
-
 export const PasswordCodec = withMessage(
   t.brand(
     t.string,
-    (value): value is t.Branded<string, PasswordBrand> =>  isPassword(value),
+    (value): value is t.Branded<string, PasswordBrand> => isPassword(value),
     'Password'
   ),
   () => 'Ops! senha invalida'

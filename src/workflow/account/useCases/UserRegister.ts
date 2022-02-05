@@ -4,17 +4,15 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../core/infra/Middleware'
 import { clientError, fail } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
-import { createAccessToken } from '../infra/http/OAuth/create_id_token'
+import { createAccessToken } from '../infra/http/OAuth/createAccessToken'
 import { userRegisterPropsValidate } from '../services/validate/userRegisterProps'
 import { userSaver } from '../domain/entities/userSaver'
 import { hashPassword } from '../services/password/hash'
 
-
-
 export const userRegister: Middleware = (_httpRequest, httpBody) => {
-  const {name, email, password} = httpBody
+  const { name, email, password } = httpBody
 
-  const unValidatedUser = {name, email, password} 
+  const unValidatedUser = { name, email, password }
 
   const httpResponse = pipe(
     unValidatedUser,
@@ -22,18 +20,17 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain(validUser => {
-
-      return pipe(  
+      return pipe(
         TE.tryCatch(
           async () => {
             const { name, email, password } = validUser
             const hash = await hashPassword(password)
-    
+
             return { name, email, hash }
           },
-    
+
           (err) => {
-            console.log(err);
+            console.log(err)
             return fail(new Error('Oops! A sua senha não foi criada. Por favor contacte suporte'))
           }
         ),
@@ -42,11 +39,9 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
             user,
             userSaver,
             TE.map(newUser => {
-              
               const token = createAccessToken(newUser)
 
-              return ok({ 
-                name: newUser.name,
+              return ok({
                 token
               })
             })

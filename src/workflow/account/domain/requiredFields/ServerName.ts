@@ -9,7 +9,7 @@ type ServerNameBrand = {
 export const ServerNameCodec = withMessage(
   t.brand(
     t.string,
-    (value): value is t.Branded<string, ServerNameBrand> =>  isServerName(value),
+    (value): value is t.Branded<string, ServerNameBrand> => isServerName(value),
     'ServerName'
   ),
   () => 'Ops! Nome do servidor invalido'

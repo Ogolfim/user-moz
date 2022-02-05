@@ -9,7 +9,7 @@ type EmailBrand = {
 export const EmailCodec = withMessage(
   t.brand(
     t.string,
-    (value): value is t.Branded<string, EmailBrand> =>  isEmail(value),
+    (value): value is t.Branded<string, EmailBrand> => isEmail(value),
     'Email'
   ),
   () => 'Ops! Email invalido'
@@ -18,6 +18,3 @@ export const EmailCodec = withMessage(
 const IntersectEmail = t.intersection([t.string, EmailCodec])
 
 export type Email = t.TypeOf<typeof IntersectEmail>
-
-
-

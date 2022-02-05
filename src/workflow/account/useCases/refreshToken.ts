@@ -3,13 +3,12 @@ import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
-import { created, ok } from '../../../core/infra/HttpSuccessResponse'
+import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { findUserById } from '../domain/entities/findUserById'
 import { UserRefreshTokenPropsValidate } from '../services/validate/RefreshTokenProps'
-import { createAccessToken } from '../infra/http/OAuth/create_id_token'
+import { createAccessToken } from '../infra/http/OAuth/createAccessToken'
 
 export const refreshToken: Middleware = (_httpRequest, httpBody) => {
-
   const { userId } = httpBody
 
   const httpResponse = pipe(
@@ -18,7 +17,6 @@ export const refreshToken: Middleware = (_httpRequest, httpBody) => {
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain((userId) => {
-
       return pipe(
         userId,
         findUserById,
@@ -26,27 +24,25 @@ export const refreshToken: Middleware = (_httpRequest, httpBody) => {
           return TE.tryCatch(
             async () => {
               if (!user) {
-                throw new Error(`Oops! Conta não encontrada`);
+                throw new Error('Oops! Conta não encontrada')
               }
-    
-              return user;
+
+              return user
             },
-    
+
             notFoundUserError => clientError(notFoundUserError as Error)
           )
         }),
         TE.map(user => {
-
           const token = createAccessToken(user)
 
-          return ok({ 
+          return ok({
             token
           })
         })
       )
     })
   )
-
 
   return httpResponse
 }

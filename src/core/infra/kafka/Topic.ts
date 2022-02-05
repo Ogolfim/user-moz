@@ -1,2 +1,2 @@
 
-export type Topic = "USER_TAGS" | "BILLS"
+export type Topic = 'USER_TAGS' | 'BILLS'

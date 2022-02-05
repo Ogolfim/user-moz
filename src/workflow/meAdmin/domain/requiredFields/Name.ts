@@ -9,7 +9,7 @@ type NameBrand = {
 export const NameCodec = withMessage(
   t.brand(
     t.string,
-    (value): value is t.Branded<string, NameBrand> =>  isName(value),
+    (value): value is t.Branded<string, NameBrand> => isName(value),
     'Name'
   ),
   () => 'Ops! Nome invalido'

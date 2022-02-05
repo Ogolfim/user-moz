@@ -7,5 +7,4 @@ export const TagCodec = t.type({
   title: TagTitleCodec
 })
 
-
 export type Tag = t.TypeOf<typeof TagCodec>

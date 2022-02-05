@@ -6,9 +6,7 @@ import { Middleware } from '../../../core/infra/Middleware'
 import { UserLoggerByOauthPropsValidate } from '../services/validate/UserLoggerByOauthProps'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
-import { createAccessToken } from '../infra/http/OAuth/create_id_token'
-
-
+import { createAccessToken } from '../infra/http/OAuth/createAccessToken'
 
 export const userLoggerByOauth: Middleware = (_httpRequest, httpBody) => {
   const { name, email, serverName } = httpBody
@@ -21,16 +19,13 @@ export const userLoggerByOauth: Middleware = (_httpRequest, httpBody) => {
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain(validUser => {
-
       return pipe(
         validUser,
         findOrSaveUser,
         TE.map(user => {
-          
           const token = createAccessToken(user)
 
-          return ok({ 
-            name: user.name,
+          return ok({
             token
           })
         })

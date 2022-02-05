@@ -3,16 +3,16 @@ export type HttpSuccessResponse = {
   body: any
 }
 
-export function ok<T>(dto?: T): HttpSuccessResponse {
+export function ok<T> (dto?: T): HttpSuccessResponse {
   return {
     statusCode: 200,
-    body: dto,
+    body: dto
   }
 }
 
-export function created<T>(dto?: T): HttpSuccessResponse {
+export function created<T> (dto?: T): HttpSuccessResponse {
   return {
     statusCode: 201,
-    body: dto,
+    body: dto
   }
 }

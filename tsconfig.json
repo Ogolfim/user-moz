@@ -4,8 +4,26 @@
       "module": "commonjs",
       "sourceMap": true,
       "outDir": "dist",
+      "rootDir": "src",
+      "removeComments": true,
+      "typeRoots": [
+        "./node_modules/@types",
+        "./src/@types"
+      ],
+      "baseUrl": "src",
+      "paths": {
+        "@core/*": ["core/*"],
+        "@account/*": ["workflow/account/*"],
+        "@meAdmin/*": ["workflow/meAdmin/*"],
+        "@bills/*": ["workflow/bills/*"],
+        "@payments/*": ["workflow/payments/*"]
+      },
       "strict": true,
       "lib": ["esnext"],
-      "esModuleInterop": true
-    }
+      "esModuleInterop": true,
+    },
+    "include": [
+      "./src",
+      "./server"
+  ],
   }

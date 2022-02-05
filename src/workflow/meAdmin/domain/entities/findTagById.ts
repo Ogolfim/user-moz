@@ -1,18 +1,15 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { fail } from '../../../../core/infra/HttpErrorResponse';
-import { prisma } from "../../infra/prisma/client";
-import { FindTagById } from '../contracts/findTagById';
+import { fail } from '../../../../core/infra/HttpErrorResponse'
+import { prisma } from '../../infra/prisma/client'
+import { FindTagById } from '../contracts/findTagById'
 
- 
-export const findTagById: FindTagById =  (id) => {
+export const findTagById: FindTagById = (id) => {
+  const tag = TE.tryCatch(
 
-  const tag =  TE.tryCatch(
-    
     async () => {
-
       const tag = await prisma.tags.findUnique({
-        where: { id },
-      }) 
+        where: { id }
+      })
 
       return tag
     },
@@ -22,6 +19,6 @@ export const findTagById: FindTagById =  (id) => {
       return fail(new Error('Oops! Erro. Por favor contacte suporte'))
     }
   )
-  
+
   return tag
 }

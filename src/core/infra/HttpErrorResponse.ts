@@ -3,68 +3,67 @@ export type HttpErrorResponse = {
   body: any
 }
 
-
-export function clientError(error: Error): HttpErrorResponse {
+export function clientError (error: Error): HttpErrorResponse {
   return {
     statusCode: 400,
     body: {
-      error: error.message,
-    },
+      error: error.message
+    }
   }
 }
 
-export function unauthorized(error: Error): HttpErrorResponse {
+export function unauthorized (error: Error): HttpErrorResponse {
   return {
     statusCode: 401,
     body: {
-      error: error.message,
-    },
+      error: error.message
+    }
   }
 }
 
-export function forbidden(error: Error): HttpErrorResponse {
+export function forbidden (error: Error): HttpErrorResponse {
   return {
     statusCode: 403,
     body: {
-      error: error.message,
-    },
+      error: error.message
+    }
   }
 }
 
-export function notFound(error: Error): HttpErrorResponse {
+export function notFound (error: Error): HttpErrorResponse {
   return {
     statusCode: 404,
     body: {
-      error: error.message,
-    },
+      error: error.message
+    }
   }
 }
 
-export function conflict(error: Error): HttpErrorResponse {
+export function conflict (error: Error): HttpErrorResponse {
   return {
     statusCode: 409,
     body: {
-      error: error.message,
-    },
+      error: error.message
+    }
   }
 }
 
-export function tooMany(error: Error): HttpErrorResponse {
+export function tooMany (error: Error): HttpErrorResponse {
   return {
     statusCode: 429,
     body: {
-      error: error.message,
-    },
+      error: error.message
+    }
   }
 }
 
-export function fail(error: Error) {
+export function fail (error: Error) {
   console.log(error)
 
   return {
     statusCode: 500,
     body: {
-      error: error.message,
-    },
+      error: error.message
+    }
   }
 }

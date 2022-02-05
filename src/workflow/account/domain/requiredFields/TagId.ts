@@ -9,7 +9,7 @@ type TagIdBrand = {
 export const TagIdCodec = withMessage(
   t.brand(
     t.string,
-    (value): value is t.Branded<string, TagIdBrand> =>  isTagId(value),
+    (value): value is t.Branded<string, TagIdBrand> => isTagId(value),
     'TagId'
   ),
   () => 'Ops! Id do tag invalido'

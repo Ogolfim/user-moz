@@ -4,10 +4,8 @@ import { pipe } from 'fp-ts/lib/function'
 import { ValidationError } from 'io-ts'
 import { UUID } from 'io-ts-types'
 
-
-export const UserRefreshTokenPropsValidate = (id: string): 
+export const UserRefreshTokenPropsValidate = (id: string):
 E.Either<ValidationError, UUID> => {
-
   return pipe(
     UUID.decode(id),
     E.mapLeft(errors => errors[0]),

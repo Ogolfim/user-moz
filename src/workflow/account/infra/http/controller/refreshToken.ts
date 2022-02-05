@@ -4,20 +4,19 @@ import { pipe } from 'fp-ts/lib/function'
 import { refreshToken } from '../../../useCases/refreshToken'
 import { sendRefreshToken } from '../OAuth/sendRefreshToken'
 
-
 export const refreshTokenController = (request: Request, response: Response) => {
-
   pipe(
     refreshToken(request, request.body),
     TE.mapLeft(httpErrorResponse => {
-      response.status(httpErrorResponse.statusCode).json(httpErrorResponse.body)
+      const { statusCode, body } = httpErrorResponse
+      return response.status(statusCode).json(body)
     }),
     TE.map(httpSuccessResponse => {
       const { statusCode, body } = httpSuccessResponse
 
       sendRefreshToken(response, body.token)
 
-      response.status(statusCode).json(body)
+      return response.status(statusCode).json(body)
     })
   )()
 }

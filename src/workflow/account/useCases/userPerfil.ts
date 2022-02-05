@@ -8,7 +8,6 @@ import { findUserById } from '../domain/entities/findUserById'
 import { UserPerfilPropsValidate } from '../services/validate/userPerfilProps'
 
 export const userPerfil: Middleware = (_httpRequest, httpBody) => {
-
   const { userId } = httpBody
 
   const httpResponse = pipe(
@@ -17,7 +16,6 @@ export const userPerfil: Middleware = (_httpRequest, httpBody) => {
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain((userId) => {
-
       return pipe(
         userId,
         findUserById,
@@ -25,26 +23,23 @@ export const userPerfil: Middleware = (_httpRequest, httpBody) => {
           return TE.tryCatch(
             async () => {
               if (!user) {
-                throw new Error(`Oops! Conta não encontrada`);
+                throw new Error('Oops! Conta não encontrada')
               }
-    
-              return user;
+
+              return user
             },
-    
+
             notFoundUserError => clientError(notFoundUserError as Error)
           )
         }),
         TE.map(user => {
-
           const { name, email } = user
 
-
-          return created()
+          return created({ name, email })
         })
       )
     })
   )
-
 
   return httpResponse
 }

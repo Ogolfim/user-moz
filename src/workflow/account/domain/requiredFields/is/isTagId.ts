@@ -3,7 +3,7 @@
 // Must not have spaces
 
 export const isTagId = (value: string) => {
-  if (!value ||value.trim().length < 4 || value.trim().length > 50) {
+  if (!value || value.trim().length < 4 || value.trim().length > 50) {
     return false
   }
 

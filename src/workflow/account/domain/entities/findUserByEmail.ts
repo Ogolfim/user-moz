@@ -1,17 +1,14 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { fail } from '../../../../core/infra/HttpErrorResponse';
-import { prisma } from "../../infra/prisma/client";
-import { FindUserByEmail } from '../contracts/FindUserByEmail';
+import { fail } from '../../../../core/infra/HttpErrorResponse'
+import { prisma } from '../../infra/prisma/client'
+import { FindUserByEmail } from '../contracts/FindUserByEmail'
 
- 
-export const findUserByEmail: FindUserByEmail =  (email) => {
-
-  const user =  TE.tryCatch(
+export const findUserByEmail: FindUserByEmail = (email) => {
+  const user = TE.tryCatch(
     async () => {
-
       return await prisma.users.findUnique({
-        where: { email },
-      }) 
+        where: { email }
+      })
     },
 
     (err) => {
@@ -19,6 +16,6 @@ export const findUserByEmail: FindUserByEmail =  (email) => {
       return fail(new Error('Oops! Erro. Por favor contacte suporte'))
     }
   )
-  
+
   return user
 }

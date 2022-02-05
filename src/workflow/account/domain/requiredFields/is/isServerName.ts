@@ -4,12 +4,12 @@ export const isServerName = (value: string) => {
     return false
   }
 
-  if(
+  if (
     value.match(/google/) ||
     value.match(/linkedin/)
   ) {
     return true
   }
 
-  return false;
+  return false
 }

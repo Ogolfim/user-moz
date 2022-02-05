@@ -11,38 +11,58 @@ datasource db {
 }
 
 
-model users {
+model User {
   id                  String         @id @default(uuid())
   name                String 
   hash                String? 
   serverName          String?
   email               String         @unique   
-  payment             payments[]
+  payment             Payment[]
   tags                tagUser[]
+  services            UserService   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId           Int
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @default(now())
+
+  @@map("users")
+}
+
+model UserService {
+  id                  Int           @id @default(autoincrement())
+  webDownload         Boolean       @default(false)
+  apiAccess           Boolean       @default(false)
+  user                User?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @default(now())
+  @@map("user_services")
 }
 
 model tagUser {
   id                  Int           @id   @default(autoincrement())
-  user                users         @relation(fields: [userId], references: [id])
+  user                User          @relation(fields: [userId], references: [id])
   userId              String
-  tag                 tags          @relation(fields: [tagId], references: [id])
+  tag                 Tag          @relation(fields: [tagId], references: [id])
   tagId               String
+
+  @@map("tags_users")
 }
 
-model tags {
+model Tag {
   id                  String          @id
   title               String          @unique
   users               tagUser[]
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @default(now())
+
+  @@map("tags")
 }
 
-model payments {
+model Payment {
   id                Int         @id @default(autoincrement())
-  user              users       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId            String
+
+  @@map("payments")
 }
 
 model meAdmin {
@@ -52,4 +72,6 @@ model meAdmin {
   hash                String 
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @default(now())
+
+  @@map("me_admins")
 }

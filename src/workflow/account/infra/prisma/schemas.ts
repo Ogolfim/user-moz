@@ -1,3 +1,3 @@
-import { users } from '@prisma/client';
+import { users } from '@prisma/client'
 
 export type UserSchema = users

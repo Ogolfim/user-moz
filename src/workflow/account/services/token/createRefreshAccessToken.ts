@@ -1,13 +1,13 @@
 import { sign } from 'jsonwebtoken'
-import { CreateAccessToken } from '../../domain/contracts/CreateIdToken'
+import { CreateRefreshAccessToken } from '../../domain/contracts/CreateRefreshAccessToken'
 
-export const createAccessToken: CreateAccessToken = ({ id }) => {
+export const createRefreshAccessToken: CreateRefreshAccessToken = ({ id, userId, expiresIn }) => {
   return sign(
-    {},
+    { id },
     process.env.ACCESS_TOKEN_SECRET!,
     {
-      subject: id,
-      expiresIn: '10m'
+      subject: userId,
+      expiresIn: expiresIn
     }
   )
 }

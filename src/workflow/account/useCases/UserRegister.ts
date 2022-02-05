@@ -10,6 +10,7 @@ import { userSaver } from '../domain/entities/userSaver'
 import { hashPassword } from '../services/password/hash'
 import { createRefreshToken } from '../domain/entities/createRefreshToken'
 import { UUID } from 'io-ts-types'
+import { createRefreshAccessToken } from '../services/token/createRefreshAccessToken'
 
 export const userRegister: Middleware = (_httpRequest, httpBody) => {
   const { name, email, password } = httpBody
@@ -55,9 +56,11 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
             TE.map(({ user, refreshToken }) => {
               const token = createAccessToken(user)
 
+              const refreshAccessToken = createRefreshAccessToken(refreshToken)
+
               return ok({
                 token,
-                refreshToken
+                refreshToken: refreshAccessToken
               })
             })
           )

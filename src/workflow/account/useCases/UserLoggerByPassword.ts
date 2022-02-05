@@ -10,6 +10,7 @@ import { findUserByEmail } from '../domain/entities/findUserByEmail'
 import { verifyPassword } from '../services/password/verify'
 import { UUID } from 'io-ts-types'
 import { createRefreshToken } from '../domain/entities/createRefreshToken'
+import { createRefreshAccessToken } from '../services/token/createRefreshAccessToken'
 
 export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
   const { email, password } = httpBody
@@ -61,9 +62,11 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
 
               const token = createAccessToken(user)
 
+              const refreshAccessToken = createRefreshAccessToken(refreshToken)
+
               return ok({
                 token,
-                refreshToken
+                refreshToken: refreshAccessToken
               })
             },
             (err) => clientError(err as Error)

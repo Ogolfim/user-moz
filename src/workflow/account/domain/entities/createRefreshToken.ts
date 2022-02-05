@@ -2,10 +2,10 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import dayjs from 'dayjs'
 import { fail } from '../../../../core/infra/HttpErrorResponse'
 import { prisma } from '../../infra/prisma/client'
-import { CreateRefreshToken } from '../contracts/CreateRefreshToken'
+import { RefreshTokenSaver } from '../contracts/RefreshTokenSaver'
 import { pipe } from 'fp-ts/lib/function'
 
-export const createRefreshToken: CreateRefreshToken = (userId) => {
+export const createRefreshToken: RefreshTokenSaver = (userId) => {
   const refreshToken = pipe(
     TE.tryCatch(
       async () => {

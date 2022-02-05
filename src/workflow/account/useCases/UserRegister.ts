@@ -4,10 +4,12 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../core/infra/Middleware'
 import { clientError, fail } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
-import { createAccessToken } from '../infra/http/OAuth/createAccessToken'
+import { createAccessToken } from '../services/token/createAccessToken'
 import { userRegisterPropsValidate } from '../services/validate/userRegisterProps'
 import { userSaver } from '../domain/entities/userSaver'
 import { hashPassword } from '../services/password/hash'
+import { createRefreshToken } from '../domain/entities/createRefreshToken'
+import { UUID } from 'io-ts-types'
 
 export const userRegister: Middleware = (_httpRequest, httpBody) => {
   const { name, email, password } = httpBody
@@ -38,11 +40,24 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
           return pipe(
             user,
             userSaver,
-            TE.map(newUser => {
-              const token = createAccessToken(newUser)
+            TE.chain(user => {
+              return pipe(
+                user.id as UUID,
+                createRefreshToken,
+                TE.map(refreshToken => {
+                  return {
+                    user,
+                    refreshToken
+                  }
+                })
+              )
+            }),
+            TE.map(({ user, refreshToken }) => {
+              const token = createAccessToken(user)
 
               return ok({
-                token
+                token,
+                refreshToken
               })
             })
           )

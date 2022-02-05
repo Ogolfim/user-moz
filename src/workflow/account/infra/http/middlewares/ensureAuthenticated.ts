@@ -12,11 +12,11 @@ export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody)
   const httpResponse = pipe(
     E.tryCatch(
       () => {
-        if (!bearerHeader) throw new Error('Oops! Acesso recusado')
+        if (!bearerHeader) throw new Error('Não autorizado')
 
         const accessToken = bearerHeader.split(' ')[1]
 
-        if (!accessToken) throw new Error('Oops! Acesso recusado')
+        if (!accessToken) throw new Error('Não autorizado')
 
         return accessToken
       },
@@ -29,7 +29,7 @@ export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody)
 
           return ok({ ...httpBody, userId: decoded.sub })
         },
-        (_err) => forbidden(new Error('Oops! Acesso recusado'))
+        (_err) => forbidden(new Error('Não autorizado'))
       )
     }),
     TE.fromEither

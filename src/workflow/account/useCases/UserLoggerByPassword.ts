@@ -4,10 +4,12 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
-import { createAccessToken } from '../infra/http/OAuth/createAccessToken'
+import { createAccessToken } from '../services/token/createAccessToken'
 import { UserLoggerByPasswordPropsValidate } from '../services/validate/UserLoggerByPasswordProps'
 import { findUserByEmail } from '../domain/entities/findUserByEmail'
 import { verifyPassword } from '../services/password/verify'
+import { UUID } from 'io-ts-types'
+import { createRefreshToken } from '../domain/entities/createRefreshToken'
 
 export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
   const { email, password } = httpBody
@@ -37,6 +39,18 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
           )
         }),
         TE.chain(user => {
+          return pipe(
+            user.id as UUID,
+            createRefreshToken,
+            TE.map(refreshToken => {
+              return {
+                user,
+                refreshToken
+              }
+            })
+          )
+        }),
+        TE.chain(({ user, refreshToken }) => {
           return TE.tryCatch(
             async () => {
               if (!user.hash) throw new Error('Oops! Senha incorreta')
@@ -48,7 +62,8 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
               const token = createAccessToken(user)
 
               return ok({
-                token
+                token,
+                refreshToken
               })
             },
             (err) => clientError(err as Error)

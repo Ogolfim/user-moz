@@ -6,7 +6,7 @@ import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { findUserById } from '../domain/entities/findUserById'
 import { UserRefreshTokenPropsValidate } from '../services/validate/RefreshTokenProps'
-import { createAccessToken } from '../infra/http/OAuth/createAccessToken'
+import { createAccessToken } from '../services/token/createAccessToken'
 
 export const refreshToken: Middleware = (_httpRequest, httpBody) => {
   const { userId } = httpBody

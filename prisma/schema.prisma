@@ -19,6 +19,7 @@ model User {
   email               String         @unique   
   payment             Payment[]
   tags                Tag[]
+  refreshToken        UserRefreshToken?
   services            UserService   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   serviceId           Int
   createdAt           DateTime      @default(now())
@@ -37,6 +38,13 @@ model UserService {
   @@map("user_services")
 }
 
+model UserRefreshToken {
+  id                  String           @id @default(uuid())
+  expiresIn           Int
+  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId            String
+  @@map("user_refresh_token")
+}
 
 model Tag {
   id                  String          @id

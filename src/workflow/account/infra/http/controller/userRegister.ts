@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { userRegister } from '../../../useCases/userRegister'
-import { sendRefreshToken } from '../OAuth/sendRefreshToken'
+import { sendRefreshToken } from '../middlewares/sendRefreshToken'
 
 export const userRegisterController = (request: Request, response: Response) => {
   pipe(

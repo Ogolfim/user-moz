@@ -5,28 +5,25 @@ import { tagCreator } from '../../../useCases/tagCreator'
 import { ensureAuthenticatedMiddleware } from '../middlewares/ensureAuthenticated'
 
 export const tagCreatorController = (request: Request, response: Response) => {
-
   pipe(
     ensureAuthenticatedMiddleware(request, request.body),
     TE.mapLeft(httpErrorResponse => {
-      
       const { statusCode, body } = httpErrorResponse
 
       response.status(statusCode).json(body)
     }),
-    TE.map(({body}) => {
-      
-      pipe(
+    TE.map(({ body }) => {
+      return pipe(
         tagCreator(request, body),
         TE.mapLeft(httpErrorResponse => {
           const { statusCode, body } = httpErrorResponse
-                    
-          response.status(statusCode).json(body)
+
+          return response.status(statusCode).json(body)
         }),
         TE.map(httpSuccessResponse => {
           const { statusCode, body } = httpSuccessResponse
 
-          response.status(statusCode).json(body)
+          return response.status(statusCode).json(body)
         })
       )()
     })

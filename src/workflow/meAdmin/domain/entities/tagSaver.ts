@@ -25,7 +25,7 @@ export const tagSaver: TagSaver = ({ id, title }) => {
 
     TE.chain(() => TE.tryCatch(
       async () => {
-        return prisma.tags.create({
+        return prisma.tag.create({
           data: {
             id,
             title

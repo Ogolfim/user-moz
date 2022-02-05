@@ -7,7 +7,7 @@ export const findTagById: FindTagById = (id) => {
   const tag = TE.tryCatch(
 
     async () => {
-      const tag = await prisma.tags.findUnique({
+      const tag = await prisma.tag.findUnique({
         where: { id }
       })
 

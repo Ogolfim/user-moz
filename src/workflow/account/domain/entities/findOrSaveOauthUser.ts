@@ -7,7 +7,7 @@ export const findOrSaveUser: FindOrSaveUser = ({ name, email, serverName }) => {
   const user = TE.tryCatch(
 
     async () => {
-      const user = await prisma.users.findUnique({
+      const user = await prisma.user.findUnique({
         where: { email }
       })
 
@@ -15,11 +15,14 @@ export const findOrSaveUser: FindOrSaveUser = ({ name, email, serverName }) => {
         return user
       }
 
-      return await prisma.users.create({
+      return await prisma.user.create({
         data: {
           name,
           serverName,
-          email
+          email,
+          services: {
+            create: {}
+          }
         }
       })
     },

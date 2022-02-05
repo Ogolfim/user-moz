@@ -25,11 +25,14 @@ export const userSaver: UserSaver = ({ name, email, hash }) => {
 
     TE.chain(() => TE.tryCatch(
       async () => {
-        return prisma.users.create({
+        return prisma.user.create({
           data: {
             name,
             hash,
-            email
+            email,
+            services: {
+              create: {}
+            }
           }
         })
       },

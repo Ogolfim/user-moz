@@ -7,7 +7,7 @@ export const findUserById: FindUserById = (id) => {
   const user = TE.tryCatch(
 
     async () => {
-      const user = await prisma.users.findUnique({
+      const user = await prisma.user.findUnique({
         where: { id }
       })
 

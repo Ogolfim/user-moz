@@ -6,7 +6,7 @@ import { FindUserByEmail } from '../contracts/FindUserByEmail'
 export const findUserByEmail: FindUserByEmail = (email) => {
   const user = TE.tryCatch(
     async () => {
-      return await prisma.users.findUnique({
+      return await prisma.user.findUnique({
         where: { email }
       })
     },

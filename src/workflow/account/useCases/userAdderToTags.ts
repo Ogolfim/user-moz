@@ -6,40 +6,20 @@ import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { created } from '../../../core/infra/HttpSuccessResponse'
 import { UserAdderToTagsPropsValidate } from '../services/validate/userAdderToTagsProps'
 import { addUserToTags } from '../domain/entities/addUserToTags'
-import { findUserById } from '../domain/entities/findUserById'
 
 export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
   const { userId, tags } = httpBody
 
-  const unValidatedUser = { userId, tags }
+  const unValidatedUserTags = { userId, tags }
 
   const httpResponse = pipe(
-    unValidatedUser,
+    unValidatedUserTags,
     UserAdderToTagsPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
-    TE.chain(({ userId, tags }) => {
+    TE.chain((validUserTags) => {
       return pipe(
-        userId,
-        findUserById,
-        TE.chain(foundUser => {
-          return TE.tryCatch(
-            async () => {
-              if (!foundUser) {
-                throw new Error('Oops! Usuário não encontrado')
-              }
-
-              return { userId, tags }
-            },
-
-            userFoundError => clientError(userFoundError as Error)
-          )
-        })
-      )
-    }),
-    TE.chain((user) => {
-      return pipe(
-        user,
+        validUserTags,
         addUserToTags,
         TE.map(user => {
           const { name, email } = user

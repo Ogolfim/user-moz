@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '../../../../core/infra/http_error_response'
 import { prisma } from '../../infra/prisma/client'
@@ -11,6 +12,25 @@ export const findRefreshTokenById: RefreshTokenById = (id) => {
         where: { id }
       })
 
+      if (refreshToken && isExpiredDay(refreshToken.expiresIn)) {
+        const { userId } = refreshToken
+
+        await prisma.userRefreshToken.deleteMany({
+          where: { userId }
+        })
+
+        const expiresIn = dayjs().add(2, 'days').unix()
+
+        const newRefreshToken = await prisma.userRefreshToken.create({
+          data: {
+            userId,
+            expiresIn
+          }
+        })
+
+        return newRefreshToken
+      }
+
       return refreshToken
     },
 
@@ -21,4 +41,8 @@ export const findRefreshTokenById: RefreshTokenById = (id) => {
   )
 
   return refreshToken
+}
+
+const isExpiredDay = (expiresIn: number) => {
+  return dayjs().isAfter(dayjs.unix(expiresIn))
 }

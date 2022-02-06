@@ -17,11 +17,11 @@ export const ensureValidRefreshTokenMiddleware: Middleware = (httpRequest, httpB
   const httpResponse = pipe(
     E.tryCatch(
       () => {
-        if (!bearerHeader) throw new Error('Oops! Você não está autorizado')
+        if (!bearerHeader) throw new Error('Não tem permissão')
 
         const refreshAccessToken = bearerHeader.split(' ')[1]
 
-        if (!refreshAccessToken) throw new Error('Oops! Você não está autorizado')
+        if (!refreshAccessToken) throw new Error('Não tem permissão')
 
         return refreshAccessToken
       },
@@ -34,7 +34,7 @@ export const ensureValidRefreshTokenMiddleware: Middleware = (httpRequest, httpB
 
           return ok({ ...httpBody, userId: sub, id: id })
         },
-        (_err) => forbidden(new Error('Oops! Você não está autorizado'))
+        (_err) => forbidden(new Error('Refresh Access Token invalido'))
       )
     }),
     TE.fromEither

@@ -12,11 +12,11 @@ export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody)
   const httpResponse = pipe(
     E.tryCatch(
       () => {
-        if (!bearerHeader) throw new Error('Oops! Você não está autorizado')
+        if (!bearerHeader) throw new Error('Não tem permissão')
 
         const accessToken = bearerHeader.split(' ')[1]
 
-        if (!accessToken) throw new Error('Oops! Você não está autorizado')
+        if (!accessToken) throw new Error('Não tem permissão')
 
         return accessToken
       },
@@ -29,7 +29,7 @@ export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody)
 
           return ok({ ...httpBody, userId: decoded.sub })
         },
-        (_err) => forbidden(new Error('Oops! Você não está autorizado'))
+        (_err) => forbidden(new Error('Access Token invalido'))
       )
     }),
     TE.fromEither

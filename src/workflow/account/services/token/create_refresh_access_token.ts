@@ -7,7 +7,7 @@ export const createRefreshAccessToken: CreateRefreshAccessToken = ({ id, userId 
     process.env.REFRESH_TOKEN_SECRET!,
     {
       subject: userId,
-      expiresIn: 60
+      expiresIn: '24h'
     }
   )
 }

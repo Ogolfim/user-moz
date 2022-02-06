@@ -1,15 +1,15 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
+import { UUID } from 'io-ts-types'
 import { pipe } from 'fp-ts/lib/function'
+import dayjs from 'dayjs'
 import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { findRefreshTokenById } from '../domain/entities/findRefreshTokenById'
 import { UserRefreshTokenPropsValidate } from '../services/validate/RefreshTokenProps'
 import { createAccessToken } from '../services/token/createAccessToken'
-import { UUID } from 'io-ts-types'
 import { createRefreshToken } from '../domain/entities/createRefreshToken'
-import dayjs from 'dayjs'
 
 export const refreshToken: Middleware = (_httpRequest, httpBody) => {
   const { id, userId } = httpBody

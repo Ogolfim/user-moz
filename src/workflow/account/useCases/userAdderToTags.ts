@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { created } from '../../../core/infra/HttpSuccessResponse'
-import { UserAdderToTagsPropsValidate } from '../services/validate/userAdderToTagsProps'
+import { userAdderToTagsPropsValidate } from '../services/validate/userAdderToTagsProps'
 import { addUserToTags } from '../domain/entities/addUserToTags'
 
 export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
@@ -14,7 +14,7 @@ export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     unValidatedUserTags,
-    UserAdderToTagsPropsValidate,
+    userAdderToTagsPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain((validUserTags) => {

@@ -5,7 +5,7 @@ import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { createAccessToken } from '../infra/http/OAuth/createAccessToken'
-import { MeAdminLoggerPropsValidate } from '../services/validate/meAdminLoggerProps'
+import { meAdminLoggerPropsValidate } from '../services/validate/meAdminLoggerProps'
 import { findAdminByEmail } from '../domain/entities/findAdminByEmail'
 import { verifyPassword } from '../services/password/verify'
 
@@ -16,7 +16,7 @@ export const meAdminLogger: Middleware = (_httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     unValidatedAdmin,
-    MeAdminLoggerPropsValidate,
+    meAdminLoggerPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain(({ email, password }) => {

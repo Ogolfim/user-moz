@@ -7,7 +7,7 @@ import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { findRefreshTokenById } from '../domain/entities/findRefreshTokenById'
-import { UserRefreshTokenPropsValidate } from '../services/validate/RefreshTokenProps'
+import { userRefreshTokenPropsValidate } from '../services/validate/refreshTokenProps'
 import { createAccessToken } from '../services/token/createAccessToken'
 import { createRefreshToken } from '../domain/entities/createRefreshToken'
 
@@ -16,7 +16,7 @@ export const refreshToken: Middleware = (_httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     { id, userId },
-    UserRefreshTokenPropsValidate,
+    userRefreshTokenPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain(refreshTokenProps => {

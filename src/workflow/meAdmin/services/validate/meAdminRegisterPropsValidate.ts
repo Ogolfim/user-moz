@@ -1,15 +1,10 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { MeAdminRegisterProps, MeAdminRegisterPropsCodec } from '../../domain/requiredFields/admin/MeAdminRegisterProps'
+import { MeAdminRegisterPropsCodec } from '../../domain/requiredFields/admin/MeAdminRegisterProps'
+import { MeAdminRegisterPropsValidate } from './contracts/MeAdminRegisterPropsValidate'
 import { ValidationError } from './errors/ValidationError'
 
-interface unValidatedAdmin {
-  name: string
-  email: string
-  password: string
-}
-
-export const meAdminRegisterPropsValidate = (data: unValidatedAdmin): E.Either<ValidationError, MeAdminRegisterProps> => {
+export const meAdminRegisterPropsValidate: MeAdminRegisterPropsValidate = (data) => {
   return pipe(
     E.tryCatch(
       () => {

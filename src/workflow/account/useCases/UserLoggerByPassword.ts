@@ -5,7 +5,7 @@ import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { createAccessToken } from '../services/token/createAccessToken'
-import { UserLoggerByPasswordPropsValidate } from '../services/validate/UserLoggerByPasswordProps'
+import { userLoggerByPasswordPropsValidate } from '../services/validate/userLoggerByPasswordProps'
 import { findUserByEmail } from '../domain/entities/findUserByEmail'
 import { verifyPassword } from '../services/password/verify'
 import { UUID } from 'io-ts-types'
@@ -19,7 +19,7 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     unValidatedUser,
-    UserLoggerByPasswordPropsValidate,
+    userLoggerByPasswordPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain(({ email, password }) => {

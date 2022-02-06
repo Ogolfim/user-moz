@@ -1,15 +1,10 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { UserLoggerByOauthProps, UserLoggerByOauthPropsCodec } from '../../domain/requiredFields/Users/UserLoggerByOauthProps'
+import { UserLoggerByOauthPropsCodec } from '../../domain/requiredFields/Users/UserLoggerByOauthProps'
+import { UserLoggerByOauthPropsValidate } from './contracts/UserLoggerByOauthPropsValidate'
 import { ValidationError } from './errors/ValidationError'
 
-interface unValidatedUser {
-  name: string
-  email: string
-  serverName: string
-}
-
-export const UserLoggerByOauthPropsValidate = (data: unValidatedUser): E.Either<ValidationError, UserLoggerByOauthProps> => {
+export const userLoggerByOauthPropsValidate: UserLoggerByOauthPropsValidate = (data) => {
   return pipe(
     E.tryCatch(
       () => {

@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { UUID } from 'io-ts-types'
 import { findOrSaveUser } from '../domain/entities/findOrSaveOauthUser'
 import { Middleware } from '../../../core/infra/Middleware'
-import { UserLoggerByOauthPropsValidate } from '../services/validate/UserLoggerByOauthProps'
+import { userLoggerByOauthPropsValidate } from '../services/validate/userLoggerByOauthProps'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../core/infra/HttpSuccessResponse'
 import { createAccessToken } from '../services/token/createAccessToken'
@@ -18,7 +18,7 @@ export const userLoggerByOauth: Middleware = (_httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     unValidatedUser,
-    UserLoggerByOauthPropsValidate,
+    userLoggerByOauthPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain(validUser => {

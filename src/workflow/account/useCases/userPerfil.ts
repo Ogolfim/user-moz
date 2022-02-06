@@ -5,14 +5,14 @@ import { Middleware } from '../../../core/infra/Middleware'
 import { clientError } from '../../../core/infra/HttpErrorResponse'
 import { created } from '../../../core/infra/HttpSuccessResponse'
 import { findUserById } from '../domain/entities/findUserById'
-import { UserPerfilPropsValidate } from '../services/validate/userPerfilProps'
+import { userPerfilPropsValidate } from '../services/validate/userPerfilProps'
 
 export const userPerfil: Middleware = (_httpRequest, httpBody) => {
   const { userId } = httpBody
 
   const httpResponse = pipe(
     userId,
-    UserPerfilPropsValidate,
+    userPerfilPropsValidate,
     E.mapLeft(error => clientError(new Error(error.message))),
     TE.fromEither,
     TE.chain((userId) => {

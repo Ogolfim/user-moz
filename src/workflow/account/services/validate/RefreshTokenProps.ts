@@ -1,14 +1,10 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { UserRefreshTokenProps, UserRefreshTokenPropsCodec } from '../../domain/requiredFields/Users/UserRefreshTokenProps'
+import { UserRefreshTokenPropsCodec } from '../../domain/requiredFields/Users/UserRefreshTokenProps'
+import { UserRefreshTokenPropsValidate } from './contracts/UserRefreshTokenPropsValidate'
 import { ValidationError } from './errors/ValidationError'
 
-interface unRefreshTokenProps {
-  id: string
-  userId: string
-}
-
-export const UserRefreshTokenPropsValidate = (data: unRefreshTokenProps): E.Either<ValidationError, UserRefreshTokenProps> => {
+export const userRefreshTokenPropsValidate: UserRefreshTokenPropsValidate = (data) => {
   return pipe(
     E.tryCatch(
       () => {

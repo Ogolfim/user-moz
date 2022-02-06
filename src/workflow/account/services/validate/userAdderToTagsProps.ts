@@ -1,19 +1,10 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { UserAdderToTagsProps, UserAdderToTagsPropsCodec } from '../../domain/requiredFields/Users/UserAdderToTagsProps'
+import { UserAdderToTagsPropsCodec } from '../../domain/requiredFields/Users/UserAdderToTagsProps'
+import { UserAdderToTagsPropsValidate } from './contracts/userAdderToTagsPropsValidate'
 import { ValidationError } from './errors/ValidationError'
 
-type Tag = {
-  id: string
-  title: string
-}
-
-interface unValidatedUser {
-  userId: string
-  tags: Tag[]
-}
-
-export const UserAdderToTagsPropsValidate = (data: unValidatedUser): E.Either<ValidationError, UserAdderToTagsProps> => {
+export const userAdderToTagsPropsValidate: UserAdderToTagsPropsValidate = (data) => {
   return pipe(
     E.tryCatch(
       () => {

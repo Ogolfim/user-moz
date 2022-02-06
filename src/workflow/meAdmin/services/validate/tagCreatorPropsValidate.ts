@@ -1,14 +1,10 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { Tag, TagCodec } from '../../domain/requiredFields/Tag'
+import { TagCodec } from '../../domain/requiredFields/Tag'
+import { TagCreatorPropsValidate } from './contracts/tagCreatorPropsValidate'
 import { ValidationError } from './errors/ValidationError'
 
-interface unValidatedTag {
-  id: string
-  title: string
-}
-
-export const tagCreatorPropsValidate = (data: unValidatedTag): E.Either<ValidationError, Tag> => {
+export const tagCreatorPropsValidate: TagCreatorPropsValidate = (data) => {
   return pipe(
     E.tryCatch(
       () => {

@@ -1,7 +1,5 @@
 import bcrypt from 'bcrypt'
-import { Password } from '../../domain/requiredFields/Password'
-
-export type VerifyPassword = (password: Password, hash: string) => Promise<boolean>
+import { VerifyPassword } from './contracts/Verify'
 
 export const verifyPassword: VerifyPassword = async (password, hash) => {
   const result = await bcrypt.compare(password, hash)

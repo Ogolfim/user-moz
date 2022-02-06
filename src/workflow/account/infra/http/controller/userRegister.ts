@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { userRegister } from '../../../useCases/userRegister'
-import { sendRefreshToken } from '../middlewares/sendRefreshToken'
+import { sendToken } from '../middlewares/sendToken'
 
 export const userRegisterController = (request: Request, response: Response) => {
   pipe(
@@ -14,7 +14,7 @@ export const userRegisterController = (request: Request, response: Response) => 
     TE.map(httpSuccessResponse => {
       const { statusCode, body } = httpSuccessResponse
 
-      sendRefreshToken(response, body.token)
+      sendToken(response, body.token)
 
       return response.status(statusCode).json(body)
     })

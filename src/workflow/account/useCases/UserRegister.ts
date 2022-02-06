@@ -54,7 +54,7 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
               )
             }),
             TE.map(({ user, refreshToken }) => {
-              const token = createAccessToken(user)
+              const token = createAccessToken(user.id as UUID)
 
               const refreshAccessToken = createRefreshAccessToken(refreshToken)
 

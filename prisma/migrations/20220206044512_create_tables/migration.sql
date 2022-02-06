@@ -24,12 +24,12 @@ CREATE TABLE "user_services" (
 );
 
 -- CreateTable
-CREATE TABLE "tags_users" (
-    "id" SERIAL NOT NULL,
+CREATE TABLE "user_refresh_token" (
+    "id" TEXT NOT NULL,
+    "expiresIn" INTEGER NOT NULL,
     "userId" TEXT NOT NULL,
-    "tagId" TEXT NOT NULL,
 
-    CONSTRAINT "tags_users_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "user_refresh_token_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -62,6 +62,12 @@ CREATE TABLE "me_admins" (
     CONSTRAINT "me_admins_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "_TagToUser" (
+    "A" TEXT NOT NULL,
+    "B" TEXT NOT NULL
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -69,19 +75,31 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 CREATE UNIQUE INDEX "users_serviceId_key" ON "users"("serviceId");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "user_refresh_token_userId_key" ON "user_refresh_token"("userId");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "tags_title_key" ON "tags"("title");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "me_admins_email_key" ON "me_admins"("email");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "_TagToUser_AB_unique" ON "_TagToUser"("A", "B");
+
+-- CreateIndex
+CREATE INDEX "_TagToUser_B_index" ON "_TagToUser"("B");
+
 -- AddForeignKey
 ALTER TABLE "users" ADD CONSTRAINT "users_serviceId_fkey" FOREIGN KEY ("serviceId") REFERENCES "user_services"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "tags_users" ADD CONSTRAINT "tags_users_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "tags_users" ADD CONSTRAINT "tags_users_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES "tags"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "user_refresh_token" ADD CONSTRAINT "user_refresh_token_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "payments" ADD CONSTRAINT "payments_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_TagToUser" ADD FOREIGN KEY ("A") REFERENCES "tags"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "_TagToUser" ADD FOREIGN KEY ("B") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

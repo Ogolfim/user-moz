@@ -6,7 +6,12 @@ import { Middleware } from '../../../../../core/infra/Middleware'
 import { forbidden } from '../../../../../core/infra/HttpErrorResponse'
 import { ok } from '../../../../../core/infra/HttpSuccessResponse'
 
-export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody) => {
+type DecodedRefreshJwt = {
+  sub: string
+  id: string
+}
+
+export const ensureValidRefreshTokenMiddleware: Middleware = (httpRequest, httpBody) => {
   const bearerHeader = httpRequest.headers.authorization
 
   const httpResponse = pipe(
@@ -14,20 +19,20 @@ export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody)
       () => {
         if (!bearerHeader) throw new Error('Oops! Você não está autorizado')
 
-        const accessToken = bearerHeader.split(' ')[1]
+        const refreshAccessToken = bearerHeader.split(' ')[1]
 
-        if (!accessToken) throw new Error('Oops! Você não está autorizado')
+        if (!refreshAccessToken) throw new Error('Oops! Você não está autorizado')
 
-        return accessToken
+        return refreshAccessToken
       },
       (err) => forbidden(err as Error)
     ),
-    E.chain(accessToken => {
+    E.chain(refreshAccessToken => {
       return E.tryCatch(
         () => {
-          const decoded = verify(accessToken, process.env.ACCESS_TOKEN_SECRET!)
+          const { sub, id } = verify(refreshAccessToken, process.env.REFRESH_TOKEN_SECRET!) as DecodedRefreshJwt
 
-          return ok({ ...httpBody, userId: decoded.sub })
+          return ok({ ...httpBody, userId: sub, id: id })
         },
         (_err) => forbidden(new Error('Oops! Você não está autorizado'))
       )

@@ -22,7 +22,7 @@ export const createRefreshToken: RefreshTokenSaver = (userId) => {
       }
     ),
     TE.chain(userId => {
-      const expiresIn = dayjs().add(1, 'day').unix()
+      const expiresIn = dayjs().add(2, 'days').unix()
 
       return TE.tryCatch(
         async () => {

@@ -1,3 +1,3 @@
-import { UserSchema } from '../../infra/prisma/schemas'
+import { UUID } from 'io-ts-types'
 
-export type CreateAccessToken = (user: UserSchema) => string
+export type CreateAccessToken = (userId: UUID) => string

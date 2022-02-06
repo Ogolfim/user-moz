@@ -1,7 +1,7 @@
 Feature: Como cliente quero dados de perfil do usuário
 
   Scenario: Validar e autenticar usuário
-    Dado que estou na endpoint de consulta de refresh Token
+    Dado que estou na endpoint de refresh Token
     Quando eu solicitar um novo Token
     Então o sistema deve validar parâmentros da requisição
       E o sistema deve autenticar usuário

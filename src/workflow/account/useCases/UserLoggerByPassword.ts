@@ -60,7 +60,7 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
 
               if (!result) throw new Error('Oops! Senha incorreta')
 
-              const token = createAccessToken(user)
+              const token = createAccessToken(user.id as UUID)
 
               const refreshAccessToken = createRefreshAccessToken(refreshToken)
 

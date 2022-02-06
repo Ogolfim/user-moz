@@ -1,14 +1,29 @@
-
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { ValidationError } from 'io-ts'
-import { UUID } from 'io-ts-types'
+import { UserRefreshTokenProps, UserRefreshTokenPropsCodec } from '../../domain/requiredFields/Users/UserRefreshTokenProps'
+import { ValidationError } from './errors/ValidationError'
 
-export const UserRefreshTokenPropsValidate = (id: string):
-E.Either<ValidationError, UUID> => {
+interface unRefreshTokenProps {
+  id: string
+  userId: string
+}
+
+export const UserRefreshTokenPropsValidate = (data: unRefreshTokenProps): E.Either<ValidationError, UserRefreshTokenProps> => {
   return pipe(
-    UUID.decode(id),
-    E.mapLeft(errors => errors[0]),
-    E.map(id => id)
+    E.tryCatch(
+      () => {
+        if (!data) throw new ValidationError('Oops! Refresh token invalido')
+
+        return data
+      },
+
+      (err) => err as ValidationError
+    ),
+    E.chain(data => pipe(
+      data,
+      UserRefreshTokenPropsCodec.decode,
+      E.mapLeft(errors => new ValidationError(errors[0].message!)),
+      E.map(data => data)
+    ))
   )
 }

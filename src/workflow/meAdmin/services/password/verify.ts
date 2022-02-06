@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { VerifyPassword } from './contracts/Verify'
+import { VerifyPassword } from './contracts/verify'
 
 export const verifyPassword: VerifyPassword = async (password, hash) => {
   const result = await bcrypt.compare(password, hash)

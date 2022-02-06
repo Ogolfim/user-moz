@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isName } from './is/isName'
+import { isName } from './is/is_name'
 
 type NameBrand = {
   readonly Name: unique symbol
@@ -12,7 +12,7 @@ export const NameCodec = withMessage(
     (value): value is t.Branded<string, NameBrand> => isName(value),
     'Name'
   ),
-  () => 'Ops! Nome invalido'
+  () => 'Nome'
 )
 
 const IntersectName = t.intersection([t.string, NameCodec])

@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isPassword } from './is/isPassword'
+import { isPassword } from './is/is_password'
 
 type PasswordBrand = {
   readonly Password: unique symbol
@@ -12,7 +12,7 @@ export const PasswordCodec = withMessage(
     (value): value is t.Branded<string, PasswordBrand> => isPassword(value),
     'Password'
   ),
-  () => 'Ops! senha invalida'
+  () => 'Senha'
 )
 
 const IntersectPassword = t.intersection([t.string, PasswordCodec])

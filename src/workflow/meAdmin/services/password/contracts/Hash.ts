@@ -1,3 +1,3 @@
-import { Password } from '../../../domain/requiredFields/Password'
+import { Password } from '../../../domain/requiredFields/password'
 
 export type HashPassword = (password: Password) => Promise<string>

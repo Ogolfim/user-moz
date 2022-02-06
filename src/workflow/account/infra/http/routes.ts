@@ -1,10 +1,10 @@
 import { Router } from 'express'
-import { refreshTokenController } from './controller/refreshToken'
-import { userAdderToTagsController } from './controller/userAdderToTags'
-import { userLoggerByOauthController } from './controller/userLoggerByOauth'
-import { userLoggerByPasswordController } from './controller/userLoggerByPassword'
-import { userPerfilController } from './controller/userPerfil'
-import { userRegisterController } from './controller/userRegister'
+import { refreshTokenController } from './controller/refresh_token'
+import { userAdderToTagsController } from './controller/add_user_to_tags'
+import { userLoggerByOauthController } from './controller/login_by_oauth'
+import { userLoggerByPasswordController } from './controller/login_by_password'
+import { userPerfilController } from './controller/user_perfil'
+import { userRegisterController } from './controller/user_register'
 
 const AccountRouter = Router()
 

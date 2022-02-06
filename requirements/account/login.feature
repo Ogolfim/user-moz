@@ -17,7 +17,8 @@ Feature: Como cliente quero logar o usuário usando servidores de autorização
   Scenario: Dados de login
     Dado que o sistema tem acesso aos servidores dados do usuário
     Então o sistema deve criar Access Token com 10 minutos de validade
-      E o sitema deve criar um refresh Token com 2 dias de validade
+      E o sitema deve remover qualquer refresh Token que tiver
+      E o sitema deve criar um novo refresh Token com 1 dias de validade
       E o sistema deve me retornar Access Token, nome e permições do usuário
 
 
@@ -33,6 +34,8 @@ Feature: Como cliente quero logar o usando dados do formulário
   Scenario: Dados de login
     Dado que estou na endpoint de login
     Então o sistema deve criar Access Token com 10 minutos de validade
+      E o sitema deve remover qualquer refresh Token que tiver
+      E o sitema deve criar um novo refresh Token com 1 dias de validade
       E o sistema deve retornar Access Token, nome e permições do usuário
 
 

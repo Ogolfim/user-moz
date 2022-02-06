@@ -8,7 +8,10 @@ Feature: Como cliente quero dados de perfil do usuário
   
   Scenario: Novo Token
     Dados que autenticação teve sucesso
-    Então o sistema deve me retornar um novo Token
+    Então o sistema deve criar Access Token com 10 minutos de validade
+      E o sitema deve remover qualquer refresh Token que tiver
+      E o sitema deve criar um novo refresh Token com 1 dias de validade
+      E o sistema deve retornar Access Token
 
   Scenario: Erro de validação e autenticação
     Dado que foi encontrado erros na validação ou autenticação

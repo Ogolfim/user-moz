@@ -17,7 +17,8 @@ Feature: Como cliente quero criar conta do usuário usando servidores de autoriz
   Scenario: Dados de login
     Dado que o sistema tem acesso aos servidores dados do usuário
     Então o sistema deve criar Access Token com 10 minutos de validade
-      E o sitema deve criar um refresh Token com 2 dias de validade
+      E o sitema deve remover qualquer refresh Token que tiver
+      E o sitema deve criar um novo refresh Token com 1 dias de validade
       E o sitema deve me retornar Access Token, nome e permições do usuário
 
 
@@ -32,7 +33,8 @@ Feature: Como cliente quero criar conta do usuário usando dados do formulário
   Scenario: Dados de login
     Dado que os dados foram salvos com sucesso
     Então o sistema deve criar Access Token com 10 minutos de validade
-      E o sitema deve criar um refresh Token com 2 dias de validade
+      E o sitema deve remover qualquer refresh Token que tiver
+      E o sitema deve criar um novo refresh Token com 1 dias de validade
       E o sitema deve retornar Access Token, nome e permições do usuário
   
   Scenario: Usuário já tem conta

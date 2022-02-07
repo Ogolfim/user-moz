@@ -2,13 +2,13 @@ import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { clientError, fail } from '../../../../core/infra/http_error_response'
 import { prisma } from '../../infra/prisma/client'
-import { UserSaver } from '../contracts/create_user'
-import { findUserByEmail } from './find_user_by_email'
+import { CreateUSerDB } from '../contracts/create_user'
+import { findUserByEmailDB } from './find_user_by_email'
 
-export const userSaver: UserSaver = ({ name, email, hash }) => {
+export const createUserDB: CreateUSerDB = ({ name, email, hash }) => {
   const newUser = pipe(
     email,
-    findUserByEmail,
+    findUserByEmailDB,
     TE.chain(user => {
       return TE.tryCatch(
         async () => {

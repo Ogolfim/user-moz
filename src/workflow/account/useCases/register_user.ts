@@ -6,9 +6,9 @@ import { clientError, fail } from '../../../core/infra/http_error_response'
 import { ok } from '../../../core/infra/http_success_response'
 import { createAccessToken } from '../services/token/create_access_token'
 import { userRegisterPropsValidate } from '../services/validate/register_user_props'
-import { userSaver } from '../domain/entities/create_user'
+import { createUserDB } from '../domain/entities/create_user'
 import { hashPassword } from '../services/password/hash'
-import { createRefreshToken } from '../domain/entities/create_refresh_token'
+import { createRefreshTokenDB } from '../domain/entities/create_refresh_token'
 import { UUID } from 'io-ts-types'
 import { createRefreshAccessToken } from '../services/token/create_refresh_access_token'
 
@@ -40,11 +40,11 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
         TE.chain(user => {
           return pipe(
             user,
-            userSaver,
+            createUserDB,
             TE.chain(user => {
               return pipe(
                 user.id as UUID,
-                createRefreshToken,
+                createRefreshTokenDB,
                 TE.map(refreshToken => {
                   return {
                     user,

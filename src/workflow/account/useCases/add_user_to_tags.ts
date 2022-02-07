@@ -5,7 +5,7 @@ import { Middleware } from '../../../core/infra/middleware'
 import { clientError } from '../../../core/infra/http_error_response'
 import { created } from '../../../core/infra/http_success_response'
 import { userAdderToTagsPropsValidate } from '../services/validate/add_user_to_tags_props'
-import { addUserToTags } from '../domain/entities/add_user_to_tags'
+import { addUserToTagsDB } from '../domain/entities/add_user_to_tags'
 
 export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
   const { userId, tags } = httpBody
@@ -20,7 +20,7 @@ export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
     TE.chain((validUserTags) => {
       return pipe(
         validUserTags,
-        addUserToTags,
+        addUserToTagsDB,
         TE.map(user => {
           const { name, email } = user
 

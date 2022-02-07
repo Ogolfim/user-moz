@@ -1,14 +1,14 @@
 import * as TE from 'fp-ts/TaskEither'
-import { AddUserToTags } from '../contracts/add_user_to_tags'
+import { AddUserToTagsDB } from '../contracts/add_user_to_tags'
 import { clientError, fail } from '../../../../core/infra/http_error_response'
 import { prisma } from '../../infra/prisma/client'
 import { pipe } from 'fp-ts/lib/function'
-import { findUserById } from './find_user_by_id'
+import { findUserByIdDB } from './find_user_by_id'
 
-export const addUserToTags: AddUserToTags = ({ userId, tags }) => {
+export const addUserToTagsDB: AddUserToTagsDB = ({ userId, tags }) => {
   const user = pipe(
     userId,
-    findUserById,
+    findUserByIdDB,
     TE.chain(UserFound => {
       return TE.tryCatch(
         async () => {

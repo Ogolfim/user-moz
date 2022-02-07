@@ -7,4 +7,4 @@ interface User extends UserSchema {
   services: ServiceSchema
 }
 
-export type FindUserByEmail = (email: Email) => TE.TaskEither<HttpErrorResponse, User | null>
+export type FindUserByEmailDB = (email: Email) => TE.TaskEither<HttpErrorResponse, User | null>

@@ -5,7 +5,7 @@ import { Middleware } from '../../../core/infra/middleware'
 import { clientError } from '../../../core/infra/http_error_response'
 import { ok } from '../../../core/infra/http_success_response'
 import { tagCreatorPropsValidate } from '../services/validate/tag_creator_props'
-import { tagSaver } from '../domain/entities/tag_saver'
+import { createTagDB } from '../domain/entities/tag_saver'
 
 export const tagCreator: Middleware = (_httpRequest, httpBody) => {
   const { id, title } = httpBody
@@ -18,7 +18,7 @@ export const tagCreator: Middleware = (_httpRequest, httpBody) => {
     TE.chain(validTag => {
       return pipe(
         validTag,
-        tagSaver,
+        createTagDB,
         TE.map(newTag => {
           const { id, title } = newTag
 

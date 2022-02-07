@@ -1,14 +1,14 @@
 import * as TE from 'fp-ts/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { TagSaver } from '../contracts/tag_saver'
+import { CreateTagDB } from '../contracts/create_tag'
 import { clientError, fail } from '../../../../core/infra/http_error_response'
 import { prisma } from '../../infra/prisma/client'
-import { findTagById } from './find_tag_by_id'
+import { findTagByIdDB } from './find_tag_by_id'
 
-export const tagSaver: TagSaver = ({ id, title }) => {
+export const createTagDB: CreateTagDB = ({ id, title }) => {
   const newTag = pipe(
     id,
-    findTagById,
+    findTagByIdDB,
     TE.chain(tag => {
       return TE.tryCatch(
         async () => {

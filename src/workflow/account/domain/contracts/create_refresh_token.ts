@@ -11,4 +11,4 @@ interface RefreshToken extends RefreshTokenSchema {
   user: User
 }
 
-export type RefreshTokenSaver = (userId: UUID) => TE.TaskEither<HttpErrorResponse, RefreshToken>
+export type CreateRefreshTokenDB = (userId: UUID) => TE.TaskEither<HttpErrorResponse, RefreshToken>

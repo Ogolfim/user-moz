@@ -3,4 +3,4 @@ import { HttpErrorResponse } from '../../../../core/infra/http_error_response'
 import { AdminSchema } from '../../infra/prisma/schemas'
 import { Email } from '../requiredFields/email'
 
-export type FindAdminByEmail = (email: Email) => TE.TaskEither<HttpErrorResponse, AdminSchema | null>
+export type FindAdminByEmailDB = (email: Email) => TE.TaskEither<HttpErrorResponse, AdminSchema | null>

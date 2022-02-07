@@ -2,13 +2,13 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { UUID } from 'io-ts-types'
-import { findOrSaveUser } from '../domain/entities/find_or_create_oauth_user'
+import { findOrCreateUserDB } from '../domain/entities/find_or_create_oauth_user'
 import { Middleware } from '../../../core/infra/middleware'
 import { userLoggerByOauthPropsValidate } from '../services/validate/login_by_oauth_props'
 import { clientError } from '../../../core/infra/http_error_response'
 import { ok } from '../../../core/infra/http_success_response'
 import { createAccessToken } from '../services/token/create_access_token'
-import { createRefreshToken } from '../domain/entities/create_refresh_token'
+import { createRefreshTokenDB } from '../domain/entities/create_refresh_token'
 import { createRefreshAccessToken } from '../services/token/create_refresh_access_token'
 
 export const userLoggerByOauth: Middleware = (_httpRequest, httpBody) => {
@@ -24,11 +24,11 @@ export const userLoggerByOauth: Middleware = (_httpRequest, httpBody) => {
     TE.chain(validUser => {
       return pipe(
         validUser,
-        findOrSaveUser,
+        findOrCreateUserDB,
         TE.chain(user => {
           return pipe(
             user.id as UUID,
-            createRefreshToken,
+            createRefreshTokenDB,
             TE.map(refreshToken => {
               return {
                 user,

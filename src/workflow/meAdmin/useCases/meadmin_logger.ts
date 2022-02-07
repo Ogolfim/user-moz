@@ -6,7 +6,7 @@ import { clientError } from '../../../core/infra/http_error_response'
 import { ok } from '../../../core/infra/http_success_response'
 import { createAccessToken } from '../infra/http/OAuth/create_access_token'
 import { meAdminLoggerPropsValidate } from '../services/validate/meadmin_logger_props'
-import { findAdminByEmail } from '../domain/entities/find_admin_by_email'
+import { findAdminByEmailDB } from '../domain/entities/find_admin_by_email'
 import { verifyPassword } from '../services/password/verify'
 
 export const meAdminLogger: Middleware = (_httpRequest, httpBody) => {
@@ -22,7 +22,7 @@ export const meAdminLogger: Middleware = (_httpRequest, httpBody) => {
     TE.chain(({ email, password }) => {
       return pipe(
         email,
-        findAdminByEmail,
+        findAdminByEmailDB,
         TE.chain(admin => {
           return TE.tryCatch(
             async () => {

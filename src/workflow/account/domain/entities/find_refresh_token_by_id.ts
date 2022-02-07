@@ -1,9 +1,9 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '../../../../core/infra/http_error_response'
 import { prisma } from '../../infra/prisma/client'
-import { RefreshTokenById } from '../contracts/find_refresh_token_by_id'
+import { RefreshTokenByIdDB } from '../contracts/find_refresh_token_by_id'
 
-export const findRefreshTokenById: RefreshTokenById = (id) => {
+export const findRefreshTokenByIdDB: RefreshTokenByIdDB = (id) => {
   const refreshToken = TE.tryCatch(
 
     async () => {

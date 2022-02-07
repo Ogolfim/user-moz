@@ -6,10 +6,10 @@ import { clientError } from '../../../core/infra/http_error_response'
 import { ok } from '../../../core/infra/http_success_response'
 import { createAccessToken } from '../services/token/create_access_token'
 import { userLoggerByPasswordPropsValidate } from '../services/validate/login_by_password_props'
-import { findUserByEmail } from '../domain/entities/find_user_by_email'
+import { findUserByEmailDB } from '../domain/entities/find_user_by_email'
 import { verifyPassword } from '../services/password/verify'
 import { UUID } from 'io-ts-types'
-import { createRefreshToken } from '../domain/entities/create_refresh_token'
+import { createRefreshTokenDB } from '../domain/entities/create_refresh_token'
 import { createRefreshAccessToken } from '../services/token/create_refresh_access_token'
 
 export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
@@ -25,7 +25,7 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
     TE.chain(({ email, password }) => {
       return pipe(
         email,
-        findUserByEmail,
+        findUserByEmailDB,
         TE.chain(user => {
           return TE.tryCatch(
             async () => {
@@ -42,7 +42,7 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
         TE.chain(user => {
           return pipe(
             user.id as UUID,
-            createRefreshToken,
+            createRefreshTokenDB,
             TE.map(refreshToken => {
               return {
                 user,

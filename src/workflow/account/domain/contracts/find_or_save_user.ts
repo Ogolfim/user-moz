@@ -15,4 +15,4 @@ interface User extends UserSchema {
   services: ServiceSchema
 }
 
-export type FindOrSaveUser = (user: FindOrSaveUserProps) => TE.TaskEither<HttpErrorResponse, User>
+export type FindOrCreateUserDB = (user: FindOrSaveUserProps) => TE.TaskEither<HttpErrorResponse, User>

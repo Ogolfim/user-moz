@@ -6,7 +6,7 @@ import { clientError, fail } from '../../../core/infra/http_error_response'
 import { ok } from '../../../core/infra/http_success_response'
 import { createAccessToken } from '../infra/http/OAuth/create_access_token'
 import { meAdminRegisterPropsValidate } from '../services/validate/meadmin_register_props'
-import { adminSaver } from '../domain/entities/admin_saver'
+import { createAdminDB } from '../domain/entities/create_admin'
 import { hashPassword } from '../services/password/hash'
 
 export const meAdminRegister: Middleware = (_httpRequest, httpBody) => {
@@ -37,7 +37,7 @@ export const meAdminRegister: Middleware = (_httpRequest, httpBody) => {
         TE.chain(admin => {
           return pipe(
             admin,
-            adminSaver,
+            createAdminDB,
             TE.map(newAdmin => {
               const token = createAccessToken(newAdmin)
 

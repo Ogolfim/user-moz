@@ -7,4 +7,4 @@ interface User extends UserSchema {
   tags: TagSchema[]
 }
 
-export type FindAllUserInfo = (userId: UUID) => TE.TaskEither<HttpErrorResponse, User | null>
+export type FindAllUserInfoDB = (userId: UUID) => TE.TaskEither<HttpErrorResponse, User | null>

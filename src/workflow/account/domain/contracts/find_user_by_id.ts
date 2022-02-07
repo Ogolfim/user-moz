@@ -7,4 +7,4 @@ interface User extends UserSchema {
   services: ServiceSchema
 }
 
-export type FindUserById = (id: UUID) => TE.TaskEither<HttpErrorResponse, User | null>
+export type FindUserByIdDB = (id: UUID) => TE.TaskEither<HttpErrorResponse, User | null>

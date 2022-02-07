@@ -19,7 +19,7 @@ Feature: Como cliente quero logar o usuário usando servidores de autorização
     Então o sistema deve criar Access Token com 10 minutos de validade
       E o sitema deve remover qualquer refresh Token que tiver
       E o sitema deve criar um novo refresh Token com 1 dias de validade
-      E o sistema deve me retornar Access Token, nome e permições do usuário
+      E o sistema deve me retornar Access Token, nome e serviços do usuário
 
 
 
@@ -36,7 +36,7 @@ Feature: Como cliente quero logar o usando dados do formulário
     Então o sistema deve criar Access Token com 10 minutos de validade
       E o sitema deve remover qualquer refresh Token que tiver
       E o sitema deve criar um novo refresh Token com 1 dias de validade
-      E o sistema deve retornar Access Token, nome e permições do usuário
+      E o sistema deve retornar Access Token, nome e serviços do usuário
 
 
   Scenario: Erro de validação e autenticação

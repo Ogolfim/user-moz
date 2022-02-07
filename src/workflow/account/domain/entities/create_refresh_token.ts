@@ -2,7 +2,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import dayjs from 'dayjs'
 import { fail } from '../../../../core/infra/http_error_response'
 import { prisma } from '../../infra/prisma/client'
-import { RefreshTokenSaver } from '../contracts/refresh_token_saver'
+import { RefreshTokenSaver } from '../contracts/create_refresh_token'
 import { pipe } from 'fp-ts/lib/function'
 
 export const createRefreshToken: RefreshTokenSaver = (userId) => {
@@ -30,6 +30,13 @@ export const createRefreshToken: RefreshTokenSaver = (userId) => {
             data: {
               userId,
               expiresIn
+            },
+            include: {
+              user: {
+                include: {
+                  services: true
+                }
+              }
             }
           })
 

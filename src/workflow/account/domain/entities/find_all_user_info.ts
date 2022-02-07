@@ -1,17 +1,20 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '../../../../core/infra/http_error_response'
 import { prisma } from '../../infra/prisma/client'
-import { RefreshTokenById } from '../contracts/find_refresh_token_by_id'
+import { FindAllUserInfo } from '../contracts/find_all_user_info'
 
-export const findRefreshTokenById: RefreshTokenById = (id) => {
-  const refreshToken = TE.tryCatch(
+export const findAllUserInfo: FindAllUserInfo = (userId) => {
+  const user = TE.tryCatch(
 
     async () => {
-      const refreshToken = await prisma.userRefreshToken.findUnique({
-        where: { id }
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        include: {
+          tags: true
+        }
       })
 
-      return refreshToken
+      return user
     },
 
     (err) => {
@@ -20,5 +23,5 @@ export const findRefreshTokenById: RefreshTokenById = (id) => {
     }
   )
 
-  return refreshToken
+  return user
 }

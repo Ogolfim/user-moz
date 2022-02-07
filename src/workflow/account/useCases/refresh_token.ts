@@ -41,7 +41,7 @@ export const refreshToken: Middleware = (_httpRequest, httpBody) => {
           refreshToken.userId as UUID,
           createRefreshToken,
           TE.map(refreshToken => {
-            const token = createAccessToken(refreshToken.userId as UUID)
+            const token = createAccessToken(refreshToken.user)
 
             const refreshAccessToken = createRefreshAccessToken(refreshToken)
 

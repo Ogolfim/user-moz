@@ -7,7 +7,10 @@ export const findUserByEmail: FindUserByEmail = (email) => {
   const user = TE.tryCatch(
     async () => {
       return await prisma.user.findUnique({
-        where: { email }
+        where: { email },
+        include: {
+          services: true
+        }
       })
     },
 

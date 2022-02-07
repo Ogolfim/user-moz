@@ -4,8 +4,9 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../core/infra/middleware'
 import { clientError } from '../../../core/infra/http_error_response'
 import { created } from '../../../core/infra/http_success_response'
-import { findUserById } from '../domain/entities/find_user_by_id'
 import { userPerfilPropsValidate } from '../services/validate/user_perfil_props'
+import { findAllUserInfo } from '../domain/entities/find_all_user_info'
+import { manyTagView } from '../services/views/tag'
 
 export const userPerfil: Middleware = (_httpRequest, httpBody) => {
   const { userId } = httpBody
@@ -18,7 +19,7 @@ export const userPerfil: Middleware = (_httpRequest, httpBody) => {
     TE.chain((userId) => {
       return pipe(
         userId,
-        findUserById,
+        findAllUserInfo,
         TE.chain(user => {
           return TE.tryCatch(
             async () => {
@@ -33,9 +34,14 @@ export const userPerfil: Middleware = (_httpRequest, httpBody) => {
           )
         }),
         TE.map(user => {
-          const { name, email } = user
+          const { name, email, tags } = user
 
-          return created({ name, email })
+          return created(
+            {
+              name,
+              email,
+              tags: manyTagView(tags)
+            })
         })
       )
     })

@@ -8,7 +8,10 @@ export const findUserById: FindUserById = (id) => {
 
     async () => {
       const user = await prisma.user.findUnique({
-        where: { id }
+        where: { id },
+        include: {
+          services: true
+        }
       })
 
       return user

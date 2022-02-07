@@ -11,6 +11,7 @@ Feature: Como cliente quero dados de perfil do usuário
     Então o sistema deve criar Access Token com 10 minutos de validade
       E o sitema deve remover qualquer refresh Token que tiver
       E o sitema deve criar um novo refresh Token com 1 dias de validade
+      E o sitema deve retornar o novo refresh Token
       E o sistema deve retornar Access Token
 
   Scenario: Erro de validação e autenticação

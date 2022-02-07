@@ -33,6 +33,9 @@ export const userSaver: UserSaver = ({ name, email, hash }) => {
             services: {
               create: {}
             }
+          },
+          include: {
+            services: true
           }
         })
       },

@@ -19,8 +19,7 @@ Feature: Como cliente quero criar conta do usuário usando servidores de autoriz
     Então o sistema deve criar Access Token com 10 minutos de validade
       E o sitema deve remover qualquer refresh Token que tiver
       E o sitema deve criar um novo refresh Token com 1 dias de validade
-      E o sitema deve me retornar Access Token, nome e permições do usuário
-
+      E o sitema deve me retornar Access Token, nome e serviços do usuário
 
 Feature: Como cliente quero criar conta do usuário usando dados do formulário
 
@@ -35,7 +34,7 @@ Feature: Como cliente quero criar conta do usuário usando dados do formulário
     Então o sistema deve criar Access Token com 10 minutos de validade
       E o sitema deve remover qualquer refresh Token que tiver
       E o sitema deve criar um novo refresh Token com 1 dias de validade
-      E o sitema deve retornar Access Token, nome e permições do usuário
+      E o sitema deve retornar Access Token, nome e serviços do usuário
   
   Scenario: Usuário já tem conta
     Dado que foi encontrado uma conta ja existente do usuário
@@ -48,19 +47,3 @@ Feature: Como cliente quero criar conta do usuário usando dados do formulário
       E o sitema deve retornar o erro
 
 
-Feature: Como cliente quero salvar tags das informações que o usuário gosta no website
-
-  Scenario: Validar e autenticar o usuário
-    Dado que estou na endpoint de salvar tags
-    Quando eu solicitar salvar tags
-    Então o sistema deve validar parâmentros da requisição
-      E o sistema deve autenticar usuário
-
-  Scenario: Salvar tags das informações
-    Dado que o usuário concorda em receber atualizações das informações
-    Então o sistema deve enviar as tags, nome e o email para o EmailService
-
-  Scenario: Erro de validação e autenticação
-    Dado que foi encontrado erro na validação ou autenticação
-    Então o sistema deve interromper o processo
-      E o sitema deve retornar o erro

@@ -8,7 +8,10 @@ export const findOrSaveUser: FindOrSaveUser = ({ name, email, serverName }) => {
 
     async () => {
       const user = await prisma.user.findUnique({
-        where: { email }
+        where: { email },
+        include: {
+          services: true
+        }
       })
 
       if (user) {
@@ -23,6 +26,9 @@ export const findOrSaveUser: FindOrSaveUser = ({ name, email, serverName }) => {
           services: {
             create: {}
           }
+        },
+        include: {
+          services: true
         }
       })
     },

@@ -1,5 +1,5 @@
 import * as TE from 'fp-ts/TaskEither'
-import { UserSchema } from '../../infra/prisma/schemas'
+import { ServiceSchema, UserSchema } from '../../infra/prisma/schemas'
 import { Name } from '../requiredFields/name'
 import { Email } from '../requiredFields/email'
 import { HttpErrorResponse } from '../../../../core/infra/http_error_response'
@@ -10,4 +10,8 @@ interface UserSaverProps {
   hash: string
 }
 
-export type UserSaver = (user: UserSaverProps) => TE.TaskEither<HttpErrorResponse, UserSchema>
+interface User extends UserSchema {
+  services: ServiceSchema
+}
+
+export type UserSaver = (user: UserSaverProps) => TE.TaskEither<HttpErrorResponse, User>

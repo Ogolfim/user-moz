@@ -1,10 +1,10 @@
 import * as TE from 'fp-ts/TaskEither'
 import { UUID } from 'io-ts-types'
 import { HttpErrorResponse } from '../../../../core/infra/http_error_response'
-import { ServiceSchema, UserSchema } from '../../infra/prisma/schemas'
+import { TagSchema, UserSchema } from '../../infra/prisma/schemas'
 
 interface User extends UserSchema {
-  services: ServiceSchema
+  tags: TagSchema[]
 }
 
-export type FindUserById = (id: UUID) => TE.TaskEither<HttpErrorResponse, User | null>
+export type FindAllUserInfo = (userId: UUID) => TE.TaskEither<HttpErrorResponse, User | null>

@@ -4,9 +4,9 @@ import { UUID } from 'io-ts-types'
 import { HttpErrorResponse } from '../../../../core/infra/http_error_response'
 import { Tag } from '../requiredFields/tag'
 
-interface IAddUserToTags {
+interface IRemoveUserFromTags {
   userId: UUID
   tags: Tag[]
 }
 
-export type AddUserToTagsDB = (props: IAddUserToTags) => TE.TaskEither<HttpErrorResponse, UserSchema>
+export type RemoveUserFromTagsDB = (props: IRemoveUserFromTags) => TE.TaskEither<HttpErrorResponse, UserSchema>

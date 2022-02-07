@@ -13,7 +13,7 @@ export const addUserToTagsDB: AddUserToTagsDB = ({ userId, tags }) => {
       return TE.tryCatch(
         async () => {
           if (!UserFound) {
-            throw new Error('Oops! Usuário não existe')
+            throw new Error('A sua conta não foi encontrada')
           }
 
           return UserFound

@@ -1,13 +1,13 @@
 import { Router } from 'express'
-import { refreshTokenController } from './controller/refresh_token'
-import { userAdderToTagsController } from './controller/add_user_to_tags'
-import { userLoggerByOauthController } from './controller/login_by_oauth'
-import { userLoggerByPasswordController } from './controller/login_by_password'
-import { userPerfilController } from './controller/user_perfil'
-import { userRegisterController } from './controller/user_register'
-import { removeUserFromTagsController } from './controller/remove_user_from_tags'
-import { updateUserNameController } from './controller/update_user_name'
-import { updateUserEmailController } from './controller/update_user_email'
+import { refreshTokenController } from './controller/token/refresh_token'
+import { userAdderToTagsController } from './controller/tags/add_user_to_tags'
+import { removeUserFromTagsController } from './controller/tags/remove_user_from_tags'
+import { userLoggerByOauthController } from './controller/login/login_by_oauth'
+import { userLoggerByPasswordController } from './controller/login/login_by_password'
+import { userPerfilController } from './controller/userInfo/user_perfil'
+import { userRegisterController } from './controller/createUser/user_register'
+import { updateUserNameController } from './controller/updateUser/update_user_name'
+import { updateUserEmailController } from './controller/updateUser/update_user_email'
 
 const AccountRouter = Router()
 

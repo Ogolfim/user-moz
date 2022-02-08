@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import { meAdminLoggerController } from './controller/meadmin_logger'
-import { meAdminRegisterController } from './controller/meadmin_register'
-import { tagCreatorController } from './controller/tag_creator'
+import { meAdminLoggerController } from './controller/login/login_meadmin'
+import { meAdminRegisterController } from './controller/createMeAdmin/create_meadmin'
+import { tagCreatorController } from './controller/tags/create_tags'
 
 const MeAdminRouter = Router()
 

@@ -1,5 +1,5 @@
 import * as TE from 'fp-ts/TaskEither'
-import { RemoveUserFromTagsDB } from '../../contracts/tags/remove_user_from_tags'
+import { RemoveUserFromTagsDB } from '../../contracts/Tag/remove_user_from_tags'
 import { clientError, fail } from '../../../../../core/infra/http_error_response'
 import { prisma } from '../../../infra/prisma/client'
 import { pipe } from 'fp-ts/lib/function'

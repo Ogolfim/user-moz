@@ -1,5 +1,5 @@
 import * as TE from 'fp-ts/TaskEither'
-import { AddUserToTagsDB } from '../../contracts/tags/add_user_to_tags'
+import { AddUserToTagsDB } from '../../contracts/Tag/add_user_to_tags'
 import { clientError, fail } from '../../../../../core/infra/http_error_response'
 import { prisma } from '../../../infra/prisma/client'
 import { pipe } from 'fp-ts/lib/function'

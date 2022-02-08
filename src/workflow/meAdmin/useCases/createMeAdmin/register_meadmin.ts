@@ -5,7 +5,7 @@ import { Middleware } from '../../../../core/infra/middleware'
 import { clientError, fail } from '../../../../core/infra/http_error_response'
 import { ok } from '../../../../core/infra/http_success_response'
 import { createAccessToken } from '../../infra/http/OAuth/create_access_token'
-import { meAdminRegisterPropsValidate } from '../../services/validate/meadmin_register_props'
+import { meAdminRegisterPropsValidate } from '../../services/validate/createUser/meadmin_register_props'
 import { createAdminDB } from '../../domain/entities/createAdmin/create_admin'
 import { hashPassword } from '../../services/password/hash'
 

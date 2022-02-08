@@ -1,7 +1,7 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '../../../../../core/infra/http_error_response'
 import { prisma } from '../../../infra/prisma/client'
-import { FindUserByEmailDB } from '../../contracts/findUser/find_user_by_email'
+import { FindUserByEmailDB } from '../../contracts/FindUser/find_user_by_email'
 
 export const findUserByEmailDB: FindUserByEmailDB = (email) => {
   const user = TE.tryCatch(

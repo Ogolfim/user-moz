@@ -1,7 +1,7 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '../../../../../core/infra/http_error_response'
 import { prisma } from '../../../infra/prisma/client'
-import { FindUserByIdDB } from '../../contracts/findUser/find_user_by_id'
+import { FindUserByIdDB } from '../../contracts/FindUser/find_user_by_id'
 
 export const findUserByIdDB: FindUserByIdDB = (id) => {
   const user = TE.tryCatch(

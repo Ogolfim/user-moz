@@ -2,7 +2,7 @@ import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { clientError, fail } from '../../../../../core/infra/http_error_response'
 import { prisma } from '../../../infra/prisma/client'
-import { UpdateUserEmailDB } from '../../contracts/updateUser/update_user_email'
+import { UpdateUserEmailDB } from '../../contracts/UpdateUser/update_user_email'
 import { findUserByEmailDB } from './../findUser/find_user_by_email'
 import { findUserByIdDB } from './../findUser/find_user_by_id'
 

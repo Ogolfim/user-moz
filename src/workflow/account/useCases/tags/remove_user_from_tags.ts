@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../../core/infra/middleware'
 import { clientError } from '../../../../core/infra/http_error_response'
 import { created } from '../../../../core/infra/http_success_response'
-import { userAdderToTagsPropsValidate } from '../../services/validate/add_user_to_tags_props'
+import { userAdderToTagsPropsValidate } from '../../services/validate/tags/add_user_to_tags_props'
 import { removeUserFromTagsDB } from '../../domain/entities/tags/remove_user_from_tags'
 
 export const removeUserFromTags: Middleware = (_httpRequest, httpBody) => {

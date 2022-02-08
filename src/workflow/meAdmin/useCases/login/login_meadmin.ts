@@ -5,7 +5,7 @@ import { Middleware } from '../../../../core/infra/middleware'
 import { clientError } from '../../../../core/infra/http_error_response'
 import { ok } from '../../../../core/infra/http_success_response'
 import { createAccessToken } from '../../infra/http/OAuth/create_access_token'
-import { meAdminLoggerPropsValidate } from '../../services/validate/meadmin_logger_props'
+import { meAdminLoggerPropsValidate } from '../../services/validate/login/meadmin_logger_props'
 import { findAdminByEmailDB } from '../../domain/entities/findAdmin/find_admin_by_email'
 import { verifyPassword } from '../../services/password/verify'
 

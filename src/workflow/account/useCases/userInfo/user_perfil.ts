@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '../../../../core/infra/middleware'
 import { clientError } from '../../../../core/infra/http_error_response'
 import { created } from '../../../../core/infra/http_success_response'
-import { userPerfilPropsValidate } from '../../services/validate/user_perfil_props'
+import { userPerfilPropsValidate } from '../../services/validate/UserInfo/user_perfil_props'
 import { findAllUserInfoDB } from '../../domain/entities/findUser/find_all_user_info'
 import { manyTagView } from '../../services/views/tag'
 

@@ -1,8 +1,8 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import dayjs from 'dayjs'
-import { fail } from '../../../../../core/infra/http_error_response'
-import { prisma } from '../../../infra/prisma/client'
-import { CreateRefreshTokenDB } from '../../contracts/Token/create_refresh_token'
+import { fail } from '@core/infra/http_error_response'
+import { prisma } from '@account/infra/prisma/client'
+import { CreateRefreshTokenDB } from '@account/domain/contracts/Token/create_refresh_token'
 import { pipe } from 'fp-ts/lib/function'
 
 export const createRefreshTokenDB: CreateRefreshTokenDB = (userId) => {

@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isPassword } from './is/is_password'
+import { isPassword } from '@meAdmin/domain/requiredFields/is/is_password'
 
 type PasswordBrand = {
   readonly Password: unique symbol

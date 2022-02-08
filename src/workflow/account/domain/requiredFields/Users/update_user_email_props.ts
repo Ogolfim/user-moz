@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { UUID } from 'io-ts-types'
-import { EmailCodec } from '../email'
+import { EmailCodec } from '@account/domain/requiredFields/email'
 
 export const UpdateUserEmailPropsCodec = t.type({
   email: EmailCodec,

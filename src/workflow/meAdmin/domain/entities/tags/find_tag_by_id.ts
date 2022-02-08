@@ -1,7 +1,7 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { fail } from '../../../../../core/infra/http_error_response'
-import { prisma } from '../../../infra/prisma/client'
-import { FindTagByIdDB } from '../../contracts/tags/find_tag_by_id'
+import { fail } from '@core/infra/http_error_response'
+import { prisma } from '@meAdmin/infra/prisma/client'
+import { FindTagByIdDB } from '@meAdmin/domain/contracts/tags/find_tag_by_id'
 
 export const findTagByIdDB: FindTagByIdDB = (id) => {
   const tag = TE.tryCatch(

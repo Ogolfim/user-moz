@@ -3,12 +3,12 @@ import * as E from 'fp-ts/lib/Either'
 import dayjs from 'dayjs'
 import { pipe } from 'fp-ts/lib/function'
 import { UUID } from 'io-ts-types'
-import { Middleware } from '../../../../core/infra/middleware'
-import { clientError } from '../../../../core/infra/http_error_response'
-import { ok } from '../../../../core/infra/http_success_response'
-import { resetPasswordRequestPropsValidate } from '../../services/validate/updateUser/reset_password_request_props'
-import { findUserByEmailDB } from '../../domain/entities/findUser/find_user_by_email'
-import { createResetPasswordToken } from '../../services/token/create_reset_password_token'
+import { Middleware } from '@core/infra/middleware'
+import { clientError } from '@core/infra/http_error_response'
+import { ok } from '@core/infra/http_success_response'
+import { resetPasswordRequestPropsValidate } from '@account/services/validate/updateUser/reset_password_request_props'
+import { findUserByEmailDB } from '@account/domain/entities/findUser/find_user_by_email'
+import { createResetPasswordToken } from '@account/services/token/create_reset_password_token'
 
 export const resetPasswordRequest: Middleware = (_httpRequest, httpBody) => {
   const { email } = httpBody

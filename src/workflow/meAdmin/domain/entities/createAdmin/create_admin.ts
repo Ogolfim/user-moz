@@ -1,9 +1,9 @@
 import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { clientError, fail } from '../../../../../core/infra/http_error_response'
-import { prisma } from '../../../infra/prisma/client'
-import { CreateAdminDB } from '../../contracts/createAdmin/create_admin'
-import { findAdminByEmailDB } from '../findAdmin/find_admin_by_email'
+import { clientError, fail } from '@core/infra/http_error_response'
+import { prisma } from '@meAdmin/infra/prisma/client'
+import { CreateAdminDB } from '@meAdmin/domain/contracts/createAdmin/create_admin'
+import { findAdminByEmailDB } from '@meAdmin/domain/entities/findAdmin/find_admin_by_email'
 
 export const createAdminDB: CreateAdminDB = ({ name, email, hash }) => {
   const newAdmin = pipe(

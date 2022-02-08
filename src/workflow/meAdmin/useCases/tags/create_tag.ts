@@ -1,11 +1,11 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { Middleware } from '../../../../core/infra/middleware'
-import { clientError } from '../../../../core/infra/http_error_response'
-import { ok } from '../../../../core/infra/http_success_response'
-import { tagCreatorPropsValidate } from '../../services/validate/tag/tag_creator_props'
-import { createTagDB } from '../../domain/entities/tags/create_tag'
+import { Middleware } from '@core/infra/middleware'
+import { clientError } from '@core/infra/http_error_response'
+import { ok } from '@core/infra/http_success_response'
+import { tagCreatorPropsValidate } from '@meAdmin/services/validate/tag/tag_creator_props'
+import { createTagDB } from '@meAdmin/domain/entities/tags/create_tag'
 
 export const tagCreator: Middleware = (_httpRequest, httpBody) => {
   const { id, title } = httpBody

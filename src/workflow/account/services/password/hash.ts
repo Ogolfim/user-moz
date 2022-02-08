@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import { HashPassword } from './contracts/hash'
+import { HashPassword } from '@account/services/password/contracts/Hash'
 
 export const hashPassword: HashPassword = async (password) => {
   const salt = await bcrypt.genSalt(10)

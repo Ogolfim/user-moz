@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { meAdminRegister } from '../../../../useCases/createMeAdmin/register_meadmin'
-import { sendToken } from '../../OAuth/send_token'
+import { meAdminRegister } from '@meAdmin/useCases/createMeAdmin/register_meadmin'
+import { sendToken } from '@meAdmin/infra/http/middlewares/send_token'
 
 export const meAdminRegisterController = (request: Request, response: Response) => {
   pipe(

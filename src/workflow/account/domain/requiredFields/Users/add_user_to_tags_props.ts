@@ -1,7 +1,7 @@
 import * as t from 'io-ts'
 import { UUID } from 'io-ts-types'
 
-import { TagCodec } from '../tag'
+import { TagCodec } from '@account/domain/requiredFields/tag'
 
 export const UserAdderToTagsPropsCodec = t.type({
   userId: UUID,

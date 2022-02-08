@@ -2,9 +2,9 @@ import { verify } from 'jsonwebtoken'
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { Middleware } from '../../../../../core/infra/middleware'
-import { forbidden } from '../../../../../core/infra/http_error_response'
-import { ok } from '../../../../../core/infra/http_success_response'
+import { Middleware } from '@core/infra/middleware'
+import { forbidden } from '@core/infra/http_error_response'
+import { ok } from '@core/infra/http_success_response'
 
 export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody) => {
   const bearerHeader = httpRequest.headers.authorization

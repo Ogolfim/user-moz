@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
-import { TagIdCodec } from './tag_id'
-import { TagTitleCodec } from './tag_title'
+import { TagIdCodec } from '@account/domain/requiredFields/tag_id'
+import { TagTitleCodec } from '@account/domain/requiredFields/tag_title'
 
 export const TagCodec = t.type({
   id: TagIdCodec,

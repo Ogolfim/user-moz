@@ -1,9 +1,9 @@
 import * as TE from 'fp-ts/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { CreateTagDB } from '../../contracts/tags/create_tag'
-import { clientError, fail } from '../../../../../core/infra/http_error_response'
-import { prisma } from '../../../infra/prisma/client'
-import { findTagByIdDB } from './find_tag_by_id'
+import { CreateTagDB } from '@meAdmin/domain/contracts/tags/create_tag'
+import { clientError, fail } from '@core/infra/http_error_response'
+import { prisma } from '@meAdmin/infra/prisma/client'
+import { findTagByIdDB } from '@meAdmin/domain/entities/tags/find_tag_by_id'
 
 export const createTagDB: CreateTagDB = ({ id, title }) => {
   const newTag = pipe(

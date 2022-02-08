@@ -1,7 +1,7 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { fail } from '../../../../../core/infra/http_error_response'
-import { prisma } from '../../../infra/prisma/client'
-import { FindAdminByEmailDB } from '../../contracts/findAdmin/find_admin_by_email'
+import { fail } from '@core/infra/http_error_response'
+import { prisma } from '@meAdmin/infra/prisma/client'
+import { FindAdminByEmailDB } from '@meAdmin/domain/contracts/findAdmin/find_admin_by_email'
 
 export const findAdminByEmailDB: FindAdminByEmailDB = (email) => {
   const Admin = TE.tryCatch(

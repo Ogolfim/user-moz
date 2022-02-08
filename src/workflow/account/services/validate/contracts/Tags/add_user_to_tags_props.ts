@@ -1,6 +1,6 @@
 import * as E from 'fp-ts/lib/Either'
-import { UserAdderToTagsProps } from '../../../../domain/requiredFields/Users/add_user_to_tags_props'
-import { ValidationError } from '../../errors/validation_error'
+import { UserAdderToTagsProps } from '@account/domain/requiredFields/Users/add_user_to_tags_props'
+import { ValidationError } from '@account/services/validate/errors/validation_error'
 
 type Tag = {
   id: string

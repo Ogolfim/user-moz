@@ -1,9 +1,9 @@
-import { MeAdminLoggerPropsCodec } from '../../../domain/requiredFields/admin/meadmin_logger_props'
-import { ValidationError } from '../errors/validation_error'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { MeAdminLoggerPropsValidate } from '../contracts/Login/meadmin_logger_props'
 import { failure } from 'io-ts/lib/PathReporter'
+import { MeAdminLoggerPropsValidate } from '@meAdmin/services/validate/contracts/Login/meadmin_logger_props'
+import { MeAdminLoggerPropsCodec } from '@meAdmin/domain/requiredFields/admin/meadmin_logger_props'
+import { ValidationError } from '@meAdmin/services/validate/errors/validation_error'
 
 export const meAdminLoggerPropsValidate: MeAdminLoggerPropsValidate = (data) => {
   return pipe(

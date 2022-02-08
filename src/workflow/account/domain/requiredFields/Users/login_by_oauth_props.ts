@@ -1,8 +1,8 @@
 import * as t from 'io-ts'
 
-import { EmailCodec } from '../email'
-import { NameCodec } from '../name'
-import { ServerNameCodec } from '../server_name'
+import { EmailCodec } from '@account/domain/requiredFields/email'
+import { NameCodec } from '@account/domain/requiredFields/name'
+import { ServerNameCodec } from '@account/domain/requiredFields/server_name'
 
 export const UserLoggerByOauthPropsCodec = t.type({
   name: NameCodec,

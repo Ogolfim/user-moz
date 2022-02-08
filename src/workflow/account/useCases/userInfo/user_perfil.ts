@@ -1,12 +1,12 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { Middleware } from '../../../../core/infra/middleware'
-import { clientError } from '../../../../core/infra/http_error_response'
-import { created } from '../../../../core/infra/http_success_response'
-import { userPerfilPropsValidate } from '../../services/validate/UserInfo/user_perfil_props'
-import { findAllUserInfoDB } from '../../domain/entities/findUser/find_all_user_info'
-import { manyTagView } from '../../services/views/tag'
+import { Middleware } from '@core/infra/middleware'
+import { clientError } from '@core/infra/http_error_response'
+import { created } from '@core/infra/http_success_response'
+import { userPerfilPropsValidate } from '@account/services/validate/UserInfo/user_perfil_props'
+import { findAllUserInfoDB } from '@account/domain/entities/findUser/find_all_user_info'
+import { manyTagView } from '@account/services/views/tag'
 
 export const userPerfil: Middleware = (_httpRequest, httpBody) => {
   const { userId } = httpBody

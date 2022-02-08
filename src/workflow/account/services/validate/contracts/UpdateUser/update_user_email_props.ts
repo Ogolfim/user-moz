@@ -1,6 +1,6 @@
 import * as E from 'fp-ts/lib/Either'
-import { UpdateUserEmailProps } from '../../../../domain/requiredFields/Users/update_user_email_props'
-import { ValidationError } from '../../errors/validation_error'
+import { UpdateUserEmailProps } from '@account/domain/requiredFields/Users/update_user_email_props'
+import { ValidationError } from '@account/services/validate/errors/validation_error'
 
 interface unValidatedUser {
   email: string

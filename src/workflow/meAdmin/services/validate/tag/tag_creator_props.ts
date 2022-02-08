@@ -1,9 +1,9 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/PathReporter'
-import { TagCodec } from '../../../domain/requiredFields/tag'
-import { TagCreatorPropsValidate } from '../contracts/Tag/tag_reator_props_validate'
-import { ValidationError } from '../errors/validation_error'
+import { TagCodec } from '@meAdmin/domain/requiredFields/tag'
+import { TagCreatorPropsValidate } from '@meAdmin/services/validate/contracts/Tag/tag_reator_props_validate'
+import { ValidationError } from '@meAdmin/services/validate/errors/validation_error'
 
 export const tagCreatorPropsValidate: TagCreatorPropsValidate = (data) => {
   return pipe(

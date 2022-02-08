@@ -1,8 +1,8 @@
 import * as TE from 'fp-ts/TaskEither'
-import { UserSchema } from '../../../infra/prisma/schemas'
-import { Name } from '../../requiredFields/name'
+import { UserSchema } from '@account/infra/prisma/schemas'
+import { Name } from '@account/domain/requiredFields/name'
 import { UUID } from 'io-ts-types'
-import { HttpErrorResponse } from '../../../../../core/infra/http_error_response'
+import { HttpErrorResponse } from '@core/infra/http_error_response'
 
 interface UpdateUserNameProps {
   name: Name

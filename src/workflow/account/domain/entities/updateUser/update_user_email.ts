@@ -1,10 +1,10 @@
 import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { clientError, fail } from '../../../../../core/infra/http_error_response'
-import { prisma } from '../../../infra/prisma/client'
-import { UpdateUserEmailDB } from '../../contracts/UpdateUser/update_user_email'
-import { findUserByEmailDB } from './../findUser/find_user_by_email'
-import { findUserByIdDB } from './../findUser/find_user_by_id'
+import { clientError, fail } from '@core/infra/http_error_response'
+import { prisma } from '@account/infra/prisma/client'
+import { UpdateUserEmailDB } from '@account/domain/contracts/UpdateUser/update_user_email'
+import { findUserByEmailDB } from '@account/domain/entities/findUser/find_user_by_email'
+import { findUserByIdDB } from '@account/domain/entities/findUser/find_user_by_id'
 
 export const updateUserEmailDB: UpdateUserEmailDB = ({ email, userId }) => {
   const newUser = pipe(

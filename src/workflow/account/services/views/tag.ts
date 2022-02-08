@@ -1,4 +1,4 @@
-import { ManyTagView, TagView } from './contract/tag'
+import { ManyTagView, TagView } from '@account/services/views/contract/tag'
 
 export const tagView: TagView = (tag) => {
   return {

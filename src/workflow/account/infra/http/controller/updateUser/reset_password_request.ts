@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { resetPasswordRequest } from '../../../../useCases/updateUser/reset_password_request'
+import { resetPasswordRequest } from '@account/useCases/updateUser/reset_password_request'
 
 export const resetPasswordRequestController = (request: Request, response: Response) => {
   pipe(

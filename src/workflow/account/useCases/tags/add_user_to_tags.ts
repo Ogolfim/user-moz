@@ -1,11 +1,11 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { Middleware } from '../../../../core/infra/middleware'
-import { clientError } from '../../../../core/infra/http_error_response'
-import { created } from '../../../../core/infra/http_success_response'
-import { userAdderToTagsPropsValidate } from '../../services/validate/tags/add_user_to_tags_props'
-import { addUserToTagsDB } from '../../domain/entities/tags/add_user_to_tags'
+import { Middleware } from '@core/infra/middleware'
+import { clientError } from '@core/infra/http_error_response'
+import { created } from '@core/infra/http_success_response'
+import { userAdderToTagsPropsValidate } from '@account/services/validate/tags/add_user_to_tags_props'
+import { addUserToTagsDB } from '@account/domain/entities/tags/add_user_to_tags'
 
 export const userAdderToTags: Middleware = (_httpRequest, httpBody) => {
   const { userId, tags } = httpBody

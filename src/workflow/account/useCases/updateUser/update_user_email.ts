@@ -1,11 +1,11 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { Middleware } from '../../../../core/infra/middleware'
-import { clientError } from '../../../../core/infra/http_error_response'
-import { ok } from '../../../../core/infra/http_success_response'
-import { updateUserEmailPropsValidate } from '../../services/validate/updateUser/update_user_email_props'
-import { updateUserEmailDB } from '../../domain/entities/updateUser/update_user_email'
+import { Middleware } from '@core/infra/middleware'
+import { clientError } from '@core/infra/http_error_response'
+import { ok } from '@core/infra/http_success_response'
+import { updateUserEmailPropsValidate } from '@account/services/validate/updateUser/update_user_email_props'
+import { updateUserEmailDB } from '@account/domain/entities/updateUser/update_user_email'
 
 export const updateUserEmail: Middleware = (_httpRequest, httpBody) => {
   const { email, userId } = httpBody

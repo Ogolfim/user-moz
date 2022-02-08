@@ -1,4 +1,4 @@
-import { TagSchema } from '../../../infra/prisma/schemas'
+import { TagSchema } from '@account/infra/prisma/schemas'
 
 interface Tag {
   id: string

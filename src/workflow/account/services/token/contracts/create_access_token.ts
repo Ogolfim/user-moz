@@ -1,4 +1,4 @@
-import { ServiceSchema, UserSchema } from '../../../infra/prisma/schemas'
+import { ServiceSchema, UserSchema } from '@account/infra/prisma/schemas'
 
 interface User extends UserSchema {
   services: ServiceSchema

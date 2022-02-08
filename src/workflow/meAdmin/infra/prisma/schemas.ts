@@ -1,4 +1,4 @@
 import { meAdmin, Tag } from '@prisma/client'
 
-export type AdminSchema = meAdmin
+export type MeAdminSchema = meAdmin
 export type TagSchema = Tag

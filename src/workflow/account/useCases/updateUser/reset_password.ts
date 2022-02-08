@@ -1,12 +1,12 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { Middleware } from '../../../../core/infra/middleware'
-import { clientError, fail } from '../../../../core/infra/http_error_response'
-import { ok } from '../../../../core/infra/http_success_response'
-import { resetPasswordPropsValidate } from '../../services/validate/updateUser/reset_password_props'
-import { resetPasswordDB } from '../../domain/entities/updateUser/reset_password'
-import { hashPassword } from '../../services/password/hash'
+import { Middleware } from '@core/infra/middleware'
+import { clientError, fail } from '@core/infra/http_error_response'
+import { ok } from '@core/infra/http_success_response'
+import { resetPasswordPropsValidate } from '@account/services/validate/updateUser/reset_password_props'
+import { resetPasswordDB } from '@account/domain/entities/updateUser/reset_password'
+import { hashPassword } from '@account/services/password/hash'
 import dayjs from 'dayjs'
 
 export const resetPassword: Middleware = (_httpRequest, httpBody) => {

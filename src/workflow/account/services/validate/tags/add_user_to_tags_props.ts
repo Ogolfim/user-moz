@@ -1,9 +1,9 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
-import { UserAdderToTagsPropsCodec } from '../../../domain/requiredFields/Users/add_user_to_tags_props'
-import { UserAdderToTagsPropsValidate } from '../contracts/Tags/add_user_to_tags_props'
-import { ValidationError } from '../errors/validation_error'
+import { UserAdderToTagsPropsCodec } from '@account/domain/requiredFields/Users/add_user_to_tags_props'
+import { UserAdderToTagsPropsValidate } from '@account/services/validate/contracts/Tags/add_user_to_tags_props'
+import { ValidationError } from '@account/services/validate/errors/validation_error'
 
 export const userAdderToTagsPropsValidate: UserAdderToTagsPropsValidate = (data) => {
   return pipe(

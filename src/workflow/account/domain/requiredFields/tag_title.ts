@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isTagTitle } from './is/is_tag_title'
+import { isTagTitle } from '@account/domain/requiredFields/is/is_tag_title'
 
 type TagTitleBrand = {
   readonly TagTitle: unique symbol

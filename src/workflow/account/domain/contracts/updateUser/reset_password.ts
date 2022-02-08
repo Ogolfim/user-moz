@@ -1,7 +1,7 @@
 import * as TE from 'fp-ts/TaskEither'
-import { UserSchema } from '../../../infra/prisma/schemas'
+import { UserSchema } from '@account/infra/prisma/schemas'
 import { UUID } from 'io-ts-types'
-import { HttpErrorResponse } from '../../../../../core/infra/http_error_response'
+import { HttpErrorResponse } from '@core/infra/http_error_response'
 
 interface IResetPassword {
   userId: UUID

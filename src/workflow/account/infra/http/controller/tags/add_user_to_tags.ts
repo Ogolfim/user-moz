@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { userAdderToTags } from '../../../../useCases/tags/add_user_to_tags'
-import { ensureAuthenticatedMiddleware } from '../../middlewares/ensure_authenticated'
+import { userAdderToTags } from '@account/useCases/tags/add_user_to_tags'
+import { ensureAuthenticatedMiddleware } from '@account/infra/http/middlewares/ensure_authenticated'
 
 export const userAdderToTagsController = (request: Request, response: Response) => {
   pipe(

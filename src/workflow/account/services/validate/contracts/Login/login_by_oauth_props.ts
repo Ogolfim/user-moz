@@ -1,6 +1,6 @@
 import * as E from 'fp-ts/lib/Either'
-import { UserLoggerByOauthProps } from '../../../../domain/requiredFields/Users/login_by_oauth_props'
-import { ValidationError } from '../../errors/validation_error'
+import { UserLoggerByOauthProps } from '@account/domain/requiredFields/Users/login_by_oauth_props'
+import { ValidationError } from '@account/services/validate/errors/validation_error'
 
 interface unValidatedUser {
   name: string

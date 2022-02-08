@@ -1,6 +1,6 @@
 import * as E from 'fp-ts/lib/Either'
-import { UserRefreshTokenProps } from '../../../../domain/requiredFields/Users/refresh_token_props'
-import { ValidationError } from '../../errors/validation_error'
+import { UserRefreshTokenProps } from '@account/domain/requiredFields/Users/refresh_token_props'
+import { ValidationError } from '@account/services/validate/errors/validation_error'
 
 interface unRefreshTokenProps {
   id: string

@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken'
-import { CreateRefreshAccessToken } from './contracts/create_refresh_access_token'
+import { CreateRefreshAccessToken } from '@account/services/token/contracts/create_refresh_access_token'
 
 export const createRefreshAccessToken: CreateRefreshAccessToken = ({ id, userId }) => {
   return sign(

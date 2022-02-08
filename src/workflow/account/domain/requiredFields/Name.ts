@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isName } from './is/is_name'
+import { isName } from '@account/domain/requiredFields/is/is_name'
 
 type NameBrand = {
   readonly Name: unique symbol

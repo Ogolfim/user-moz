@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { userPerfil } from '../../../../useCases/userInfo/user_perfil'
-import { ensureAuthenticatedMiddleware } from '../../middlewares/ensure_authenticated'
+import { userPerfil } from '@account/useCases/userInfo/user_perfil'
+import { ensureAuthenticatedMiddleware } from '@account/infra/http/middlewares/ensure_authenticated'
 
 export const userPerfilController = (request: Request, response: Response) => {
   pipe(

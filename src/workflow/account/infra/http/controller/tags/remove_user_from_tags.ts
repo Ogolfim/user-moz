@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { ensureAuthenticatedMiddleware } from '../../middlewares/ensure_authenticated'
-import { removeUserFromTags } from '../../../../useCases/tags/remove_user_from_tags'
+import { ensureAuthenticatedMiddleware } from '@account/infra/http/middlewares/ensure_authenticated'
+import { removeUserFromTags } from '@account/useCases/tags/remove_user_from_tags'
 
 export const removeUserFromTagsController = (request: Request, response: Response) => {
   pipe(

@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { refreshToken } from '../../../../useCases/token/refresh_token'
-import { sendToken } from '../../middlewares/send_token'
-import { ensureValidRefreshTokenMiddleware } from '../../middlewares/ensure_valid_refresh_token'
+import { refreshToken } from '@account/useCases/token/refresh_token'
+import { sendToken } from '@account/infra/http/middlewares/send_token'
+import { ensureValidRefreshTokenMiddleware } from '@account/infra/http/middlewares/ensure_valid_refresh_token'
 
 export const refreshTokenController = (request: Request, response: Response) => {
   pipe(

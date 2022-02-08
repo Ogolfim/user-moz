@@ -1,6 +1,6 @@
 import * as E from 'fp-ts/lib/Either'
-import { Tag } from '../../../../domain/requiredFields/tag'
-import { ValidationError } from '../../errors/validation_error'
+import { Tag } from '@meAdmin/domain/requiredFields/tag'
+import { ValidationError } from '@meAdmin/services/validate/errors/validation_error'
 
 interface unValidatedTag {
   id: string

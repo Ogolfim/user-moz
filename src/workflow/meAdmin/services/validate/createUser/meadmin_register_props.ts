@@ -1,9 +1,9 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
-import { MeAdminRegisterPropsCodec } from '../../../domain/requiredFields/admin/meadmin_register_props'
-import { MeAdminRegisterPropsValidate } from '../contracts/CreateUser/meadmin_register_props_validate'
-import { ValidationError } from '../errors/validation_error'
+import { MeAdminRegisterPropsCodec } from '@meAdmin/domain/requiredFields/admin/meadmin_register_props'
+import { MeAdminRegisterPropsValidate } from '@meAdmin/services/validate/contracts/CreateUser/meadmin_register_props_validate'
+import { ValidationError } from '@meAdmin/services/validate/errors/validation_error'
 
 export const meAdminRegisterPropsValidate: MeAdminRegisterPropsValidate = (data) => {
   return pipe(

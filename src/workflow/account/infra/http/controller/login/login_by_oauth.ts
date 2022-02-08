@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { userLoggerByOauth } from '../../../../useCases/login/login_by_oauth'
-import { sendToken } from '../../middlewares/send_token'
+import { userLoggerByOauth } from '@account/useCases/login/login_by_oauth'
+import { sendToken } from '@account/infra/http/middlewares/send_token'
 
 export const userLoggerByOauthController = (request: Request, response: Response) => {
   pipe(

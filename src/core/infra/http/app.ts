@@ -5,7 +5,7 @@ import helmet from 'helmet'
 import { config } from 'dotenv'
 import dotenvExpand from 'dotenv-expand'
 
-import router from './routes'
+import router from '@core/infra/http/routes'
 
 dotenvExpand(config())
 

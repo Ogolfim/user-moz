@@ -1,7 +1,7 @@
 import { Router } from 'express'
 
-import AccountRouter from '../../../workflow/account/infra/http/routes'
-import MeAdminRouter from '../../../workflow/meAdmin/infra/http/routes'
+import AccountRouter from '@account/infra/http/routes'
+import MeAdminRouter from '@meAdmin/infra/http/routes'
 
 const router = Router()
 

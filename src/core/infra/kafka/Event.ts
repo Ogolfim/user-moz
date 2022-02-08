@@ -1,7 +1,7 @@
 import { RecordMetadata } from 'kafkajs'
-import { userAccountKafka } from './config'
-import { Kay } from './key'
-import { Topic } from './topic'
+import { userAccountKafka } from '@core/infra/kafka/config'
+import { Kay } from '@core/infra/kafka/key'
+import { Topic } from '@core/infra/kafka/topic'
 
 export interface UserAccountEvent {
   topic: Topic,

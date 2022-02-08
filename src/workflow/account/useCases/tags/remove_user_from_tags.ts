@@ -15,7 +15,7 @@ export const removeUserFromTags: Middleware = (_httpRequest, httpBody) => {
   const httpResponse = pipe(
     unValidatedUserTags,
     userAdderToTagsPropsValidate,
-    E.mapLeft(error => clientError(new Error(error.message))),
+    E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain((validUserTags) => {
       return pipe(

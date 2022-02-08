@@ -19,7 +19,7 @@ export const userLoggerByOauth: Middleware = (_httpRequest, httpBody) => {
   const httpResponse = pipe(
     unValidatedUser,
     userLoggerByOauthPropsValidate,
-    E.mapLeft(error => clientError(new Error(error.message))),
+    E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain(validUser => {
       return pipe(

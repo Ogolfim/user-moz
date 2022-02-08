@@ -17,7 +17,7 @@ export const refreshToken: Middleware = (_httpRequest, httpBody) => {
   const httpResponse = pipe(
     { id, userId },
     userRefreshTokenPropsValidate,
-    E.mapLeft(error => clientError(new Error(error.message))),
+    E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain(validProps => {
       return pipe(

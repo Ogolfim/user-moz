@@ -33,11 +33,6 @@
         "@payment/services/*": ["src/workflow/payments/*"],
         "@payment/useCases/*": ["src/workflow/payments/*"]
       },
-      "plugins": [
-        {
-          "transform": "@zerollup/ts-transform-paths"
-        }
-      ],
       "strict": false,
       "lib": ["esnext"],
       "esModuleInterop": true,

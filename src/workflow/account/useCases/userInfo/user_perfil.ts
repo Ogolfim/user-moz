@@ -14,7 +14,7 @@ export const userPerfil: Middleware = (_httpRequest, httpBody) => {
   const httpResponse = pipe(
     userId,
     userPerfilPropsValidate,
-    E.mapLeft(error => clientError(new Error(error.message))),
+    E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain((userId) => {
       return pipe(

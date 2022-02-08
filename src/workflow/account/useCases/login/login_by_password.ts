@@ -20,7 +20,7 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
   const httpResponse = pipe(
     unValidatedUser,
     userLoggerByPasswordPropsValidate,
-    E.mapLeft(error => clientError(new Error(error.message))),
+    E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain(({ email, password }) => {
       return pipe(

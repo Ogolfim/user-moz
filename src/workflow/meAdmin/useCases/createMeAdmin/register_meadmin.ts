@@ -17,7 +17,7 @@ export const meAdminRegister: Middleware = (_httpRequest, httpBody) => {
   const httpResponse = pipe(
     unValidatedAdmin,
     meAdminRegisterPropsValidate,
-    E.mapLeft(error => clientError(new Error(error.message))),
+    E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain(validAdmin => {
       return pipe(

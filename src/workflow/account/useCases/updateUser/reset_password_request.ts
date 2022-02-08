@@ -8,12 +8,10 @@ import { updateUserNamePropsValidate } from '../../services/validate/update_user
 import { updateUserNameDB } from '../../domain/entities/updateUser/update_user_name'
 
 export const updateUserName: Middleware = (_httpRequest, httpBody) => {
-  const { name, userId } = httpBody
-
-  const unValidatedUser = { name, userId }
+  const { email } = httpBody
 
   const httpResponse = pipe(
-    unValidatedUser,
+    email,
     updateUserNamePropsValidate,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,

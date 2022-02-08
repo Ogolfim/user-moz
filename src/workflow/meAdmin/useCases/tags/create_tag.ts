@@ -13,7 +13,7 @@ export const tagCreator: Middleware = (_httpRequest, httpBody) => {
   const httpResponse = pipe(
     { id, title },
     tagCreatorPropsValidate,
-    E.mapLeft(err => clientError(new Error(err.message))),
+    E.mapLeft(err => clientError(err)),
     TE.fromEither,
     TE.chain(validTag => {
       return pipe(

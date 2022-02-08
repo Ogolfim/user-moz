@@ -15,7 +15,7 @@ export const updateUserEmail: Middleware = (_httpRequest, httpBody) => {
   const httpResponse = pipe(
     unValidatedUser,
     updateUserEmailPropsValidate,
-    E.mapLeft(error => clientError(new Error(error.message))),
+    E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain(validUser => pipe(
       validUser,

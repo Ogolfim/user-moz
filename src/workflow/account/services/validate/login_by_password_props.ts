@@ -2,7 +2,7 @@ import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
 import { UserLoggerByPasswordPropsCodec } from '../../domain/requiredFields/Users/loging_by_password_props'
-import { UserLoggerByPasswordPropsValidate } from './contracts/login_by_password_props_validate'
+import { UserLoggerByPasswordPropsValidate } from './contracts/login_by_password_props'
 import { ValidationError } from './errors/validation_error'
 
 export const userLoggerByPasswordPropsValidate: UserLoggerByPasswordPropsValidate = (data) => {

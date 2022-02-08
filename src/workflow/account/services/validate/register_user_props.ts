@@ -2,7 +2,7 @@ import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
 import { UserRegisterPropsCodec } from '../../domain/requiredFields/Users/register_user_props'
-import { UserRegisterPropsValidate } from './contracts/register_user_props_validate'
+import { UserRegisterPropsValidate } from './contracts/register_user_props'
 import { ValidationError } from './errors/validation_error'
 
 export const userRegisterPropsValidate: UserRegisterPropsValidate = (data) => {

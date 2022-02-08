@@ -1,15 +1,15 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
-import { UserAdderToTagsPropsCodec } from '../../domain/requiredFields/Users/add_user_to_tags_props'
-import { UserAdderToTagsPropsValidate } from './contracts/add_user_to_tags_props'
+import { ResetPasswordPropsCodec } from '../../domain/requiredFields/Users/reset_password_props'
+import { ResetPasswordPropsValidate } from './contracts/reset_password_props_validate'
 import { ValidationError } from './errors/validation_error'
 
-export const userAdderToTagsPropsValidate: UserAdderToTagsPropsValidate = (data) => {
+export const resetPasswordPropsValidate: ResetPasswordPropsValidate = (data) => {
   return pipe(
     E.tryCatch(
       () => {
-        if (!data) throw new ValidationError('Você deve fornecer id do usuário e pelo memos uma tag')
+        if (!data) throw new ValidationError('informações em falta')
 
         return data
       },
@@ -18,7 +18,7 @@ export const userAdderToTagsPropsValidate: UserAdderToTagsPropsValidate = (data)
     ),
     E.chain(data => pipe(
       data,
-      UserAdderToTagsPropsCodec.decode,
+      ResetPasswordPropsCodec.decode,
       E.mapLeft(errors => new ValidationError(failure(errors).join(', ') + ' invalido'))
     ))
   )

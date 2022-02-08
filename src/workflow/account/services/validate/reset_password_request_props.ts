@@ -1,14 +1,14 @@
-
+import { EmailCodec } from '../../domain/requiredFields/email'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
-import { UUID } from 'io-ts-types'
 import { failure } from 'io-ts/lib/PathReporter'
-import { UserPerfilPropsValidate } from './contracts/user_perfil_props'
+import { ResetPasswordRequestPropsValidate } from './contracts/reset_password_request_props'
 import { ValidationError } from './errors/validation_error'
 
-export const userPerfilPropsValidate: UserPerfilPropsValidate = (id) => {
+export const resetPasswordRequestPropsValidate: ResetPasswordRequestPropsValidate = (data) => {
   return pipe(
-    UUID.decode(id),
+    data,
+    EmailCodec.decode,
     E.mapLeft(errors => new ValidationError(failure(errors).join(', ') + ' invalido'))
   )
 }

@@ -1,29 +1,40 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
+import dayjs from 'dayjs'
 import { pipe } from 'fp-ts/lib/function'
+import { UUID } from 'io-ts-types'
 import { Middleware } from '../../../../core/infra/middleware'
 import { clientError } from '../../../../core/infra/http_error_response'
 import { ok } from '../../../../core/infra/http_success_response'
-import { updateUserNamePropsValidate } from '../../services/validate/update_user_name_props'
-import { updateUserNameDB } from '../../domain/entities/updateUser/update_user_name'
+import { resetPasswordRequestPropsValidate } from '../../services/validate/reset_password_request_props'
+import { findUserByEmailDB } from '../../domain/entities/findUser/find_user_by_email'
+import { createResetPasswordToken } from '../../services/token/create_reset_password_token'
 
-export const updateUserName: Middleware = (_httpRequest, httpBody) => {
+export const resetPasswordRequest: Middleware = (_httpRequest, httpBody) => {
   const { email } = httpBody
 
   const httpResponse = pipe(
     email,
-    updateUserNamePropsValidate,
+    resetPasswordRequestPropsValidate,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
-    TE.chain(validUser => pipe(
-      validUser,
-      updateUserNameDB,
+    TE.chain(validEmail => pipe(
+      validEmail,
+      findUserByEmailDB,
       TE.map(user => {
-        const UserNameUpdatedEvent = {
-          name: user.name
+        const token = createResetPasswordToken({
+          userId: user.id as UUID,
+          expiresIn: '15m'
+        })
+
+        const sendResetPasswordRequestEvent = {
+          name: user.name,
+          email: user.email,
+          date: dayjs(new Date()).format('DD/MM/YYYY'),
+          token: token
         }
 
-        return ok(UserNameUpdatedEvent)
+        return ok(sendResetPasswordRequestEvent)
       })
 
     ))

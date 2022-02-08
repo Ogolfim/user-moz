@@ -10,20 +10,39 @@
         "./node_modules/@types",
         "./src/@types"
       ],
-      "baseUrl": "src",
+      "baseUrl": ".",
       "paths": {
-        "@core/*": ["core/*"],
-        "@account/*": ["workflow/account/*"],
-        "@meAdmin/*": ["workflow/meAdmin/*"],
-        "@bills/*": ["workflow/bills/*"],
-        "@payments/*": ["workflow/payments/*"]
+        "@core/*": ["src/core/*"],
+        "@account/domain/*": ["src/workflow/account/domain/*"],
+        "@account/infra/*": ["src/workflow/account/infra/*"],
+        "@account/services/*": ["src/workflow/account/services/*"],
+        "@account/useCases/*": ["src/workflow/account/useCases/*"],
+
+        "@meAdmin/domain/*": ["src/workflow/meAdmin/domain/*"],
+        "@meAdmin/infra/*": ["src/workflow/meAdmin/infra/*"],
+        "@meAdmin/services/*": ["src/workflow/meAdmin/services/*"],
+        "@meAdmin/useCases/*": ["src/workflow/meAdmin/useCases/*"],
+
+        "@bills/domain/*": ["src/workflow/bills/domain/*"],
+        "@bills/infra/*": ["src/workflow/bills/infra/*"],
+        "@bills/services/*": ["src/workflow/bills/services/*"],
+        "@bills/useCases/*": ["src/workflow/bills/useCases/*"],
+
+        "@payment/domain/*": ["src/workflow/payments/*"],
+        "@payment/infra/*": ["src/workflow/payments/*"],
+        "@payment/services/*": ["src/workflow/payments/*"],
+        "@payment/useCases/*": ["src/workflow/payments/*"]
       },
-      "strict": true,
+      "plugins": [
+        {
+          "transform": "@zerollup/ts-transform-paths"
+        }
+      ],
+      "strict": false,
       "lib": ["esnext"],
       "esModuleInterop": true,
     },
     "include": [
-      "./src",
-      "./server"
-, "src/workflow/account/services/validate/contracts/.ts"  ],
+      "src"
+    ]
   }

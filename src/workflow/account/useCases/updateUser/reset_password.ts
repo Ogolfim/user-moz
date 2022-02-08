@@ -7,6 +7,7 @@ import { ok } from '../../../../core/infra/http_success_response'
 import { resetPasswordPropsValidate } from '../../services/validate/reset_password_props'
 import { resetPasswordDB } from '../../domain/entities/updateUser/reset_password'
 import { hashPassword } from '../../services/password/hash'
+import dayjs from 'dayjs'
 
 export const resetPassword: Middleware = (_httpRequest, httpBody) => {
   const { userId, password } = httpBody
@@ -36,8 +37,13 @@ export const resetPassword: Middleware = (_httpRequest, httpBody) => {
         TE.chain(user => pipe(
           user,
           resetPasswordDB,
-          TE.map((_user) => {
-            return ok()
+          TE.map((user) => {
+            const PasswordUpdatedEvent = {
+              name: user.name,
+              email: user.email,
+              date: dayjs(new Date()).format('DD/MM/YYYY')
+            }
+            return ok(PasswordUpdatedEvent)
           })
         ))
       )

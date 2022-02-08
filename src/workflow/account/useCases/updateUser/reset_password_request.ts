@@ -26,15 +26,14 @@ export const resetPasswordRequest: Middleware = (_httpRequest, httpBody) => {
           userId: user.id as UUID,
           expiresIn: '15m'
         })
-
-        const sendResetPasswordRequestEvent = {
+        const passwordUpdateRequestedEvent = {
           name: user.name,
           email: user.email,
           date: dayjs(new Date()).format('DD/MM/YYYY'),
           token: token
         }
 
-        return ok(sendResetPasswordRequestEvent)
+        return ok(passwordUpdateRequestedEvent)
       })
 
     ))

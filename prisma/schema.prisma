@@ -10,14 +10,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
+// Account Schemas
 model User {
   id                  String         @id @default(uuid())
   name                String 
   hash                String? 
   serverName          String?
   email               String         @unique   
-  payment             Payment[]
+  customer            Customer?   @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId          String?
   tags                Tag[]
   refreshToken        UserRefreshToken?
   services            UserService   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
@@ -56,14 +57,55 @@ model Tag {
   @@map("tags")
 }
 
-model Payment {
-  id                Int         @id @default(autoincrement())
-  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId            String
+// Bill Schamas
+model Customer {
+  id                  String              @id @default(uuid())
+  name                String
+  email               String              @unique
+  phone               String
+  accountType         String
+  user                User?
+  address             Address             @relation(fields: [addressId], references: [id], onDelete: Cascade)
+  addressId           String
+  customerService     CustomerService     @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  serviceId           Int
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @default(now())
 
-  @@map("payments")
+  @@map("customers")
 }
 
+model CustomerService {
+  id                  Int      @id @default(autoincrement())
+  name                String
+  billStatus          String   
+  amount              Decimal      
+  paymentStartedAt    DateTime
+  paymentCompletedAt  DateTime? 
+  expireAt            DateTime
+  customer            Customer?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @default(now())
+
+  @@map("customer_services")
+}
+
+model Address {
+  id                  String      @id @default(uuid())
+  country             String
+  provinceOrState     String      @unique
+  city                String
+  address1            String
+  address2            String
+  zipCode             String
+  customer            Customer?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @default(now())
+
+  @@map("addresses")
+}
+
+// MozEconomia Admin
 model meAdmin {
   id                  String         @id @default(uuid())
   name                String 

@@ -17,8 +17,7 @@ model User {
   hash                String? 
   serverName          String?
   email               String         @unique   
-  customer            Customer?   @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId          String?
+  customer            Customer?
   tags                Tag[]
   refreshToken        UserRefreshToken?
   services            UserService   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
@@ -61,14 +60,13 @@ model Tag {
 model Customer {
   id                  String              @id @default(uuid())
   name                String
-  email               String              @unique
+  email               String
   phone               String
   accountType         String
-  user                User?
-  address             Address             @relation(fields: [addressId], references: [id], onDelete: Cascade)
-  addressId           String
-  customerService     CustomerService     @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  serviceId           Int
+  user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String         
+  address             Address?
+  customerService     CustomerService?
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @default(now())
 
@@ -83,7 +81,8 @@ model CustomerService {
   paymentStartedAt    DateTime
   paymentCompletedAt  DateTime? 
   expireAt            DateTime
-  customer            Customer?
+  customer            Customer        @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId          String
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @default(now())
 
@@ -91,14 +90,15 @@ model CustomerService {
 }
 
 model Address {
-  id                  String      @id @default(uuid())
+  id                  String          @id @default(uuid())
   country             String
-  provinceOrState     String      @unique
+  provinceOrState     String          @unique
   city                String
   address1            String
   address2            String
-  zipCode             String
-  customer            Customer?
+  postcode            String
+  customer            Customer        @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId          String
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @default(now())
 

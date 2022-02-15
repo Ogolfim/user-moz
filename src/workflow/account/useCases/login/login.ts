@@ -13,7 +13,7 @@ import { loginUserService } from '@account/services/user/login/login'
 import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
 import { userServices } from '@account/services/bill/user_service'
 
-export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
+export const loginUseCase: Middleware = (_httpRequest, httpBody) => {
   const { email, password } = httpBody
 
   const unValidatedUser = { email, password }

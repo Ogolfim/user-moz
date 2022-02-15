@@ -14,7 +14,7 @@ import { createRefreshTokenService } from '@account/services/tokens/create_refre
 import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 import { userServices } from '@account/services/bill/user_service'
 
-export const refreshToken: Middleware = (_httpRequest, httpBody) => {
+export const refreshTokenUseCase: Middleware = (_httpRequest, httpBody) => {
   const { id, userId } = httpBody
 
   const httpResponse = pipe(

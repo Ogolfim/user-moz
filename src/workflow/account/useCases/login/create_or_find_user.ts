@@ -7,11 +7,11 @@ import { Middleware } from '@core/infra/middleware'
 import { userLoggerByOauthPropsValidate } from '@account/services/validate/user/login/login_by_oauth_props'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { createAccessToken } from '@account/services/tokens/token/access'
+import { createAccessToken } from '@account/services/token/access'
 import { createRefreshTokenDB } from '@account/domain/entities/token/create_refresh_token'
-import { createRefreshAccessToken } from '@account/services/tokens/token/refresh'
+import { createRefreshAccessToken } from '@account/services/token/refresh'
 
-export const userLoggerByOauth: Middleware = (httpRequest, httpBody) => {
+export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
   const { name, email } = httpBody
   const { serverName } = httpRequest.params
 

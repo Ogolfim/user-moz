@@ -1,11 +1,11 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
-import { UserLoggerByOauthPropsCodec } from '@account/domain/requiredFields/Users/login_by_oauth_props'
-import { UserLoggerByOauthPropsValidate } from '@account/services/validate/contracts/Login/login_by_oauth_props'
+import { CreateOrFindUserPropsCodec } from '@account/domain/requiredFields/Users/create_or_find_user.ts'
+import { CreateOrFindValidator } from '@account/domain/contracts/User/Login/CreateOrFindUser'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 
-export const userLoggerByOauthPropsValidate: UserLoggerByOauthPropsValidate = (data) => {
+export const createOrFindUserPropsValidate: CreateOrFindValidator = (data) => {
   return pipe(
     E.tryCatch(
       () => {
@@ -18,7 +18,7 @@ export const userLoggerByOauthPropsValidate: UserLoggerByOauthPropsValidate = (d
     ),
     E.chain(data => pipe(
       data,
-      UserLoggerByOauthPropsCodec.decode,
+      CreateOrFindUserPropsCodec.decode,
       E.mapLeft(errors => new ValidationError(failure(errors).join(', ') + ' invalido'))
     ))
   )

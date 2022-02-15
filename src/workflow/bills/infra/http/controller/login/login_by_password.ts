@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { userLoggerByPassword } from '@account/useCases/login/login_by_password'
+import { loginUseCase } from '@account/useCases/login/login'
 import { sendToken } from '@account/infra/http/middlewares/send_token'
 
 export const userLoggerByPasswordController = (request: Request, response: Response) => {

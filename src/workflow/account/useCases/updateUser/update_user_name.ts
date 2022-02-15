@@ -6,11 +6,12 @@ import { clientError } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
 import { updateUserNamePropsValidate } from '@account/services/validate/user/updateUser/update_user_name_props'
 import { updateUserNameDB } from '@account/domain/entities/user/updateUser/update_user_name'
+import { updateUserNameService } from '@account/services/user/update/update_user_name'
 
 export const updateUserName: Middleware = (_httpRequest, httpBody) => {
   const { name, userId } = httpBody
 
-  const unValidatedUser = { name, userId }
+  const unValidatedUser = { userId, name }
 
   const httpResponse = pipe(
     unValidatedUser,
@@ -19,7 +20,7 @@ export const updateUserName: Middleware = (_httpRequest, httpBody) => {
     TE.fromEither,
     TE.chain(validUser => pipe(
       validUser,
-      updateUserNameDB,
+      updateUserNameService(updateUserNameDB),
       TE.map(user => {
         const UserNameUpdatedEvent = {
           name: user.name

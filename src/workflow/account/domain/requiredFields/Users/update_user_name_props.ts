@@ -3,8 +3,8 @@ import { UUID } from 'io-ts-types'
 import { NameCodec } from '@account/domain/requiredFields/name'
 
 export const UpdateUserNamePropsCodec = t.type({
-  name: NameCodec,
-  userId: UUID
+  userId: UUID,
+  name: NameCodec
 })
 
 export type UpdateUserNameProps = t.TypeOf<typeof UpdateUserNamePropsCodec>

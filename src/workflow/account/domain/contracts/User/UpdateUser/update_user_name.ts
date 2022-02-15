@@ -1,12 +1,25 @@
-import * as TE from 'fp-ts/TaskEither'
-import { UserSchema } from '@account/infra/prisma/schemas'
-import { Name } from '@account/domain/requiredFields/name'
-import { UUID } from 'io-ts-types'
+import * as TE from 'fp-ts/lib/TaskEither'
+import * as E from 'fp-ts/lib/Either'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
+import { ValidationError } from '@account/services/validate/errors/validation_error'
+import { UpdateUserNameProps } from '@account/domain/requiredFields/Users/update_user_Name_props'
+import { Name } from '@account/domain/requiredFields/Name'
+import { UserSchema } from '@account/infra/prisma/schemas'
+import { UUID } from 'io-ts-types'
 
-interface UpdateUserNameProps {
-  name: Name
-  userId: UUID
+interface UnValidatedUser {
+  userId: string
+  name: string
 }
 
-export type UpdateUserNameDB = (user: UpdateUserNameProps) => TE.TaskEither<HttpErrorResponse, UserSchema>
+interface IUpdateUserNameDB {
+  userId: UUID
+  name: Name
+}
+
+export type UpdateUserNameValidator = (data: UnValidatedUser) => E.Either<ValidationError, UpdateUserNameProps>
+
+export type UpdateUserNameDB = (user: IUpdateUserNameDB) => Promise<UserSchema>
+
+export type UpdateUserNameService = (createUserDB: UpdateUserNameDB) =>
+(user: UpdateUserNameProps) => TE.TaskEither<HttpErrorResponse, UserSchema>

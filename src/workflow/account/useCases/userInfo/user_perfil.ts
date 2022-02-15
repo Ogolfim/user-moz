@@ -4,9 +4,10 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { clientError } from '@core/infra/http_error_response'
 import { created } from '@core/infra/http_success_response'
-import { userPerfilPropsValidate } from '@account/services/validate/UserInfo/user_perfil_props'
+import { userPerfilPropsValidate } from '@account/services/validate/user/UserInfo/user_perfil_props'
 import { findAllUserInfoDB } from '@account/domain/entities/user/findUser/find_all_user_info'
 import { manyTagView } from '@account/services/views/tag'
+import { userInfoService } from '@account/services/user/userInfo/user_info'
 
 export const userPerfil: Middleware = (_httpRequest, httpBody) => {
   const { userId } = httpBody
@@ -19,7 +20,7 @@ export const userPerfil: Middleware = (_httpRequest, httpBody) => {
     TE.chain((userId) => {
       return pipe(
         userId,
-        findAllUserInfoDB,
+        userInfoService(findAllUserInfoDB),
         TE.chain(user => {
           return TE.tryCatch(
             async () => {

@@ -1,9 +1,9 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '@core/infra/http_error_response'
 import { prisma } from '@account/infra/prisma/client'
-import { FindOrCreateUserDB } from '@account/domain/contracts/User/Login/find_or_save_user'
+import { CreateOrFindUserDB } from '@account/domain/contracts/User/Login/CreateOrFindUser'
 
-export const findOrCreateUserDB: FindOrCreateUserDB = ({ name, email, serverName }) => {
+export const createOrFindUserDB: CreateOrFindUserDB = ({ name, email, serverName, accountType }) => {
   const user = TE.tryCatch(
 
     async () => {

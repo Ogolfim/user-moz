@@ -4,8 +4,9 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { clientError } from '@core/infra/http_error_response'
 import { created } from '@core/infra/http_success_response'
-import { userAdderToTagsPropsValidate } from '@account/services/validate/tags/add_user_to_tags_props'
+import { removeUserFromTagsPropsValidator } from '@account/services/validate/tags/remove_user_from_tags_props'
 import { removeUserFromTagsDB } from '@account/domain/entities/tags/remove_user_from_tags'
+import { removeUserFromTagsService } from '@account/services/user/tags/remove_user_from_tags'
 
 export const removeUserFromTags: Middleware = (_httpRequest, httpBody) => {
   const { userId, tags } = httpBody
@@ -14,13 +15,13 @@ export const removeUserFromTags: Middleware = (_httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     unValidatedUserTags,
-    userAdderToTagsPropsValidate,
+    removeUserFromTagsPropsValidator,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain((validUserTags) => {
       return pipe(
         validUserTags,
-        removeUserFromTagsDB,
+        removeUserFromTagsService(removeUserFromTagsDB),
         TE.map(user => {
           const { name, email } = user
 

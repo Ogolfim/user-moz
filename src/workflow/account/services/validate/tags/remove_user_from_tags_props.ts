@@ -2,10 +2,10 @@ import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
 import { TagsPropsCodec } from '@account/domain/requiredFields/Users/tags_props'
-import { AddUserToTagsValidator } from '@account/domain/contracts/User/Tags/AddUserToTags'
+import { RemoveUserFromTagsValidator } from '@account/domain/contracts/User/Tags/RemoveUserFromTagsService'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 
-export const addUserToTagsPropsValidator: AddUserToTagsValidator = (data) => {
+export const removeUserFromTagsPropsValidator: RemoveUserFromTagsValidator = (data) => {
   return pipe(
     E.tryCatch(
       () => {

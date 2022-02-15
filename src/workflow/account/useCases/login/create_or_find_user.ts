@@ -2,14 +2,16 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { UUID } from 'io-ts-types'
-import { findOrCreateUserDB } from '@account/domain/entities/user/findUser/find_or_create_oauth_user'
 import { Middleware } from '@core/infra/middleware'
-import { userLoggerByOauthPropsValidate } from '@account/services/validate/user/login/login_by_oauth_props'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { createAccessToken } from '@account/services/token/access'
+import { createAccessToken } from '@account/services/tokens/token/access'
 import { createRefreshTokenDB } from '@account/domain/entities/token/create_refresh_token'
-import { createRefreshAccessToken } from '@account/services/token/refresh'
+import { createOrFindUserPropsValidate } from '@account/services/validate/user/login/login_by_oauth_props'
+import { createOrFindUserDB } from '@account/domain/entities/user/create_or_find_user'
+import { createOrFindUserService } from '@account/services/user/login/create_or_find_user'
+import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
+import { userServices } from '@account/services/bill/user_service'
 
 export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
   const { name, email } = httpBody
@@ -19,28 +21,31 @@ export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     unValidatedUser,
-    userLoggerByOauthPropsValidate,
+    createOrFindUserPropsValidate,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain(validUser => {
       return pipe(
         validUser,
-        findOrCreateUserDB,
+        createOrFindUserService(createOrFindUserDB),
         TE.chain(user => {
           return pipe(
             user.id as UUID,
-            createRefreshTokenDB,
+            createRefreshTokenService(createRefreshTokenDB),
             TE.chain(refreshToken => {
               return TE.tryCatch(
                 async () => {
-                  const token = await createAccessToken(user)
+                  const services = userServices({
+                    ...user.bill,
+                    services: user.bill.services as string[]
+                  })
 
-                  const refreshAccessToken = await createRefreshAccessToken(refreshToken)
+                  const token = await createAccessToken({ ...user, services })
 
                   return ok({
                     name: user.name,
                     token,
-                    refreshToken: refreshAccessToken
+                    refreshToken
                   })
                 },
 

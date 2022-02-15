@@ -1,14 +1,13 @@
 import * as TE from 'fp-ts/TaskEither'
+import * as E from 'fp-ts/Either'
 import { UUID } from 'io-ts-types'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
-import { RefreshTokenSchema, ServiceSchema, UserSchema } from '@account/infra/prisma/schemas'
+import { RefreshTokenSchema } from '@account/infra/prisma/schemas'
+import { ValidationError } from '@account/services/validate/errors/validation_error'
 
-interface User extends UserSchema {
-  services: ServiceSchema
-}
+export type CreateRefreshTokenValidator = (userId: string) => E.Either<ValidationError, UUID>
 
-interface RefreshToken extends RefreshTokenSchema {
-  user: User
-}
+export type CreateRefreshTokenDB = (userId: UUID) => Promise<RefreshTokenSchema>
 
-export type CreateRefreshTokenDB = (userId: UUID) => TE.TaskEither<HttpErrorResponse, RefreshToken>
+export type CreateRefreshTokenService = (createRefreshTokenDB: CreateRefreshTokenDB) =>
+(userId: UUID) => TE.TaskEither<HttpErrorResponse, string>

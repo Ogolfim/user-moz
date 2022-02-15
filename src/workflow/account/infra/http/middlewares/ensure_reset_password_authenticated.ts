@@ -1,10 +1,10 @@
-import { verify } from 'jsonwebtoken'
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { forbidden } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
+import { verifyResetPasswordToken } from '@account/services/tokens/token/reset_password'
 
 export const ensureResetPasswordAuthenticatedMiddleware: Middleware = (httpRequest, httpBody) => {
   const bearerHeader = httpRequest.headers.authorization
@@ -22,17 +22,17 @@ export const ensureResetPasswordAuthenticatedMiddleware: Middleware = (httpReque
       },
       (err) => forbidden(err as Error)
     ),
-    E.chain(accessToken => {
-      return E.tryCatch(
-        () => {
-          const decoded = verify(accessToken, process.env.RESET_PASSWORD_TOKEN_SECRET!)
+    TE.fromEither,
+    TE.chain(accessToken => {
+      return TE.tryCatch(
+        async () => {
+          const { payload } = await verifyResetPasswordToken(accessToken)
 
-          return ok({ ...httpBody, userId: decoded.sub })
+          return ok({ ...httpBody, userId: payload.sub })
         },
         (_err) => forbidden(new Error('Não foi possível recuperar a senha'))
       )
-    }),
-    TE.fromEither
+    })
   )
 
   return httpResponse

@@ -1,16 +1,17 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
+import { UUID } from 'io-ts-types'
 import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
-import { clientError } from '@core/infra/http_error_response'
+import { clientError, fail } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { createAccessToken } from '@account/services/token/create_access_token'
-import { userLoggerByPasswordPropsValidate } from '@account/services/validate/login/login_by_password_props'
-import { findUserByEmailDB } from '@account/domain/entities/findUser/find_user_by_email'
-import { verifyPassword } from '@account/services/password/verify'
-import { UUID } from 'io-ts-types'
+import { createAccessToken } from '@account/services/tokens/token/access'
+import { loginUserPropsValidate } from '@account/services/validate/user/login/login_by_password_props'
+import { findUserByEmailDB } from '@account/domain/entities/user/findUser/find_user_by_email'
 import { createRefreshTokenDB } from '@account/domain/entities/token/create_refresh_token'
-import { createRefreshAccessToken } from '@account/services/token/create_refresh_access_token'
+import { loginUserService } from '@account/services/user/login/login'
+import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
+import { userServices } from '@account/services/bill/user_service'
 
 export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
   const { email, password } = httpBody
@@ -19,57 +20,40 @@ export const userLoggerByPassword: Middleware = (_httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     unValidatedUser,
-    userLoggerByPasswordPropsValidate,
+    loginUserPropsValidate,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
-    TE.chain(({ email, password }) => {
+    TE.chain(validUser => {
       return pipe(
-        email,
-        findUserByEmailDB,
-        TE.chain(user => {
-          return TE.tryCatch(
-            async () => {
-              if (!user) {
-                throw new Error(`Oops! Nenhuma conta com o email ${email} encontrada`)
-              }
-
-              return user
-            },
-
-            notFoundUserError => clientError(notFoundUserError as Error)
-          )
-        }),
+        validUser,
+        loginUserService(findUserByEmailDB),
         TE.chain(user => {
           return pipe(
             user.id as UUID,
-            createRefreshTokenDB,
-            TE.map(refreshToken => {
-              return {
-                user,
-                refreshToken
-              }
+            createRefreshTokenService(createRefreshTokenDB),
+            TE.chain(refreshToken => {
+              return TE.tryCatch(
+                async () => {
+                  const services = userServices({
+                    ...user.bill,
+                    services: user.bill.services as string[]
+                  })
+
+                  const token = await createAccessToken({ ...user, services })
+
+                  return ok({
+                    name: user.name,
+                    token,
+                    refreshToken
+                  })
+                },
+
+                (err) => {
+                  console.log(err)
+                  return fail(new Error('Oops! Token não foi criado'))
+                }
+              )
             })
-          )
-        }),
-        TE.chain(({ user, refreshToken }) => {
-          return TE.tryCatch(
-            async () => {
-              if (!user.hash) throw new Error('Oops! Senha incorreta')
-
-              const result = await verifyPassword(password, user.hash)
-
-              if (!result) throw new Error('Oops! Senha incorreta')
-
-              const token = createAccessToken(user)
-
-              const refreshAccessToken = createRefreshAccessToken(refreshToken)
-
-              return ok({
-                token,
-                refreshToken: refreshAccessToken
-              })
-            },
-            (err) => clientError(err as Error)
           )
         })
       )

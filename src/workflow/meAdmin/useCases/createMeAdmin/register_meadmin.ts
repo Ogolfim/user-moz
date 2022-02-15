@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { createAccessToken } from '@meAdmin/services/token/create_access_token'
+import { createAccessToken } from '@meAdmin/services/token/access'
 import { meAdminRegisterPropsValidate } from '@meAdmin/services/validate/createUser/meadmin_register_props'
 import { createAdminDB } from '@meAdmin/domain/entities/createAdmin/create_admin'
 import { hashPassword } from '@meAdmin/services/password/hash'
@@ -38,12 +38,20 @@ export const meAdminRegister: Middleware = (_httpRequest, httpBody) => {
           return pipe(
             admin,
             createAdminDB,
-            TE.map(newAdmin => {
-              const token = createAccessToken(newAdmin)
+            TE.chain(newAdmin => {
+              return TE.tryCatch(
+                async () => {
+                  const token = await createAccessToken(newAdmin)
 
-              return ok({
-                token
-              })
+                  return ok({
+                    token
+                  })
+                },
+                (err) => {
+                  console.log(err)
+                  return fail(new Error('Oops! Token não foi criado'))
+                }
+              )
             })
           )
         })

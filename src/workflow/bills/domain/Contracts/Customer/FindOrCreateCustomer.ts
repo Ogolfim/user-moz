@@ -25,5 +25,5 @@ export type IFindOrCreateCustomerValidator = (data: UnValidatedCustomer) => E.Ei
 
 export type FindOrCreateCustomerDB = (customer: IFindOrCreateCustomer) => Promise<CustomerSchema>
 
-export type FindOrCreateCustomer = (customer: IFindOrCreateCustomer) =>
-(findOrCreateCustomerDB: FindOrCreateCustomerDB) => TE.TaskEither<HttpErrorResponse, CustomerSchema>
+export type FindOrCreateCustomer = (findOrCreateCustomerDB: FindOrCreateCustomerDB) =>
+(customer: IFindOrCreateCustomer) => TE.TaskEither<HttpErrorResponse, CustomerSchema>

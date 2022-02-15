@@ -19,7 +19,8 @@ export const findOrCreateCustomerUseCase: Middleware = (_httpRequest, httpBody) 
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain(validCustomer => pipe(
-      findOrCreateCustomer(validCustomer)(findOrCreateCustomerDB),
+      validCustomer,
+      findOrCreateCustomer(findOrCreateCustomerDB),
       TE.map(customer => {
         return ok(customer)
       })

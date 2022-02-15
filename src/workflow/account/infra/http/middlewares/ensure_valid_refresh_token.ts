@@ -1,15 +1,10 @@
-import { verify } from 'jsonwebtoken'
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { forbidden } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-
-type DecodedRefreshJwt = {
-  sub: string
-  id: string
-}
+import { verifyRefreshAccessToken } from '@account/services/tokens/token/refresh'
 
 export const ensureValidRefreshTokenMiddleware: Middleware = (httpRequest, httpBody) => {
   const bearerHeader = httpRequest.headers.authorization
@@ -27,17 +22,19 @@ export const ensureValidRefreshTokenMiddleware: Middleware = (httpRequest, httpB
       },
       (err) => forbidden(err as Error)
     ),
-    E.chain(refreshAccessToken => {
-      return E.tryCatch(
-        () => {
-          const { sub, id } = verify(refreshAccessToken, process.env.REFRESH_TOKEN_SECRET!) as DecodedRefreshJwt
+    TE.fromEither,
+    TE.chain(refreshAccessToken => {
+      return TE.tryCatch(
+        async () => {
+          const { payload } = await verifyRefreshAccessToken(refreshAccessToken)
+
+          const { sub, id } = payload
 
           return ok({ ...httpBody, userId: sub, id: id })
         },
         (_err) => forbidden(new Error('Refresh Access Token invalido'))
       )
-    }),
-    TE.fromEither
+    })
   )
 
   return httpResponse

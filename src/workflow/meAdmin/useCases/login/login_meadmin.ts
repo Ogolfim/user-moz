@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { clientError } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { createAccessToken } from '@meAdmin/services/token/create_access_token'
+import { createAccessToken } from '@meAdmin/services/token/access'
 import { meAdminLoggerPropsValidate } from '@meAdmin/services/validate/login/meadmin_logger_props'
 import { findAdminByEmailDB } from '@meAdmin/domain/entities/findAdmin/find_admin_by_email'
 import { verifyPassword } from '@meAdmin/services/password/verify'
@@ -43,7 +43,7 @@ export const meAdminLogger: Middleware = (_httpRequest, httpBody) => {
 
               if (!result) throw new Error('Oops! Senha incorreta')
 
-              const token = createAccessToken(admin)
+              const token = await createAccessToken(admin)
 
               return ok({
                 token

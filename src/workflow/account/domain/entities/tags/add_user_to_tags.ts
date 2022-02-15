@@ -3,7 +3,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { AddUserToTagsDB } from '@account/domain/contracts/Tag/add_user_to_tags'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { prisma } from '@account/infra/prisma/client'
-import { findUserByIdDB } from '@account/domain/entities/findUser/find_user_by_id'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const addUserToTagsDB: AddUserToTagsDB = ({ userId, tags }) => {
   const user = pipe(

@@ -10,39 +10,140 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Account Schemas
 model User {
   id                  String         @id @default(uuid())
   name                String 
   hash                String? 
   serverName          String?
-  email               String         @unique   
-  customer            Customer?
+  email               String         @unique 
+  accountType         String  
+  unipersonal         Unipersonal?
+  company             Company?
+  student             Student?
   tags                Tag[]
+  bill                Bill?
   refreshToken        UserRefreshToken?
-  services            UserService   @relation(fields: [serviceId], references: [id], onDelete: Cascade)
-  serviceId           Int
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @default(now())
 
   @@map("users")
 }
 
-model UserService {
+model Bill {
   id                  Int           @id @default(autoincrement())
-  webDownload         Boolean       @default(false)
-  apiAccess           Boolean       @default(false)
-  user                User?
-  createdAt           DateTime      @default(now())
-  updatedAt           DateTime      @default(now())
-  @@map("user_services")
+  services            Json  
+  amount              Decimal
+  nextBillableDay     DateTime
+  note                String
+  payment             Payment?
+  user                User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String     
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @default(now())
+
+  @@map("bills")
+}
+
+model Payment {
+  id                  Int             @id @default(autoincrement())
+  paymentStatus       String   
+  amount              Decimal      
+  paymentStartedAt    DateTime
+  paymentDeadline     DateTime
+  bill                Bill            @relation(fields: [billId], references: [id])
+  billId              Int
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @default(now())
+
+  @@map("payments")
+}
+
+model Unipersonal {
+  id                  String              @id @default(uuid())
+  phone               String
+  address             Address?
+  user                User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String         
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @default(now())
+
+  @@map("unipersonal_info")
+}
+
+model Company {
+  id                  String              @id @default(uuid())
+  name                String
+  phone               String
+  address             Address?
+  employees           Employee[]
+  user                User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String         
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @default(now())
+
+  @@map("conpany_info")
+}
+
+model Student {
+  id                  String              @id @default(uuid())
+  verifyed            Boolean
+  phone               String
+  bornAt              String
+  schoolName          String
+  studentId           String
+  address             Address?
+  user                User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String         
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @default(now())
+
+  @@map("student_info")
+}
+
+model Employee {
+  id                  String              @id @default(uuid())
+  verifyed            Boolean
+  name                String
+  email               String              @unique
+  phone               String?
+  hash                String
+  address             Address?
+  employer            Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId           String         
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @default(now())
+
+  @@map("employee_info")
+}
+
+model Address {
+  id                  String          @id @default(uuid())
+  country             String
+  provinceOrState     String          
+  city                String
+  address1            String
+  address2            String
+  postcode            String
+  unipersonal         Unipersonal?    @relation(fields: [unipersonalId], references: [id], onDelete: Cascade)
+  unipersonalId       String?  
+  company             Company?       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  companyId           String?  
+  student             Student?       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId           String?
+  employee            Employee?       @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  employeeId          String?
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @default(now())
+
+  @@map("addresses")
 }
 
 model UserRefreshToken {
   id                  String           @id @default(uuid())
   expiresIn           Int
-  user              User       @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId            String
+  user                User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId              String
+
   @@map("user_refresh_token")
 }
 
@@ -54,55 +155,6 @@ model Tag {
   updatedAt           DateTime        @default(now())
 
   @@map("tags")
-}
-
-// Bill Schamas
-model Customer {
-  id                  String              @id @default(uuid())
-  name                String
-  email               String
-  phone               String
-  accountType         String
-  user                User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId              String         
-  address             Address?
-  customerService     CustomerService?
-  createdAt           DateTime            @default(now())
-  updatedAt           DateTime            @default(now())
-
-  @@map("customers")
-}
-
-model CustomerService {
-  id                  Int      @id @default(autoincrement())
-  name                String
-  billStatus          String   
-  amount              Decimal      
-  paymentStartedAt    DateTime
-  paymentCompletedAt  DateTime? 
-  expireAt            DateTime
-  customer            Customer        @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId          String
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @default(now())
-
-  @@map("customer_services")
-}
-
-model Address {
-  id                  String          @id @default(uuid())
-  country             String
-  provinceOrState     String          @unique
-  city                String
-  address1            String
-  address2            String
-  postcode            String
-  customer            Customer        @relation(fields: [customerId], references: [id], onDelete: Cascade)
-  customerId          String
-  createdAt           DateTime        @default(now())
-  updatedAt           DateTime        @default(now())
-
-  @@map("addresses")
 }
 
 // MozEconomia Admin

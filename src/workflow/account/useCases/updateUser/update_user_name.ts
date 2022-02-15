@@ -4,8 +4,8 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { clientError } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { updateUserNamePropsValidate } from '@account/services/validate/updateUser/update_user_name_props'
-import { updateUserNameDB } from '@account/domain/entities/updateUser/update_user_name'
+import { updateUserNamePropsValidate } from '@account/services/validate/user/updateUser/update_user_name_props'
+import { updateUserNameDB } from '@account/domain/entities/user/updateUser/update_user_name'
 
 export const updateUserName: Middleware = (_httpRequest, httpBody) => {
   const { name, userId } = httpBody

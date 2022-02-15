@@ -13,8 +13,8 @@ import { resetPasswordController } from '@account/infra/http/controller/updateUs
 
 const AccountRouter = Router()
 
-AccountRouter.post('/login/form', userLoggerByPasswordController)
-AccountRouter.post('/login/oauth', userLoggerByOauthController)
+AccountRouter.post('/login', userLoggerByPasswordController)
+AccountRouter.post('/login/:serverName', userLoggerByOauthController)
 AccountRouter.post('/create', userRegisterController)
 
 AccountRouter.post('/tags', userAdderToTagsController)

@@ -12,6 +12,7 @@ dotenvExpand(config())
 const app = express()
 
 app.use(helmet())
+app.disable('etag')
 
 app.use(
   express.json({

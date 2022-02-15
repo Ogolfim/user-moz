@@ -3,7 +3,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { RemoveUserFromTagsDB } from '@account/domain/contracts/Tag/remove_user_from_tags'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { prisma } from '@account/infra/prisma/client'
-import { findUserByIdDB } from '@account/domain/entities/findUser/find_user_by_id'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const removeUserFromTagsDB: RemoveUserFromTagsDB = ({ userId, tags }) => {
   const user = pipe(

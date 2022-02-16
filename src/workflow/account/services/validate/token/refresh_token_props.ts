@@ -5,7 +5,7 @@ import { CreateRefreshTokenValidator } from '@account/domain/contracts/Token/cre
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { UUID } from 'io-ts-types'
 
-export const userRefreshTokenPropsValidate: CreateRefreshTokenValidator = (data) => {
+export const createRefreshTokenPropsValidator: CreateRefreshTokenValidator = (data) => {
   return pipe(
     data,
     UUID.decode,

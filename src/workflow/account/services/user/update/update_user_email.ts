@@ -23,7 +23,7 @@ export const updateUserEmailService: UpdateUserEmailService = (updateUserEmailDB
         return clientError(err as Error)
       }
     )),
-    TE.chain(user => TE.tryCatch(
+    TE.chain((_user) => TE.tryCatch(
       async () => await updateUserEmailDB({ email, userId }),
 
       (err) => {

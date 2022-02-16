@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { forbidden } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { verifyResetPasswordToken } from '@account/services/tokens/token/reset_password'
+import { verifyResetPasswordToken } from '@account/services/token/reset_password'
 
 export const ensureResetPasswordAuthenticatedMiddleware: Middleware = (httpRequest, httpBody) => {
   const bearerHeader = httpRequest.headers.authorization

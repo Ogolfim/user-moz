@@ -5,14 +5,12 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { createAccessToken } from '@account/services/tokens/token/access'
+import { createAccessToken } from '@account/services/token/access'
 import { loginUserPropsValidate } from '@account/services/validate/user/login/login_by_password_props'
 import { findUserByEmailDB } from '@account/domain/entities/user/findUser/find_user_by_email'
-import { createRefreshTokenDB } from '@account/domain/entities/token/create_refresh_token'
 import { loginUserService } from '@account/services/user/login/login'
-import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
+import { createRefreshAccessToken } from '@account/services/token/refresh'
 import { userServices } from '@account/services/bill/user_service'
-import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const loginUseCase: Middleware = (_httpRequest, httpBody) => {
   const { email, password } = httpBody
@@ -28,32 +26,22 @@ export const loginUseCase: Middleware = (_httpRequest, httpBody) => {
       return pipe(
         validUser,
         loginUserService(findUserByEmailDB),
-        TE.chain(user => {
-          return pipe(
-            user.id as UUID,
-            createRefreshTokenService(createRefreshTokenDB)(findUserByIdDB),
-            TE.chain(({ user, refreshToken }) => {
-              return TE.tryCatch(
-                async () => {
-                  const services = userServices(user.bill)
+        TE.chain(user => TE.tryCatch(
+          async () => {
+            const services = userServices(user.bill)
 
-                  const token = await createAccessToken({ ...user, services })
+            const refreshToken = await createRefreshAccessToken(user.id as UUID)
+            const token = await createAccessToken({ ...user, services })
 
-                  return ok({
-                    name: user.name,
-                    token,
-                    refreshToken
-                  })
-                },
-
-                (err) => {
-                  console.log(err)
-                  return fail(new Error('Oops! Token não foi criado'))
-                }
-              )
+            return ok({
+              name: user.name,
+              token,
+              refreshToken
             })
-          )
-        })
+          },
+
+          (_err) => fail(new Error('Oops! Token não foi criado'))
+        ))
       )
     })
   )

@@ -1,48 +1,54 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
+import { UUID } from 'io-ts-types'
 import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { userRefreshTokenPropsValidate } from '@account/services/validate/token/refresh_token_props'
-import { createAccessToken } from '@account/services/tokens/token/access'
-import { createRefreshTokenDB } from '@account/domain/entities/token/create_refresh_token'
+import { createRefreshTokenPropsValidator } from '@account/services/validate/token/refresh_token_props'
+import { createAccessToken } from '@account/services/token/access'
 
-import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
-import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 import { userServices } from '@account/services/bill/user_service'
+import { createRefreshAccessToken } from '@account/services/token/refresh'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
+import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
 
 export const refreshTokenUseCase: Middleware = (_httpRequest, httpBody) => {
   const { userId } = httpBody
 
   const httpResponse = pipe(
     userId,
-    userRefreshTokenPropsValidate,
+    createRefreshTokenPropsValidator,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
-    TE.chain(userId => pipe(
-      userId,
-      createRefreshTokenService(createRefreshTokenDB)(findUserByIdDB),
-      TE.chain(data => {
-        const { user, refreshToken } = data
+    TE.chain(userId => TE.tryCatch(
+      async () => await findUserByIdDB(userId),
+      () => fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))
+    )),
+    TE.chain(user => TE.tryCatch(
+      async () => {
+        if (!user) {
+          throw new EntityNotFoundError('Oops! A sua conta não foi encontrada')
+        }
 
-        return TE.tryCatch(
-          async () => {
-            const services = userServices(user.bill)
+        return user
+      },
 
-            const token = await createAccessToken({ ...user, services })
+      (err) => clientError(err as Error)
+    )),
+    TE.chain(user => TE.tryCatch(
+      async () => {
+        const services = userServices(user.bill)
 
-            return ok({
-              token,
-              refreshToken
-            })
-          },
-          (err) => {
-            console.log(err)
-            return fail(new Error('Oops! Token não foi criado'))
-          }
-        )
-      })
+        const refreshToken = await createRefreshAccessToken(user.id as UUID)
+        const token = await createAccessToken({ ...user, services })
+
+        return ok({
+          token,
+          refreshToken
+        })
+      },
+      (_err) => fail(new Error('Oops! Token não foi criado'))
     ))
   )
 

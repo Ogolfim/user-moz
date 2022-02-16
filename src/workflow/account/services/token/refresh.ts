@@ -1,9 +1,9 @@
-import { CreateRefreshAccessToken, VerifyRefreshAccessToken } from '@account/services/tokens/token/contracts/refresh'
+import { CreateRefreshAccessToken, VerifyRefreshAccessToken } from '@account/services/token/contracts/refresh'
 import { JwtPayload, sign, verify } from 'jsonwebtoken'
 
-export const createRefreshAccessToken: CreateRefreshAccessToken = async ({ id, userId }) => {
+export const createRefreshAccessToken: CreateRefreshAccessToken = async (userId) => {
   return sign(
-    { id },
+    { },
     process.env.REFRESH_TOKEN_SECRET,
     {
       expiresIn: '48h',

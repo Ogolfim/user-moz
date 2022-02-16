@@ -1,4 +1,4 @@
-import { CreateResetPasswordToken, VerifyResetPasswordToken } from '@account/services/tokens/token/contracts/reset_password'
+import { CreateResetPasswordToken, VerifyResetPasswordToken } from '@account/services/token/contracts/reset_password'
 import { JwtPayload, sign, verify } from 'jsonwebtoken'
 
 export const createResetPasswordToken: CreateResetPasswordToken = async (userId) => {

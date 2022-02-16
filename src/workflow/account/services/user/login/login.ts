@@ -9,7 +9,7 @@ import { PasswordVerifyError } from '@account/services/password/errors/hash_erro
 export const loginUserService: LoginUserService = (findUserByEmailDB) => ({ password, email }) => {
   return pipe(
     TE.tryCatch(
-      () => findUserByEmailDB(email),
+      async () => await findUserByEmailDB(email),
       err => {
         console.log(err)
         return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))

@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { forbidden } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { verifyAccessToken } from '@account/services/tokens/token/access'
+import { verifyAccessToken } from '@account/services/token/access'
 
 export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody) => {
   const bearerHeader = httpRequest.headers.authorization

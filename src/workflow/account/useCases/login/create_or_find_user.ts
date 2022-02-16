@@ -5,14 +5,12 @@ import { UUID } from 'io-ts-types'
 import { Middleware } from '@core/infra/middleware'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
-import { createAccessToken } from '@account/services/tokens/token/access'
-import { createRefreshTokenDB } from '@account/domain/entities/token/create_refresh_token'
+import { createAccessToken } from '@account/services/token/access'
 import { createOrFindUserPropsValidate } from '@account/services/validate/user/login/login_by_oauth_props'
 import { createOrFindUserDB } from '@account/domain/entities/user/create_or_find_user'
 import { createOrFindUserService } from '@account/services/user/login/create_or_find_user'
-import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
 import { userServices } from '@account/services/bill/user_service'
-import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
+import { createRefreshAccessToken } from '@account/services/token/refresh'
 
 export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
   const { name, email, accountType } = httpBody
@@ -29,32 +27,22 @@ export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
       return pipe(
         validUser,
         createOrFindUserService(createOrFindUserDB),
-        TE.chain(user => {
-          return pipe(
-            user.id as UUID,
-            createRefreshTokenService(createRefreshTokenDB)(findUserByIdDB),
-            TE.chain(({ user, refreshToken }) => {
-              return TE.tryCatch(
-                async () => {
-                  const services = userServices(user.bill)
+        TE.chain(user => TE.tryCatch(
+          async () => {
+            const services = userServices(user.bill)
 
-                  const token = await createAccessToken({ ...user, services })
+            const refreshToken = await createRefreshAccessToken(user.id as UUID)
+            const token = await createAccessToken({ ...user, services })
 
-                  return ok({
-                    name: user.name,
-                    token,
-                    refreshToken
-                  })
-                },
-
-                (err) => {
-                  console.log(err)
-                  return fail(new Error('Oops! Token não foi criado'))
-                }
-              )
+            return ok({
+              name: user.name,
+              token,
+              refreshToken
             })
-          )
-        })
+          },
+
+          (_err) => fail(new Error('Oops! Token não foi criado'))
+        ))
       )
     })
   )

@@ -1,4 +1,4 @@
-import { CreateEmailVerifyToken, VerifyEmailVerifyToken } from '@account/services/tokens/token/contracts/verify_email'
+import { CreateEmailVerifyToken, VerifyEmailVerifyToken } from '@account/services/token/contracts/verify_email'
 import { JwtPayload, sign, verify } from 'jsonwebtoken'
 
 export const createEmailVerifyToken: CreateEmailVerifyToken = async (userId) => {

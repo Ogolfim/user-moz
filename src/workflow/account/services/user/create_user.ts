@@ -4,7 +4,7 @@ import { clientError, fail } from '@core/infra/http_error_response'
 import { CreateUserService } from '@account/domain/contracts/User/CreateUser/create_user'
 import { hashPassword } from '@account/services/password/hash'
 import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
-import { PasswordHashError } from '../password/errors/hash_errors'
+import { PasswordHashError } from '@account/services/password/errors/hash_errors'
 
 export const createUserService: CreateUserService = (createUserDB) => (findUserByEmailDB) => (validUser) => {
   return pipe(
@@ -34,7 +34,12 @@ export const createUserService: CreateUserService = (createUserDB) => (findUserB
       }
     )),
     TE.chain(user => TE.tryCatch(
-      async () => await createUserDB(user),
+      async () => {
+        const re = await createUserDB(user)
+        console.log(re)
+
+        return re
+      },
       err => {
         console.log(err)
         return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))

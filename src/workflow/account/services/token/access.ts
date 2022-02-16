@@ -1,5 +1,5 @@
 import { verify, sign, JwtPayload } from 'jsonwebtoken'
-import { CreateAccessToken, VerifyAccessToken } from '@account/services/tokens/token/contracts/access'
+import { CreateAccessToken, VerifyAccessToken } from '@account/services/token/contracts/access'
 
 export const createAccessToken: CreateAccessToken = async ({ id, services }) => {
   return sign(

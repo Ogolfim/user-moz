@@ -6,6 +6,7 @@ import { Email } from '@account/domain/requiredFields/email'
 import { BillSchema, PaymentSchema, UserSchema } from '@account/infra/prisma/schemas'
 import { Password } from '@account/domain/requiredFields/password'
 import { LoginUserProps } from '@account/domain/requiredFields/Users/login_user_props'
+import { FindUserByEmailDB } from '@account/domain/contracts/User/FindUserByEmail'
 
 interface Bill extends BillSchema {
   payment: PaymentSchema
@@ -26,8 +27,6 @@ interface ILoginUser {
 }
 
 export type LoginUserValidator = (user: UnValidatedUser) => E.Either<ValidationError, LoginUserProps>
-
-export type FindUserByEmailDB = (email: Email) => Promise<User | null>
 
 export type LoginUserService = (findUserByEmailDB: FindUserByEmailDB) =>
 (user: ILoginUser) => TE.TaskEither<HttpErrorResponse, User>

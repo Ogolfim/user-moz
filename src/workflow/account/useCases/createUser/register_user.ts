@@ -12,6 +12,8 @@ import { createRefreshTokenDB } from '@account/domain/entities/token/create_refr
 import { userServices } from '@account/services/bill/user_service'
 import { createUserService } from '@account/services/user/create_user'
 import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
+import { findUserByEmailDB } from '@account/domain/entities/user/findUser/find_user_by_email'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const userRegister: Middleware = (_httpRequest, httpBody) => {
   const { name, email, password } = httpBody
@@ -25,11 +27,11 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
     TE.fromEither,
     TE.chain(validUser => pipe(
       validUser,
-      createUserService(createUserDB),
+      createUserService(createUserDB)(findUserByEmailDB),
       TE.chain(user => {
         return pipe(
           user.id as UUID,
-          createRefreshTokenService(createRefreshTokenDB),
+          createRefreshTokenService(createRefreshTokenDB)(findUserByIdDB),
           TE.chain(refreshToken => {
             return TE.tryCatch(
               async () => {

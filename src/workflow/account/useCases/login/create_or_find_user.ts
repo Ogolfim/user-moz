@@ -12,6 +12,7 @@ import { createOrFindUserDB } from '@account/domain/entities/user/create_or_find
 import { createOrFindUserService } from '@account/services/user/login/create_or_find_user'
 import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
 import { userServices } from '@account/services/bill/user_service'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
   const { name, email } = httpBody
@@ -31,7 +32,7 @@ export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
         TE.chain(user => {
           return pipe(
             user.id as UUID,
-            createRefreshTokenService(createRefreshTokenDB),
+            createRefreshTokenService(createRefreshTokenDB)(findUserByIdDB),
             TE.chain(refreshToken => {
               return TE.tryCatch(
                 async () => {

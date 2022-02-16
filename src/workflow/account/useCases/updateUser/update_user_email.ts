@@ -7,6 +7,7 @@ import { ok } from '@core/infra/http_success_response'
 import { updateUserEmailPropsValidate } from '@account/services/validate/user/updateUser/update_user_email_props'
 import { updateUserEmailDB } from '@account/domain/entities/user/updateUser/update_user_email'
 import { updateUserEmailService } from '@account/services/user/update/update_user_email'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const updateUserEmail: Middleware = (_httpRequest, httpBody) => {
   const { email, userId } = httpBody
@@ -20,7 +21,7 @@ export const updateUserEmail: Middleware = (_httpRequest, httpBody) => {
     TE.fromEither,
     TE.chain(validUser => pipe(
       validUser,
-      updateUserEmailService(updateUserEmailDB),
+      updateUserEmailService(updateUserEmailDB)(findUserByIdDB),
       TE.map(user => {
         const UserEmailUpdatedEvent = {
           email: user.email

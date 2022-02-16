@@ -7,6 +7,7 @@ import { created } from '@core/infra/http_success_response'
 import { removeUserFromTagsPropsValidator } from '@account/services/validate/tags/remove_user_from_tags_props'
 import { removeUserFromTagsDB } from '@account/domain/entities/tags/remove_user_from_tags'
 import { removeUserFromTagsService } from '@account/services/user/tags/remove_user_from_tags'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const removeUserFromTags: Middleware = (_httpRequest, httpBody) => {
   const { userId, tags } = httpBody
@@ -21,11 +22,11 @@ export const removeUserFromTags: Middleware = (_httpRequest, httpBody) => {
     TE.chain((validUserTags) => {
       return pipe(
         validUserTags,
-        removeUserFromTagsService(removeUserFromTagsDB),
-        TE.map(user => {
-          const { name, email } = user
+        removeUserFromTagsService(removeUserFromTagsDB)(findUserByIdDB),
+        TE.map(data => {
+          const { tags, user: { name, email } } = data
 
-          const event = {
+          const userRemovedFromTagsEvent = {
             name,
             email,
             tags
@@ -37,7 +38,7 @@ export const removeUserFromTags: Middleware = (_httpRequest, httpBody) => {
           //   value: JSON.stringify(event)
           // })
 
-          return created(event)
+          return created(userRemovedFromTagsEvent)
         })
       )
     })

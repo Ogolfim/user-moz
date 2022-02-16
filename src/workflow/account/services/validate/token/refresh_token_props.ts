@@ -1,25 +1,14 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/PathReporter'
-import { UserRefreshTokenPropsCodec } from '@account/domain/requiredFields/Users/refresh_token_props'
-import { UserRefreshTokenPropsValidate } from '@account/services/validate/contracts/Token/refresh_token_props_validate'
+import { CreateRefreshTokenValidator } from '@account/domain/contracts/Token/create_refresh_token'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
+import { UUID } from 'io-ts-types'
 
-export const userRefreshTokenPropsValidate: UserRefreshTokenPropsValidate = (data) => {
+export const userRefreshTokenPropsValidate: CreateRefreshTokenValidator = (data) => {
   return pipe(
-    E.tryCatch(
-      () => {
-        if (!data) throw new ValidationError('Refresh token invalido')
-
-        return data
-      },
-
-      (err) => err as ValidationError
-    ),
-    E.chain(data => pipe(
-      data,
-      UserRefreshTokenPropsCodec.decode,
-      E.mapLeft(errors => new ValidationError(failure(errors).join(', ') + ' invalido'))
-    ))
+    data,
+    UUID.decode,
+    E.mapLeft(errors => new ValidationError(failure(errors).join(', ') + ' invalido'))
   )
 }

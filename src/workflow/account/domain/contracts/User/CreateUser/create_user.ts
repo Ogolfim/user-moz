@@ -7,6 +7,7 @@ import { Name } from '@account/domain/requiredFields/name'
 import { Email } from '@account/domain/requiredFields/email'
 import { AccountType } from '@account/domain/requiredFields/account_type'
 import { BillSchema, PaymentSchema, UserSchema } from '@account/infra/prisma/schemas'
+import { FindUserByEmailDB } from '@account/domain/contracts/User/FindUserByEmail'
 
 interface UnValidatedUser {
   name: string
@@ -33,4 +34,5 @@ export type CreateUserValidator = (data: UnValidatedUser) => E.Either<Validation
 
 export type CreateUserDB = (user: ICreateUserDB) => Promise<User>
 
-export type CreateUserService = (createUserDB: CreateUserDB) => (user: CreateUserProps) => TE.TaskEither<HttpErrorResponse, User>
+export type CreateUserService = (createUserDB: CreateUserDB) =>
+(findUserByEmailDB: FindUserByEmailDB) => (user: CreateUserProps) => TE.TaskEither<HttpErrorResponse, User>

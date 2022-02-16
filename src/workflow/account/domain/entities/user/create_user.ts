@@ -2,7 +2,7 @@ import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { prisma } from '@account/infra/prisma/client'
-import { CreateUserDB } from '@account/domain/contracts/User/create_user'
+import { CreateUserDB } from '@account/domain/contracts/User/CreateUser/create_user'
 import { findUserByEmailDB } from '@account/domain/entities/user/findUser/find_user_by_email'
 
 export const createUserDB: CreateUserDB = ({ name, email, hash, accountType }) => {

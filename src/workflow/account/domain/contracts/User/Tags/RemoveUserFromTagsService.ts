@@ -3,9 +3,9 @@ import * as E from 'fp-ts/lib/Either'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { TagsProps } from '@account/domain/requiredFields/Users/tags_props'
-import { UserSchema } from '@account/infra/prisma/schemas'
-import { UUID } from 'io-ts-types'
 import { Tag } from '@account/domain/requiredFields/tag'
+import { FindUserByIdDB } from '@account/domain/contracts/User/FindUserById'
+import { BillSchema, PaymentSchema, UserSchema } from '@account/infra/prisma/schemas'
 
 interface UnValidatedUser {
   userId: string
@@ -15,14 +15,22 @@ interface UnValidatedUser {
   }[]
 }
 
+interface Bill extends BillSchema {
+  payment: PaymentSchema
+}
+
+interface User extends UserSchema {
+  bill: Bill
+}
+
 interface IRemoveUserFromTagsDB {
-  userId: UUID
+  user: User
   tags: Tag[]
 }
 
 export type RemoveUserFromTagsValidator = (data: UnValidatedUser) => E.Either<ValidationError, TagsProps>
 
-export type RemoveUserFromTagsDB = (user: IRemoveUserFromTagsDB) => Promise<UserSchema>
+export type RemoveUserFromTagsDB = (user: IRemoveUserFromTagsDB) => Promise<IRemoveUserFromTagsDB>
 
-export type RemoveUserFromTagsService = (removeUserFromTagsDB: RemoveUserFromTagsDB) =>
-(user: TagsProps) => TE.TaskEither<HttpErrorResponse, UserSchema>
+export type RemoveUserFromTagsService = (removeUserFromTagsDB: RemoveUserFromTagsDB) => (findUserByIdDB: FindUserByIdDB) =>
+(user: TagsProps) => TE.TaskEither<HttpErrorResponse, IRemoveUserFromTagsDB>

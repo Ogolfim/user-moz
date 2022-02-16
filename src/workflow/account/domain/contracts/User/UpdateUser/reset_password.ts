@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { ResetPasswordProps } from '@account/domain/requiredFields/Users/reset_password_props'
 import { UserSchema } from '@account/infra/prisma/schemas'
+import { FindUserByIdDB } from '@account/domain/contracts/User/FindUserById'
 
 interface UnValidatedUser {
   userId: string
@@ -21,4 +22,4 @@ export type UpdateUserPasswordValidator = (data: UnValidatedUser) => E.Either<Va
 export type UpdateUserPasswordDB = (user: IUpdateUserPasswordDB) => Promise<UserSchema>
 
 export type UpdateUserPasswordService = (updateUserPasswordDB: UpdateUserPasswordDB) =>
-(user: ResetPasswordProps) => TE.TaskEither<HttpErrorResponse, UserSchema>
+(findUserByIdDB: FindUserByIdDB) => (user: ResetPasswordProps) => TE.TaskEither<HttpErrorResponse, UserSchema>

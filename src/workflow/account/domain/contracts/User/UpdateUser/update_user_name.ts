@@ -6,6 +6,7 @@ import { UpdateUserNameProps } from '@account/domain/requiredFields/Users/update
 import { Name } from '@account/domain/requiredFields/Name'
 import { UserSchema } from '@account/infra/prisma/schemas'
 import { UUID } from 'io-ts-types'
+import { FindUserByIdDB } from '@account/domain/contracts/User/FindUserById'
 
 interface UnValidatedUser {
   userId: string
@@ -22,4 +23,4 @@ export type UpdateUserNameValidator = (data: UnValidatedUser) => E.Either<Valida
 export type UpdateUserNameDB = (user: IUpdateUserNameDB) => Promise<UserSchema>
 
 export type UpdateUserNameService = (updateUserEmailDB: UpdateUserNameDB) =>
-(user: UpdateUserNameProps) => TE.TaskEither<HttpErrorResponse, UserSchema>
+(findUserByIdDB: FindUserByIdDB) => (user: UpdateUserNameProps) => TE.TaskEither<HttpErrorResponse, UserSchema>

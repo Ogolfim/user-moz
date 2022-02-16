@@ -3,7 +3,7 @@ import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
 import { CreateUserPropsCodec } from '@account/domain/requiredFields/Users/register_user_props'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
-import { CreateUserValidator } from '@account/domain/contracts/User/create_user'
+import { CreateUserValidator } from '@account/domain/contracts/User/CreateUser/create_user'
 
 export const createUserPropsValidate: CreateUserValidator = (data) => {
   return pipe(

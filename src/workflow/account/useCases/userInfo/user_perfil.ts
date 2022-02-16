@@ -6,7 +6,6 @@ import { clientError } from '@core/infra/http_error_response'
 import { created } from '@core/infra/http_success_response'
 import { userPerfilPropsValidate } from '@account/services/validate/user/UserInfo/user_perfil_props'
 import { findAllUserInfoDB } from '@account/domain/entities/user/findUser/find_all_user_info'
-import { manyTagView } from '@account/services/views/tag'
 import { userInfoService } from '@account/services/user/userInfo/user_info'
 
 export const userPerfil: Middleware = (_httpRequest, httpBody) => {
@@ -35,13 +34,12 @@ export const userPerfil: Middleware = (_httpRequest, httpBody) => {
           )
         }),
         TE.map(user => {
-          const { name, email, tags } = user
+          const { name, email } = user
 
           return created(
             {
               name,
-              email,
-              tags: manyTagView(tags)
+              email
             })
         })
       )

@@ -8,6 +8,7 @@ import { ok } from '@core/infra/http_success_response'
 import { resetPasswordPropsValidate } from '@account/services/validate/user/updateUser/reset_password_props'
 import { resetPasswordDB } from '@account/domain/entities/user/updateUser/reset_password'
 import { updateUserPasswordService } from '@account/services/user/update/update_password'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const resetPassword: Middleware = (_httpRequest, httpBody) => {
   const { userId, password } = httpBody
@@ -22,7 +23,7 @@ export const resetPassword: Middleware = (_httpRequest, httpBody) => {
     TE.chain(validUser => {
       return pipe(
         validUser,
-        updateUserPasswordService(resetPasswordDB),
+        updateUserPasswordService(resetPasswordDB)(findUserByIdDB),
         TE.map(user => {
           const passwordUpdatedEvent = {
             name: user.name,

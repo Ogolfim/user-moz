@@ -1,24 +1,17 @@
-import * as TE from 'fp-ts/lib/TaskEither'
-import { fail } from '@core/infra/http_error_response'
 import { prisma } from '@account/infra/prisma/client'
-import { FindUserByEmailDB } from '@account/domain/contracts/User/Login/find_user_by_email'
+import { FindUserByEmailDB } from '@account/domain/contracts/User/FindUserByEmail'
 
-export const findUserByEmailDB: FindUserByEmailDB = (email) => {
-  const user = TE.tryCatch(
-    async () => {
-      return await prisma.user.findUnique({
-        where: { email },
+export const findUserByEmailDB: FindUserByEmailDB = async (email) => {
+  const user = await prisma.user.findUnique({
+    where: { email },
+    include: {
+      bill: {
         include: {
-          services: true
+          payment: true
         }
-      })
-    },
-
-    (err) => {
-      console.log(err)
-      return fail(new Error('Oops! Erro. Por favor contacte suporte'))
+      }
     }
-  )
+  })
 
   return user
 }

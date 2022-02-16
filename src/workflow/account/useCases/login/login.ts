@@ -12,6 +12,7 @@ import { createRefreshTokenDB } from '@account/domain/entities/token/create_refr
 import { loginUserService } from '@account/services/user/login/login'
 import { createRefreshTokenService } from '@account/services/tokens/create_refresh_token'
 import { userServices } from '@account/services/bill/user_service'
+import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const loginUseCase: Middleware = (_httpRequest, httpBody) => {
   const { email, password } = httpBody
@@ -30,7 +31,7 @@ export const loginUseCase: Middleware = (_httpRequest, httpBody) => {
         TE.chain(user => {
           return pipe(
             user.id as UUID,
-            createRefreshTokenService(createRefreshTokenDB),
+            createRefreshTokenService(createRefreshTokenDB)(findUserByIdDB),
             TE.chain(refreshToken => {
               return TE.tryCatch(
                 async () => {

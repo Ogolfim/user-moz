@@ -7,7 +7,7 @@ import { pipe } from 'fp-ts/lib/function'
 export const updateUserNameService: UpdateUserNameService = (updateNameDB) => (findUserByIdDB) => ({ name, userId }) => {
   return pipe(
     TE.tryCatch(
-      () => findUserByIdDB(userId),
+      async () => await findUserByIdDB(userId),
       err => {
         console.log(err)
         return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))

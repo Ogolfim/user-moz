@@ -26,7 +26,7 @@ export const ensureValidRefreshTokenMiddleware: Middleware = (httpRequest, httpB
     TE.chain(refreshAccessToken => {
       return TE.tryCatch(
         async () => {
-          const { payload } = await verifyRefreshAccessToken(refreshAccessToken)
+          const payload = await verifyRefreshAccessToken(refreshAccessToken)
 
           const { sub, id } = payload
 

@@ -39,7 +39,6 @@
     "helmet": "^4.6.0",
     "io-ts": "^2.2.16",
     "io-ts-types": "^0.5.16",
-    "jose": "^4.5.0",
     "jsonwebtoken": "^8.5.1",
     "kafkajs": "^1.15.0",
     "monocle-ts": "^2.3.12",

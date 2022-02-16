@@ -26,7 +26,7 @@ export const ensureAuthenticatedMiddleware: Middleware = (httpRequest, httpBody)
     TE.chain(accessToken => {
       return TE.tryCatch(
         async () => {
-          const { payload } = await verifyAccessToken(accessToken)
+          const payload = await verifyAccessToken(accessToken)
 
           return ok({ ...httpBody, userId: payload.sub })
         },

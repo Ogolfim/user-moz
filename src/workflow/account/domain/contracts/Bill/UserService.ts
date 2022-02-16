@@ -1,7 +1,6 @@
 import { BillSchema, PaymentSchema } from '@account/infra/prisma/schemas'
 
 interface Bill extends BillSchema {
-  services: string[]
   payment: PaymentSchema
 }
 
@@ -10,4 +9,4 @@ interface Service {
   webDownload: boolean
 }
 
-export type UserServices = (bill: Bill) => Service
+export type UserServices = (bill: Bill | null) => Service

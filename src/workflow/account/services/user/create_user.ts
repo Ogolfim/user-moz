@@ -34,7 +34,7 @@ export const createUserService: CreateUserService = (createUserDB) => (findUserB
       }
     )),
     TE.chain(user => TE.tryCatch(
-      () => createUserDB(user),
+      async () => await createUserDB(user),
       err => {
         console.log(err)
         return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))

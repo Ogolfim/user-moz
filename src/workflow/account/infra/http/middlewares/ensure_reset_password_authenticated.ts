@@ -26,7 +26,7 @@ export const ensureResetPasswordAuthenticatedMiddleware: Middleware = (httpReque
     TE.chain(accessToken => {
       return TE.tryCatch(
         async () => {
-          const { payload } = await verifyResetPasswordToken(accessToken)
+          const payload = await verifyResetPasswordToken(accessToken)
 
           return ok({ ...httpBody, userId: payload.sub })
         },

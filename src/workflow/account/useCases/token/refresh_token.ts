@@ -28,10 +28,7 @@ export const refreshTokenUseCase: Middleware = (_httpRequest, httpBody) => {
 
         return TE.tryCatch(
           async () => {
-            const services = userServices({
-              ...user.bill,
-              services: user.bill.services as string[]
-            })
+            const services = userServices(user.bill)
 
             const token = await createAccessToken({ ...user, services })
 

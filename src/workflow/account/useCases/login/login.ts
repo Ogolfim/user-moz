@@ -32,13 +32,10 @@ export const loginUseCase: Middleware = (_httpRequest, httpBody) => {
           return pipe(
             user.id as UUID,
             createRefreshTokenService(createRefreshTokenDB)(findUserByIdDB),
-            TE.chain(refreshToken => {
+            TE.chain(({ user, refreshToken }) => {
               return TE.tryCatch(
                 async () => {
-                  const services = userServices({
-                    ...user.bill,
-                    services: user.bill.services as string[]
-                  })
+                  const services = userServices(user.bill)
 
                   const token = await createAccessToken({ ...user, services })
 

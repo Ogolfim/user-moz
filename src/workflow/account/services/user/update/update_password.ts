@@ -9,7 +9,7 @@ import { PasswordHashError } from '@account/services/password/errors/hash_errors
 export const updateUserPasswordService: UpdateUserPasswordService = (updateUserPasswordDB) => (findUserByIdDB) => ({ userId, password }) => {
   return pipe(
     TE.tryCatch(
-      () => findUserByIdDB(userId),
+      async () => await findUserByIdDB(userId),
       err => {
         console.log(err)
         return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))

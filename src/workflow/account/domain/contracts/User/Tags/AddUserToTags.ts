@@ -6,6 +6,7 @@ import { TagsProps } from '@account/domain/requiredFields/Users/tags_props'
 import { Tag } from '@account/domain/requiredFields/tag'
 import { FindUserByIdDB } from '@account/domain/contracts/User/FindUserById'
 import { BillSchema, PaymentSchema, UserSchema } from '@account/infra/prisma/schemas'
+import { UUID } from 'io-ts-types'
 
 interface UnValidatedUser {
   userId: string
@@ -24,6 +25,11 @@ interface User extends UserSchema {
 }
 
 interface IAddUserToTagsDB {
+  userId: UUID
+  tags: Tag[]
+}
+
+interface OutputAddUserToTags {
   user: User
   tags: Tag[]
 }
@@ -33,4 +39,4 @@ export type AddUserToTagsValidator = (data: UnValidatedUser) => E.Either<Validat
 export type AddUserToTagsDB = (user: IAddUserToTagsDB) => Promise<IAddUserToTagsDB>
 
 export type AddUserToTagsService = (addUserToTagsDB: AddUserToTagsDB) => (findUserByIdDB: FindUserByIdDB) =>
-(user: TagsProps) => TE.TaskEither<HttpErrorResponse, IAddUserToTagsDB>
+(user: TagsProps) => TE.TaskEither<HttpErrorResponse, OutputAddUserToTags>

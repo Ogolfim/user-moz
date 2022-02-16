@@ -1,5 +1,5 @@
 import { UserSchema } from '@account/infra/prisma/schemas'
-import { JWTVerifyResult } from 'jose'
+import { JwtPayload } from 'jsonwebtoken'
 
 interface User extends UserSchema {
   services: {
@@ -9,4 +9,4 @@ interface User extends UserSchema {
 }
 
 export type CreateAccessToken = (user: User) => Promise<string>
-export type VerifyAccessToken = (token: string) => Promise<JWTVerifyResult>
+export type VerifyAccessToken = (token: string) => Promise<JwtPayload>

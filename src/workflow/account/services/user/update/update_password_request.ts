@@ -7,7 +7,7 @@ import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities
 export const updateUserPasswordRequestService: UpdateUserPasswordRequestService = (findUserByEmailDB) => (email) => {
   return pipe(
     TE.tryCatch(
-      () => findUserByEmailDB(email),
+      async () => await findUserByEmailDB(email),
       err => {
         console.log(err)
         return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))

@@ -15,10 +15,10 @@ import { userServices } from '@account/services/bill/user_service'
 import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 
 export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
-  const { name, email } = httpBody
+  const { name, email, accountType } = httpBody
   const { serverName } = httpRequest.params
 
-  const unValidatedUser = { name, email, serverName }
+  const unValidatedUser = { name, email, serverName, accountType }
 
   const httpResponse = pipe(
     unValidatedUser,
@@ -33,13 +33,10 @@ export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
           return pipe(
             user.id as UUID,
             createRefreshTokenService(createRefreshTokenDB)(findUserByIdDB),
-            TE.chain(refreshToken => {
+            TE.chain(({ user, refreshToken }) => {
               return TE.tryCatch(
                 async () => {
-                  const services = userServices({
-                    ...user.bill,
-                    services: user.bill.services as string[]
-                  })
+                  const services = userServices(user.bill)
 
                   const token = await createAccessToken({ ...user, services })
 

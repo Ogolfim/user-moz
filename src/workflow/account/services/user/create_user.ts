@@ -3,7 +3,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { CreateUserService } from '@account/domain/contracts/User/CreateUser/create_user'
 import { hashPassword } from '@account/services/password/hash'
-import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
+import { DatabaseFailError, EntityAlreadyExistError } from '@account/domain/entities/errors/db_error'
 import { PasswordHashError } from '@account/services/password/errors/hash_errors'
 
 export const createUserService: CreateUserService = (createUserDB) => (findUserByEmailDB) => (validUser) => {
@@ -13,7 +13,7 @@ export const createUserService: CreateUserService = (createUserDB) => (findUserB
         const userFound = await findUserByEmailDB(validUser.email)
 
         if (userFound) {
-          throw new EntityNotFoundError('Oops! A sua não foi encontrada')
+          throw new EntityAlreadyExistError(`Oops! Já existe uma conta com email ${validUser.email}`)
         }
 
         return userFound

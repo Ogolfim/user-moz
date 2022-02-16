@@ -13,3 +13,10 @@ export class EntityNotFoundError extends Error implements DomainError {
     this.name = 'EntityNotFound'
   }
 }
+
+export class EntityAlreadyExistError extends Error implements DomainError {
+  constructor (message: string) {
+    super(message)
+    this.name = 'EntityAlreadyExist'
+  }
+}

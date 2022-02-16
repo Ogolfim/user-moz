@@ -2,10 +2,10 @@ import { CreateResetPasswordToken, VerifyResetPasswordToken } from '@meAdmin/ser
 
 import { verify, sign } from 'jsonwebtoken'
 
-export const createAccessToken: CreateResetPasswordToken = async (userId) => {
+export const createResetPasswordToken: CreateResetPasswordToken = async (userId) => {
   return sign(
     {},
-    process.env.REFRESH_TOKEN_SECRET,
+    process.env.RESET_PASSWORD_TOKEN_SECRET,
     {
       expiresIn: '10m',
       subject: userId
@@ -14,7 +14,7 @@ export const createAccessToken: CreateResetPasswordToken = async (userId) => {
 }
 
 export const verifyAccessToken: VerifyResetPasswordToken = async (token: string) => {
-  const result = verify(token, process.env.ACCESS_TOKEN_SECRET)
+  const result = verify(token, process.env.RESET_PASSWORD_TOKEN_SECRET)
 
   return result
 }

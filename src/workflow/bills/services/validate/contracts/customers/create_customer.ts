@@ -1,7 +1,6 @@
 import * as E from 'fp-ts/lib/Either'
 import { ICreateCustomer } from '@bills/domain/requiredFields/customers/create_customer'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
-
 interface Address {
   country: string
   provinceOrState: string

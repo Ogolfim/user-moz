@@ -1,6 +1,7 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '@core/infra/http_error_response'
 import { UpdateUserNameService } from '@account/domain/contracts/User/UpdateUser/update_user_name'
+import { DatabaseFailError } from '@account/domain/entities/errors/db_error'
 
 export const updateUserNameService: UpdateUserNameService = (updateNameDB) => (user) => {
   return TE.tryCatch(
@@ -8,7 +9,7 @@ export const updateUserNameService: UpdateUserNameService = (updateNameDB) => (u
 
     (err) => {
       console.log(err)
-      return fail(new Error('Oops! Erro. Por favor contacte suporte'))
+      return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))
     }
   )
 }

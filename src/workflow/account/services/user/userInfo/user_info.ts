@@ -1,6 +1,7 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '@core/infra/http_error_response'
 import { UserInfoService } from '@account/domain/contracts/User/UserInfo/user_info'
+import { DatabaseFailError } from '@account/domain/entities/errors/db_error'
 
 export const userInfoService: UserInfoService = (userInfoDB) => (userId) => {
   return TE.tryCatch(
@@ -8,7 +9,7 @@ export const userInfoService: UserInfoService = (userInfoDB) => (userId) => {
 
     (err) => {
       console.log(err)
-      return fail(new Error('Oops! Erro. Por favor contacte suporte'))
+      return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))
     }
   )
 }

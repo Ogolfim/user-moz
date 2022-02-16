@@ -21,5 +21,5 @@ export type UpdateUserEmailValidator = (data: UnValidatedUser) => E.Either<Valid
 
 export type UpdateUserEmailDB = (user: IUpdateUserEmailDB) => Promise<UserSchema>
 
-export type UpdateUserEmailService = (createUserDB: UpdateUserEmailDB) =>
+export type UpdateUserEmailService = (updateUserEmailDB: UpdateUserEmailDB) =>
 (user: UpdateUserEmailProps) => TE.TaskEither<HttpErrorResponse, UserSchema>

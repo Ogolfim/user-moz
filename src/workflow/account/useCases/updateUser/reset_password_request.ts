@@ -9,6 +9,7 @@ import { ok } from '@core/infra/http_success_response'
 import { resetPasswordRequestPropsValidate } from '@account/services/validate/user/updateUser/reset_password_request_props'
 import { findUserByEmailDB } from '@account/domain/entities/user/findUser/find_user_by_email'
 import { createResetPasswordToken } from '@account/services/tokens/token/reset_password'
+import { updateUserPasswordRequestService } from '@account/services/user/update/update_password_request'
 
 export const resetPasswordRequest: Middleware = (_httpRequest, httpBody) => {
   const { email } = httpBody
@@ -20,7 +21,7 @@ export const resetPasswordRequest: Middleware = (_httpRequest, httpBody) => {
     TE.fromEither,
     TE.chain(validEmail => pipe(
       validEmail,
-      findUserByEmailDB,
+      updateUserPasswordRequestService(findUserByEmailDB),
       TE.chain(user => {
         return TE.tryCatch(
           async () => {

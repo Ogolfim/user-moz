@@ -1,6 +1,7 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '@core/infra/http_error_response'
 import { RemoveUserFromTagsService } from '@account/domain/contracts/User/Tags/RemoveUserFromTagsService'
+import { DatabaseFailError } from '@account/domain/entities/errors/db_error'
 
 export const removeUserFromTagsService: RemoveUserFromTagsService = (removeUserFromTagsDB) => (validUser) => {
   return TE.tryCatch(
@@ -8,7 +9,7 @@ export const removeUserFromTagsService: RemoveUserFromTagsService = (removeUserF
 
     (err) => {
       console.log(err)
-      return fail(new Error('Oops! Erro. Por favor contacte suporte'))
+      return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))
     }
   )
 }

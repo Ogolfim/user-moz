@@ -1,19 +1,18 @@
-import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { fail } from '@core/infra/http_error_response'
-import { CreateUserService } from '@account/domain/Contracts/User/create_user'
+import { UpdateUserPasswordService } from '@account/domain/contracts/User/UpdateUser/reset_password'
 import { hashPassword } from '@account/services/password/hash'
 import { DatabaseFailError } from '@account/domain/entities/errors/db_error'
-import { PasswordHashError } from '../password/errors/hash_errors'
+import { pipe } from 'fp-ts/lib/function'
+import { PasswordHashError } from '@account/services/password/errors/hash_errors'
 
-export const createUserService: CreateUserService = (createUserDB) => (validUser) => {
+export const updateUserPasswordService: UpdateUserPasswordService = (updateUserPasswordDB) => ({ userId, password }) => {
   return pipe(
     TE.tryCatch(
       async () => {
-        const { name, email, password, accountType } = validUser
         const hash = await hashPassword(password)
 
-        return { name, email, accountType, hash }
+        return { userId, hash }
       },
 
       (err) => {
@@ -22,7 +21,7 @@ export const createUserService: CreateUserService = (createUserDB) => (validUser
       }
     ),
     TE.chain(user => TE.tryCatch(
-      () => createUserDB(user),
+      () => updateUserPasswordDB(user),
       err => {
         console.log(err)
         return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))

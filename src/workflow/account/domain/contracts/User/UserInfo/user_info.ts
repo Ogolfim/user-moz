@@ -1,18 +1,31 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import * as E from 'fp-ts/lib/Either'
+import { UUID } from 'io-ts-types'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
-import { StudentSchema, CompanySchema, UnipersonalSchema } from '@account/infra/prisma/schemas'
-import { UUID } from 'io-ts-types'
+import { StudentSchema, CompanySchema, EmployeeSchema, UnipersonalSchema, AddressSchema } from '@account/infra/prisma/schemas'
+
+interface Unipersonal extends UnipersonalSchema {
+  address: AddressSchema
+}
+
+interface Student extends StudentSchema {
+  address: AddressSchema
+}
+
+interface Company extends CompanySchema {
+  address: AddressSchema
+  employees: EmployeeSchema[]
+}
 
 interface User {
   accountType: string;
-  student?: StudentSchema
-  company?: CompanySchema
-  unipersonal?: UnipersonalSchema
+  student: Student | null
+  company: Company | null
+  unipersonal: Unipersonal | null
 }
 
-export type getUserInfoValidator = (userId: string) => E.Either<ValidationError, UUID>
+export type GetUserInfoValidator = (userId: string) => E.Either<ValidationError, UUID>
 
 export type GetUserInfoDB = (userId: UUID) => Promise<User>
 

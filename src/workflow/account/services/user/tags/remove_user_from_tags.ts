@@ -1,5 +1,5 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { clientError, fail } from '@core/infra/http_error_response'
+import { clientError, fail, notFound } from '@core/infra/http_error_response'
 import { RemoveUserFromTagsService } from '@account/domain/contracts/User/Tags/RemoveUserFromTagsService'
 import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
 import { pipe } from 'fp-ts/lib/function'
@@ -22,7 +22,7 @@ export const removeUserFromTagsService: RemoveUserFromTagsService = (removeUserF
 
         return userFound
       },
-      (err) => clientError(err as Error)
+      (err) => notFound(err as Error)
     )),
     TE.chain(userFound => TE.tryCatch(
       async () => {

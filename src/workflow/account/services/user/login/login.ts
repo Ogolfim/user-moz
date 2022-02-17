@@ -1,5 +1,5 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { clientError, fail } from '@core/infra/http_error_response'
+import { clientError, fail, notFound } from '@core/infra/http_error_response'
 import { LoginUserService } from '@account/domain/Contracts/User/Login/LoginUser'
 import { pipe } from 'fp-ts/lib/function'
 import { verifyPassword } from '@account/services/password/verify'
@@ -23,7 +23,7 @@ export const loginUserService: LoginUserService = (findUserByEmailDB) => ({ pass
 
         return user
       },
-      notFoundError => clientError(notFoundError as Error)
+      notFoundError => notFound(notFoundError as Error)
     )),
     TE.chain((user) => {
       return TE.tryCatch(

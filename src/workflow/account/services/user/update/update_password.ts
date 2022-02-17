@@ -1,6 +1,6 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { clientError, fail } from '@core/infra/http_error_response'
+import { fail, notFound } from '@core/infra/http_error_response'
 import { UpdateUserPasswordService } from '@account/domain/contracts/User/UpdateUser/reset_password'
 import { hashPassword } from '@account/services/password/hash'
 import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
@@ -22,7 +22,7 @@ export const updateUserPasswordService: UpdateUserPasswordService = (updateUserP
         return user
       },
       err => {
-        return clientError(err as Error)
+        return notFound(err as Error)
       }
     )),
     TE.chain((_user) => TE.tryCatch(

@@ -6,9 +6,22 @@ export const getUserInfoDB: GetUserInfoDB = async (userId) => {
     where: { id: userId },
     select: {
       accountType: true,
-      student: true,
-      company: true,
-      unipersonal: true
+      student: {
+        include: {
+          address: true
+        }
+      },
+      company: {
+        include: {
+          employees: true,
+          address: true
+        }
+      },
+      unipersonal: {
+        include: {
+          address: true
+        }
+      }
     }
   })
 

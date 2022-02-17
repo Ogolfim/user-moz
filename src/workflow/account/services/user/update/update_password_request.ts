@@ -1,5 +1,5 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { clientError, fail } from '@core/infra/http_error_response'
+import { fail, notFound } from '@core/infra/http_error_response'
 import { UpdateUserPasswordRequestService } from '@account/domain/contracts/User/UpdateUser/update_user_password_request'
 import { pipe } from 'fp-ts/lib/function'
 import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
@@ -20,7 +20,7 @@ export const updateUserPasswordRequestService: UpdateUserPasswordRequestService 
         return user
       },
       err => {
-        return clientError(err as Error)
+        return notFound(err as Error)
       }
     ))
   )

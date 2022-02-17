@@ -3,8 +3,8 @@ import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/middleware'
 import { clientError, notFound } from '@core/infra/http_error_response'
-import { userPerfilPropsValidate } from '@account/services/validate/user/UserInfo/user_perfil_props'
-import { getUserInfoDB } from '@account/domain/entities/user/findUser/get_user_info'
+import { getUserInfoPropsValidate } from '@account/services/validate/user/userInfo/get_user_info_props'
+import { getUserInfoDB } from '@account/domain/entities/user/userInfo/get_user_info'
 import { userInfoService } from '@account/services/user/userInfo/user_info'
 import { unipersonalView } from '@account/services/views/userInfo/unipersonal'
 import { accountTypes } from '@account/domain/entities/db'
@@ -19,26 +19,13 @@ export const getUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
 
   const httpResponse = pipe(
     userId,
-    userPerfilPropsValidate,
+    getUserInfoPropsValidate,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain((userId) => {
       return pipe(
         userId,
         userInfoService(getUserInfoDB),
-        TE.chain(user => {
-          return TE.tryCatch(
-            async () => {
-              if (!user) {
-                throw new Error('Oops! Conta não encontrada')
-              }
-
-              return user
-            },
-
-            notFoundUserError => clientError(notFoundUserError as Error)
-          )
-        }),
         TE.chain(user => TE.tryCatch(
           async () => {
             const { unipersonal, company, student, accountType, employee } = user

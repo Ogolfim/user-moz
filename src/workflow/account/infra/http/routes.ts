@@ -6,6 +6,7 @@ import { removeUserFromTagsController } from '@account/infra/http/controller/tag
 import { userLoggerByOauthController } from '@account/infra/http/controller/login/login_by_oauth'
 import { userLoggerByPasswordController } from '@account/infra/http/controller/login/login_by_password'
 import { getUserInfoController } from '@account/infra/http/controller/userInfo/get_user_info'
+import { createUserInfoController } from '@account/infra/http/controller/userInfo/create_user_info'
 import { userRegisterController } from '@account/infra/http/controller/createUser/user_register'
 import { updateUserNameController } from '@account/infra/http/controller/updateUser/update_user_name'
 import { updateUserEmailController } from '@account/infra/http/controller/updateUser/update_user_email'
@@ -23,6 +24,8 @@ AccountRouter.post('/tags', userAdderToTagsController)
 AccountRouter.put('/tags', removeUserFromTagsController)
 
 AccountRouter.get('/info', getUserInfoController)
+AccountRouter.post('/info', createUserInfoController)
+
 AccountRouter.get('/token', refreshTokenController)
 
 AccountRouter.post('/password', resetPasswordRequestController)

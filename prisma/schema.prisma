@@ -102,7 +102,7 @@ model Company {
 
 model Student {
   id                  String              @id @default(uuid())
-  verified            Boolean
+  verified            Boolean             @default(false)
   phone               String
   bornAt              String
   schoolName          String
@@ -119,10 +119,10 @@ model Student {
 
 model Employee {
   id                  String              @id @default(uuid())
-  verified            Boolean
-  user                User            @relation(fields: [userId], references: [id])
+  verified            Boolean             @default(false)
+  user                User                @relation(fields: [userId], references: [id])
   userId              String  
-  employer            Company            @relation(fields: [companyId], references: [id])
+  employer            Company             @relation(fields: [companyId], references: [id])
   companyId           String         
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @default(now())

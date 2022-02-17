@@ -1,8 +1,8 @@
 import { prisma } from '@account/infra/prisma/client'
 import { CreateUserDB } from '@account/domain/contracts/User/CreateUser/create_user'
 
-export const createUserDB: CreateUserDB = ({ name, email, hash, accountType }) => {
-  return prisma.user.create({
+export const createUserDB: CreateUserDB = async ({ name, email, hash, accountType }) => {
+  return await prisma.user.create({
     data: {
       name,
       email,

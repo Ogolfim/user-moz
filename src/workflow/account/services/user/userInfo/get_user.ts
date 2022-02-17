@@ -1,13 +1,13 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { clientError, fail } from '@core/infra/http_error_response'
-import { getUserInfoService } from '@account/domain/contracts/User/UserInfo/UserInfo'
+import { GetUserService } from '@account/domain/contracts/User/UserInfo/GetUser'
 import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
 import { pipe } from 'fp-ts/lib/function'
 
-export const userInfoService: getUserInfoService = (getUserInfoDB) => (userId) => {
+export const getUserService: GetUserService = (getUserByIdDB) => (userId) => {
   return pipe(
     TE.tryCatch(
-      async () => await getUserInfoDB(userId),
+      async () => await getUserByIdDB(userId),
 
       (err) => {
         console.log(err)
@@ -18,7 +18,7 @@ export const userInfoService: getUserInfoService = (getUserInfoDB) => (userId) =
       return TE.tryCatch(
         async () => {
           if (!user) {
-            throw new EntityNotFoundError('Oops! Conta não encontrada')
+            throw new EntityNotFoundError('Oops! A sua conta não foi encontrada')
           }
 
           return user

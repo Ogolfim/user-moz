@@ -1,5 +1,5 @@
 import { prisma } from '@account/infra/prisma/client'
-import { GetUserInfoDB } from '@account/domain/contracts/User/UserInfo/user_info'
+import { GetUserInfoDB } from '@account/domain/contracts/User/UserInfo/UserInfo'
 
 export const getUserInfoDB: GetUserInfoDB = async (userId) => {
   const user = await prisma.user.findUnique({

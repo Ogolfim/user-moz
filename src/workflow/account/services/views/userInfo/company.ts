@@ -35,9 +35,6 @@ function employeesView (employees: EmployeeSchema[]): IEmployee[] {
   return employees.map(employee => ({
     id: employee.id,
     verified: employee.verified,
-    name: employee.name,
-    email: employee.email,
-    companyId: employee.companyId,
-    phone: employee.phone
+    companyId: employee.companyId
   }))
 }

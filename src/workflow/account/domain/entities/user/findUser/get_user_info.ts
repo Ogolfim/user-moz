@@ -11,6 +11,7 @@ export const getUserInfoDB: GetUserInfoDB = async (userId) => {
           address: true
         }
       },
+      employee: true,
       company: {
         include: {
           employees: true,

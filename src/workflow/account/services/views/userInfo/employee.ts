@@ -1,27 +1,17 @@
-import { AddressSchema, EmployeeSchema } from '@account/infra/prisma/schemas'
-
-interface IEmployee extends EmployeeSchema {
-  address: AddressSchema
-}
+import { EmployeeSchema } from '@account/infra/prisma/schemas'
 
 export interface Employee {
   verified: boolean
-  name: string
-  email: string
   companyId: string
-  phone: string
 }
 
-export const employeeView = (employee: IEmployee): Employee => {
+export const employeeView = (employee: EmployeeSchema): Employee => {
   return {
     verified: employee.verified,
-    name: employee.name,
-    email: employee.email,
-    companyId: employee.companyId,
-    phone: employee.phone
+    companyId: employee.companyId
   }
 }
 
-export const manyEmployeeView = (employees: IEmployee[]): Employee[] => {
+export const manyEmployeeView = (employees: EmployeeSchema[]): Employee[] => {
   return employees.map(employee => employeeView(employee))
 }

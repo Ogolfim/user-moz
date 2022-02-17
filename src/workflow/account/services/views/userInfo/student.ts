@@ -14,7 +14,7 @@ export interface Student {
   address: Address
 }
 
-export const StudentView = (student: IStudent): Student => {
+export const studentView = (student: IStudent): Student => {
   return {
     verified: student.verified,
     bornAt: student.bornAt,
@@ -26,5 +26,5 @@ export const StudentView = (student: IStudent): Student => {
 }
 
 export const manyStudentView = (students: IStudent[]): Student[] => {
-  return students.map(student => StudentView(student))
+  return students.map(student => studentView(student))
 }

@@ -5,11 +5,7 @@ export const findUserByEmailDB: FindUserByEmailDB = async (email) => {
   const user = await prisma.user.findUnique({
     where: { email },
     include: {
-      bill: {
-        include: {
-          payment: true
-        }
-      }
+      userServices: true
     }
   })
 

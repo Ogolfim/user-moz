@@ -1,12 +1,8 @@
 import { Email } from '@account/domain/requiredFields/email'
-import { BillSchema, PaymentSchema, UserSchema } from '@account/infra/prisma/schemas'
-
-interface Bill extends BillSchema {
-  payment: PaymentSchema
-}
+import { UserSchema, UserServicesSchema } from '@account/infra/prisma/schemas'
 
 interface User extends UserSchema {
-  bill: Bill
+  userService: UserServicesSchema
 }
 
 export type FindUserByEmailDB = (email: Email) => Promise<User | null>

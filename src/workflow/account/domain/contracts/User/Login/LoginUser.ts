@@ -3,17 +3,13 @@ import * as E from 'fp-ts/lib/Either'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { Email } from '@account/domain/requiredFields/email'
-import { BillSchema, PaymentSchema, UserSchema } from '@account/infra/prisma/schemas'
+import { UserSchema, UserServicesSchema } from '@account/infra/prisma/schemas'
 import { Password } from '@account/domain/requiredFields/password'
 import { LoginUserProps } from '@account/domain/requiredFields/Users/login_user_props'
 import { FindUserByEmailDB } from '@account/domain/contracts/User/FindUserByEmail'
 
-interface Bill extends BillSchema {
-  payment: PaymentSchema
-}
-
 interface User extends UserSchema {
-  bill: Bill
+  userService: UserServicesSchema
 }
 
 interface UnValidatedUser {

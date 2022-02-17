@@ -6,7 +6,7 @@ import { CreateUserProps } from '@account/domain/requiredFields/Users/register_u
 import { Name } from '@account/domain/requiredFields/name'
 import { Email } from '@account/domain/requiredFields/email'
 import { AccountType } from '@account/domain/requiredFields/account_type'
-import { BillSchema, PaymentSchema, UserSchema } from '@account/infra/prisma/schemas'
+import { UserSchema, UserServicesSchema } from '@account/infra/prisma/schemas'
 import { FindUserByEmailDB } from '@account/domain/contracts/User/FindUserByEmail'
 
 interface UnValidatedUser {
@@ -22,12 +22,8 @@ interface ICreateUserDB {
   accountType: AccountType
 }
 
-interface Bill extends BillSchema {
-  payment: PaymentSchema
-}
-
 interface User extends UserSchema {
-  bill: Bill
+  userService: UserServicesSchema
 }
 
 export type CreateUserValidator = (data: UnValidatedUser) => E.Either<ValidationError, CreateUserProps>

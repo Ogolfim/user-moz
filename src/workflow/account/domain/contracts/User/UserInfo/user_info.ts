@@ -23,6 +23,7 @@ interface User {
   student: Student | null
   company: Company | null
   unipersonal: Unipersonal | null
+  employee: EmployeeSchema | null
 }
 
 export type GetUserInfoValidator = (userId: string) => E.Either<ValidationError, UUID>

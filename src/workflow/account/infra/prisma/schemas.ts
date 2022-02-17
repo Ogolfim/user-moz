@@ -1,4 +1,4 @@
-import { Tag, User, UserRefreshToken, Bill, Payment } from '@prisma/client'
+import { Tag, User, UserRefreshToken, Bill, Payment, Unipersonal, Company, Student, Address, Employee } from '@prisma/client'
 
 export type UserSchema = User
 
@@ -13,3 +13,10 @@ export type ServiceSchema = {
   api: string
   webDownload: string
 }
+
+export type AddressSchema = Address
+
+export type CompanySchema = Company
+export type UnipersonalSchema = Unipersonal
+export type StudentSchema = Student
+export type EmployeeSchema = Employee

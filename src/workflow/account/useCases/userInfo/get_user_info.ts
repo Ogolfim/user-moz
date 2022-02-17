@@ -5,10 +5,10 @@ import { Middleware } from '@core/infra/middleware'
 import { clientError } from '@core/infra/http_error_response'
 import { created } from '@core/infra/http_success_response'
 import { userPerfilPropsValidate } from '@account/services/validate/user/UserInfo/user_perfil_props'
-import { findAllUserInfoDB } from '@account/domain/entities/user/findUser/find_all_user_info'
+import { getUserInfoDB } from '@account/domain/entities/user/findUser/get_user_info'
 import { userInfoService } from '@account/services/user/userInfo/user_info'
 
-export const userPerfil: Middleware = (_httpRequest, httpBody) => {
+export const getUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
   const { userId } = httpBody
 
   const httpResponse = pipe(
@@ -19,7 +19,7 @@ export const userPerfil: Middleware = (_httpRequest, httpBody) => {
     TE.chain((userId) => {
       return pipe(
         userId,
-        userInfoService(findAllUserInfoDB),
+        userInfoService(getUserInfoDB),
         TE.chain(user => {
           return TE.tryCatch(
             async () => {

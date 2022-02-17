@@ -1,12 +1,17 @@
-import { ManyTagView, TagView } from '@account/services/views/contract/tag'
+import { TagSchema } from '@account/infra/prisma/schemas'
 
-export const tagView: TagView = (tag) => {
+interface Tag {
+  id: string
+  title: string
+}
+
+export const tagView = (tag: TagSchema): Tag => {
   return {
     id: tag.id,
     title: tag.title
   }
 }
 
-export const manyTagView: ManyTagView = (tags) => {
+export const manyTagView = (tags: TagSchema[]): Tag[] => {
   return tags.map(tag => tagView(tag))
 }

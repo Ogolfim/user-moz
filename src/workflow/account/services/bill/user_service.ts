@@ -1,7 +1,7 @@
 import * as E from 'fp-ts/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { UserServices } from '@account/domain/contracts/Bill/UserService'
-import { paymentStatus, services } from '@account/domain/entities/bill/db'
+import { paymentStatus, services } from '@account/domain/entities/db'
 import { BillSchema, PaymentSchema } from '@account/infra/prisma/schemas'
 
 export const userServices: UserServices = (bill) => {

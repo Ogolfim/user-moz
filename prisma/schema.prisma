@@ -86,7 +86,7 @@ model Company {
 
 model Student {
   id                  String              @id @default(uuid())
-  verifyed            Boolean
+  verified            Boolean
   phone               String
   bornAt              String
   schoolName          String
@@ -102,11 +102,12 @@ model Student {
 
 model Employee {
   id                  String              @id @default(uuid())
-  verifyed            Boolean
+  verified            Boolean
   name                String
   email               String              @unique
   phone               String?
   hash                String
+  tags                Tag[]
   address             Address?
   employer            Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId           String         
@@ -151,6 +152,7 @@ model Tag {
   id                  String          @id
   title               String          @unique
   users               User[]
+  employees           Employee[]
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @default(now())
 

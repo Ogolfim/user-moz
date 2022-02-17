@@ -10,10 +10,6 @@ export const addUserToTagsService: AddUserToTagsService = (addUserToTagsDB) => (
       async () => {
         const userFound = await findUserByIdDB(validUser.userId)
 
-        if (!userFound) {
-          throw new EntityNotFoundError('Oops! A sua não foi encontrada')
-        }
-
         return userFound
       },
       (err) => clientError(err as Error)
@@ -30,6 +26,8 @@ export const addUserToTagsService: AddUserToTagsService = (addUserToTagsDB) => (
     )),
     TE.chain(user => TE.tryCatch(
       async () => {
+        await addUserToTagsDB(validUser)
+
         return {
           user,
           tags: validUser.tags

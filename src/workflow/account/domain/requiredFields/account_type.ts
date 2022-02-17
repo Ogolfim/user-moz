@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isAccountType } from '@bills/domain/requiredFields/is/is_account_type'
+import { isAccountType } from '@account/domain/requiredFields/is/is_account_type'
 
 type AccountTypeBrand = {
   readonly AccountType: unique symbol

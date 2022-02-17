@@ -10,6 +10,12 @@ export const removeUserFromTagsService: RemoveUserFromTagsService = (removeUserF
       async () => {
         const userFound = await findUserByIdDB(validUser.userId)
 
+        return userFound
+      },
+      (err) => clientError(err as Error)
+    ),
+    TE.chain(userFound => TE.tryCatch(
+      async () => {
         if (!userFound) {
           throw new EntityNotFoundError('Oops! A sua não foi encontrada')
         }
@@ -17,7 +23,7 @@ export const removeUserFromTagsService: RemoveUserFromTagsService = (removeUserF
         return userFound
       },
       (err) => clientError(err as Error)
-    ),
+    )),
     TE.chain(userFound => TE.tryCatch(
       async () => {
         await removeUserFromTagsDB(validUser)

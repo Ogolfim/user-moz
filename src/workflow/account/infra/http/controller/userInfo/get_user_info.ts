@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
-import { userPerfil } from '@account/useCases/userInfo/user_perfil'
+import { getUserInfoUseCase } from '@account/useCases/userInfo/get_user_info'
 import { ensureAuthenticatedMiddleware } from '@account/infra/http/middlewares/ensure_authenticated'
 
-export const userPerfilController = (request: Request, response: Response) => {
+export const getUserInfoController = (request: Request, response: Response) => {
   pipe(
     ensureAuthenticatedMiddleware(request, request.body),
     TE.mapLeft(httpErrorResponse => {
@@ -14,7 +14,7 @@ export const userPerfilController = (request: Request, response: Response) => {
     }),
     TE.map(({ body }) => {
       return pipe(
-        userPerfil(request, body),
+        getUserInfoUseCase(request, body),
         TE.mapLeft(httpErrorResponse => {
           const { statusCode, body } = httpErrorResponse
           return response.status(statusCode).json(body)

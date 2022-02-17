@@ -10,3 +10,9 @@ export const services: ServiceSchema = {
   api: 'API',
   webDownload: 'WEB_DOWNLOAD'
 }
+
+export const accountTypes = {
+  unipersonal: 'UNIPERSONAL',
+  company: 'COMPANY',
+  student: 'STUDENT'
+}

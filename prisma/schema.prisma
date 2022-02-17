@@ -108,7 +108,6 @@ model Employee {
   phone               String?
   hash                String
   tags                Tag[]
-  address             Address?
   employer            Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
   companyId           String         
   createdAt           DateTime            @default(now())
@@ -131,8 +130,6 @@ model Address {
   companyId           String?  
   student             Student?       @relation(fields: [studentId], references: [id], onDelete: Cascade)
   studentId           String?
-  employee            Employee?       @relation(fields: [employeeId], references: [id], onDelete: Cascade)
-  employeeId          String?
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @default(now())
 

@@ -10,7 +10,7 @@ import { ServerName } from '@account/domain/requiredFields/server_name'
 import { AccountType } from '@account/domain/requiredFields/account_type'
 
 interface User extends UserSchema {
-  userService: UserServicesSchema
+  userServices: UserServicesSchema
 }
 
 interface UnValidatedUser {

@@ -17,7 +17,7 @@ interface UnValidatedUser {
 }
 
 interface User extends UserSchema {
-  userService: UserServicesSchema
+  userServices: UserServicesSchema
 }
 
 interface IAddUserToTagsDB {

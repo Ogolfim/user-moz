@@ -7,11 +7,10 @@ import { clientError, fail } from '@core/infra/http_error_response'
 import { ok } from '@core/infra/http_success_response'
 import { createRefreshTokenPropsValidator } from '@account/services/validate/token/refresh_token_props'
 import { createAccessToken } from '@account/services/token/access'
-
-import { userServices } from '@account/services/bill/user_service'
 import { createRefreshAccessToken } from '@account/services/token/refresh'
 import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
+import { userServiceView } from '@account/services/views/user_services'
 
 export const refreshTokenUseCase: Middleware = (_httpRequest, httpBody) => {
   const { userId } = httpBody
@@ -38,7 +37,7 @@ export const refreshTokenUseCase: Middleware = (_httpRequest, httpBody) => {
     )),
     TE.chain(user => TE.tryCatch(
       async () => {
-        const services = userServices(user.bill)
+        const services = userServiceView(user.userServices)
 
         const refreshToken = await createRefreshAccessToken(user.id as UUID)
         const token = await createAccessToken({ ...user, services })

@@ -8,10 +8,10 @@ import { ok } from '@core/infra/http_success_response'
 import { createAccessToken } from '@account/services/token/access'
 import { createUserPropsValidate } from '@account/services/validate/user/register_user_props'
 import { createUserDB } from '@account/domain/entities/user/create_user'
-import { userServices } from '@account/services/bill/user_service'
 import { createUserService } from '@account/services/user/create_user'
 import { findUserByEmailDB } from '@account/domain/entities/user/findUser/find_user_by_email'
 import { createRefreshAccessToken } from '@account/services/token/refresh'
+import { userServiceView } from '@account/services/views/user_services'
 
 export const userRegister: Middleware = (_httpRequest, httpBody) => {
   const { name, email, password, accountType } = httpBody
@@ -28,9 +28,7 @@ export const userRegister: Middleware = (_httpRequest, httpBody) => {
       createUserService(createUserDB)(findUserByEmailDB),
       TE.chain(user => TE.tryCatch(
         async () => {
-          const services = userServices(user.bill)
-
-          console.log(user)
+          const services = userServiceView(user.userServices)
 
           const refreshToken = await createRefreshAccessToken(user.id as UUID)
           const token = await createAccessToken({ ...user, services })

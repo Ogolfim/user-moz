@@ -15,7 +15,7 @@ export const updateUserPasswordRequestService: UpdateUserPasswordRequestService 
     ),
     TE.chain(user => TE.tryCatch(
       async () => {
-        if (!user) throw new EntityNotFoundError('Oops! A sua conta não foi encontrada')
+        if (!user) throw new EntityNotFoundError('Oops! Email incorreto')
 
         return user
       },

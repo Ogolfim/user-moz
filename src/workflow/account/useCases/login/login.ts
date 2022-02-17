@@ -10,7 +10,7 @@ import { loginUserPropsValidate } from '@account/services/validate/user/login/lo
 import { findUserByEmailDB } from '@account/domain/entities/user/findUser/find_user_by_email'
 import { loginUserService } from '@account/services/user/login/login'
 import { createRefreshAccessToken } from '@account/services/token/refresh'
-import { userServices } from '@account/services/bill/user_service'
+import { userServiceView } from '@account/services/views/user_services'
 
 export const loginUseCase: Middleware = (_httpRequest, httpBody) => {
   const { email, password } = httpBody
@@ -28,7 +28,7 @@ export const loginUseCase: Middleware = (_httpRequest, httpBody) => {
         loginUserService(findUserByEmailDB),
         TE.chain(user => TE.tryCatch(
           async () => {
-            const services = userServices(user.bill)
+            const services = userServiceView(user.userServices)
 
             const refreshToken = await createRefreshAccessToken(user.id as UUID)
             const token = await createAccessToken({ ...user, services })

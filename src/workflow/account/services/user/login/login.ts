@@ -18,7 +18,7 @@ export const loginUserService: LoginUserService = (findUserByEmailDB) => ({ pass
     TE.chain(user => TE.tryCatch(
       async () => {
         if (!user) {
-          throw new EntityNotFoundError(`Oops! Nenhuma conta com o email ${email} encontrada`)
+          throw new EntityNotFoundError('Oops! Email ou senha incorreto')
         }
 
         return user

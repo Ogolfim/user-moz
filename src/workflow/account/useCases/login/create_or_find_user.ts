@@ -9,8 +9,8 @@ import { createAccessToken } from '@account/services/token/access'
 import { createOrFindUserPropsValidate } from '@account/services/validate/user/login/login_by_oauth_props'
 import { createOrFindUserDB } from '@account/domain/entities/user/create_or_find_user'
 import { createOrFindUserService } from '@account/services/user/login/create_or_find_user'
-import { userServices } from '@account/services/bill/user_service'
 import { createRefreshAccessToken } from '@account/services/token/refresh'
+import { userServiceView } from '@account/services/views/user_services'
 
 export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
   const { name, email, accountType } = httpBody
@@ -29,7 +29,7 @@ export const createOrFindUserUseCase: Middleware = (httpRequest, httpBody) => {
         createOrFindUserService(createOrFindUserDB),
         TE.chain(user => TE.tryCatch(
           async () => {
-            const services = userServices(user.bill)
+            const services = userServiceView(user.userServices)
 
             const refreshToken = await createRefreshAccessToken(user.id as UUID)
             const token = await createAccessToken({ ...user, services })

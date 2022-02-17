@@ -23,7 +23,7 @@ interface ICreateUserDB {
 }
 
 interface User extends UserSchema {
-  userService: UserServicesSchema
+  userServices: UserServicesSchema
 }
 
 export type CreateUserValidator = (data: UnValidatedUser) => E.Either<ValidationError, CreateUserProps>

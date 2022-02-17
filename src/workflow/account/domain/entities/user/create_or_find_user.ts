@@ -5,11 +5,7 @@ export const createOrFindUserDB: CreateOrFindUserDB = async ({ name, email, serv
   const userFound = await prisma.user.findUnique({
     where: { email },
     include: {
-      bill: {
-        include: {
-          payment: true
-        }
-      }
+      userServices: true
     }
   })
 
@@ -20,14 +16,13 @@ export const createOrFindUserDB: CreateOrFindUserDB = async ({ name, email, serv
       name,
       serverName,
       email,
-      accountType
+      accountType,
+      userServices: {
+        create: {}
+      }
     },
     include: {
-      bill: {
-        include: {
-          payment: true
-        }
-      }
+      userServices: true
     }
   })
 }

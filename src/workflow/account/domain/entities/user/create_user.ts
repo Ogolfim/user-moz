@@ -7,14 +7,13 @@ export const createUserDB: CreateUserDB = ({ name, email, hash, accountType }) =
       name,
       email,
       hash,
-      accountType
+      accountType,
+      userServices: {
+        create: {}
+      }
     },
     include: {
-      bill: {
-        include: {
-          payment: true
-        }
-      }
+      userServices: true
     }
   })
 }

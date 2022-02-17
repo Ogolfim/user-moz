@@ -9,7 +9,7 @@ import { LoginUserProps } from '@account/domain/requiredFields/Users/login_user_
 import { FindUserByEmailDB } from '@account/domain/contracts/User/FindUserByEmail'
 
 interface User extends UserSchema {
-  userService: UserServicesSchema
+  userServices: UserServicesSchema
 }
 
 interface UnValidatedUser {

@@ -5,11 +5,7 @@ export const findUserByIdDB: FindUserByIdDB = async (id) => {
   const user = await prisma.user.findUnique({
     where: { id },
     include: {
-      bill: {
-        include: {
-          payment: true
-        }
-      }
+      userServices: true
     }
   })
 

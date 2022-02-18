@@ -68,7 +68,7 @@ CREATE TABLE "conpany_info" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "userId" TEXT NOT NULL,
+    "adminId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
@@ -78,7 +78,7 @@ CREATE TABLE "conpany_info" (
 -- CreateTable
 CREATE TABLE "student_info" (
     "id" TEXT NOT NULL,
-    "verified" BOOLEAN NOT NULL,
+    "verified" BOOLEAN NOT NULL DEFAULT false,
     "phone" TEXT NOT NULL,
     "bornAt" TEXT NOT NULL,
     "schoolName" TEXT NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE "student_info" (
 -- CreateTable
 CREATE TABLE "employee_info" (
     "id" TEXT NOT NULL,
-    "verified" BOOLEAN NOT NULL,
+    "verified" BOOLEAN NOT NULL DEFAULT false,
     "userId" TEXT NOT NULL,
     "companyId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -170,10 +170,13 @@ CREATE UNIQUE INDEX "payments_billId_key" ON "payments"("billId");
 CREATE UNIQUE INDEX "unipersonal_info_userId_key" ON "unipersonal_info"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "conpany_info_userId_key" ON "conpany_info"("userId");
+CREATE UNIQUE INDEX "conpany_info_adminId_key" ON "conpany_info"("adminId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "student_info_userId_key" ON "student_info"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "employee_info_companyId_key" ON "employee_info"("companyId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "employee_info_userId_key" ON "employee_info"("userId");
@@ -218,7 +221,7 @@ ALTER TABLE "payments" ADD CONSTRAINT "payments_billId_fkey" FOREIGN KEY ("billI
 ALTER TABLE "unipersonal_info" ADD CONSTRAINT "unipersonal_info_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "conpany_info" ADD CONSTRAINT "conpany_info_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "conpany_info" ADD CONSTRAINT "conpany_info_adminId_fkey" FOREIGN KEY ("adminId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "student_info" ADD CONSTRAINT "student_info_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

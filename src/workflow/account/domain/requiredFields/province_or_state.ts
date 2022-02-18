@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isProvinceOrState } from '@bills/domain/requiredFields/is/is_Province_Or_State'
+import { isProvinceOrState } from '@account/domain/requiredFields/is/is_Province_Or_State'
 
 type ProvinceOrStateBrand = {
   readonly ProvinceOrState: unique symbol

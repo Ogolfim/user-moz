@@ -19,8 +19,8 @@ TE.TaskEither<HttpErrorResponse, HttpSuccessResponse> => {
       return pipe(
         employee,
         createEmployeeInfoService(createEmployeeInfoDB),
-        TE.map(userInfo => {
-          return ok(userInfo)
+        TE.map((_userInfo) => {
+          return ok()
         })
       )
     })

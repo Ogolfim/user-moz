@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isAddress2 } from '@bills/domain/requiredFields/is/is_address_2'
+import { isAddress2 } from '@account/domain/requiredFields/is/is_address_2'
 
 type Address2Brand = {
   readonly Address2: unique symbol

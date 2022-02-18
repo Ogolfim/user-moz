@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isPhone } from '@bills/domain/requiredFields/is/is_phone'
+import { isPhone } from '@account/domain/requiredFields/is/is_phone'
 
 type PhoneBrand = {
   readonly Phone: unique symbol

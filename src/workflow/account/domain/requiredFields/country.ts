@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isCountry } from '@bills/domain/requiredFields/is/is_country'
+import { isCountry } from '@account/domain/requiredFields/is/is_country'
 
 type CountryBrand = {
   readonly Country: unique symbol

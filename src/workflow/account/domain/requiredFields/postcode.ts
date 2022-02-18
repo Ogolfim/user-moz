@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
-import { isPostcode } from '@bills/domain/requiredFields/is/is_postcode'
+import { isPostcode } from '@account/domain/requiredFields/is/is_postcode'
 
 type PostcodeBrand = {
   readonly Postcode: unique symbol

@@ -5,7 +5,7 @@ import { PhoneCodec } from '@account/domain/requiredFields/phone'
 import { AddressCodec } from '@account/domain/requiredFields/address'
 
 export const CreateCompanyInfoPropsCodec = t.type({
-  userId: UUID,
+  adminId: UUID,
   name: NameCodec,
   phone: PhoneCodec,
   address: AddressCodec

@@ -8,7 +8,7 @@ import { Address } from 'user-moz'
 import { UUID } from 'io-ts-types'
 
 export interface UnValidatedCompany {
-  userId: UUID
+  adminId: UUID
   phone: string
   name: string
   address: Address
@@ -16,8 +16,8 @@ export interface UnValidatedCompany {
 
 export type CreateCompanyInfoValidator = (data: UnValidatedCompany) => E.Either<ValidationError, CreateCompanyInfoProps>
 
-export type CreateCompanyInfoDB = (user: CreateCompanyInfoProps) => Promise<CompanySchema>
-export type GetCompanyInfoByUserIdDB = (userId: UUID) => Promise<CompanySchema>
+export type CreateCompanyInfoDB = (company: CreateCompanyInfoProps) => Promise<CompanySchema>
+export type GetCompanyInfoByUserIdDB = (adminId: UUID) => Promise<CompanySchema>
 
 export type CreateCompanyInfoService = (createCompanyInfoDB: CreateCompanyInfoDB) =>
-(getCompanyInfoByUserIdDB: GetCompanyInfoByUserIdDB) => (user: CreateCompanyInfoProps) => TE.TaskEither<HttpErrorResponse, CompanySchema>
+(getCompanyInfoByUserIdDB: GetCompanyInfoByUserIdDB) => (company: CreateCompanyInfoProps) => TE.TaskEither<HttpErrorResponse, CompanySchema>

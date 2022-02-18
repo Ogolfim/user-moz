@@ -1,15 +1,13 @@
 import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { clientError, fail } from '@core/infra/http_error_response'
-import { DatabaseFailError, EntityAlreadyExistError } from '@account/domain/entities/errors/db_error'
+import { DatabaseFailError, EntityNotFoundError } from '@account/domain/entities/errors/db_error'
 import { CreateEmployeeInfoService } from '@account/domain/contracts/User/UserInfo/CreateEmployeeInfo'
 
-export const createEmployeeInfoService: CreateEmployeeInfoService = (createEmployeeInfoDB) => (getEmployeeInfoByUserIdDB) => (employee) => {
-  const { companyId } = employee
-
+export const createEmployeeInfoService: CreateEmployeeInfoService = (createEmployeeInfoDB) => (employee) => {
   return pipe(
     TE.tryCatch(
-      async () => await getEmployeeInfoByUserIdDB(companyId),
+      async () => await createEmployeeInfoDB(employee),
 
       (err) => {
         console.log(err)
@@ -19,8 +17,8 @@ export const createEmployeeInfoService: CreateEmployeeInfoService = (createEmplo
     TE.chain(employeeInfo => {
       return TE.tryCatch(
         async () => {
-          if (employeeInfo) {
-            throw new EntityAlreadyExistError('Você já tem informações salvas. Podem ser atualizadas')
+          if (!employeeInfo) {
+            throw new EntityNotFoundError('Funcionário ou a empresa não existe')
           }
 
           return employeeInfo
@@ -28,14 +26,6 @@ export const createEmployeeInfoService: CreateEmployeeInfoService = (createEmplo
 
         err => clientError(err as Error)
       )
-    }),
-    TE.chain((_companyInfo) => TE.tryCatch(
-      async () => await createEmployeeInfoDB(employee),
-
-      (err) => {
-        console.log(err)
-        return fail(new DatabaseFailError('Oops! Erro. Por favor contacte suporte'))
-      }
-    ))
+    })
   )
 }

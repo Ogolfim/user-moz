@@ -6,21 +6,20 @@ import { createEmployeeInfoPropsValidate } from '@account/services/validate/user
 import { ok } from '@core/infra/http_success_response'
 import { createEmployeeInfoDB } from '@account/domain/entities/user/userInfo/create_employee_info'
 import { createEmployeeInfoService } from '@account/services/user/userInfo/create_employee_info'
-import { getEmployeeInfoByUserIdDB } from '@account/domain/entities/user/userInfo/get_employee_by_user_id'
 import { Middleware } from '@core/infra/Middleware'
 
 export const createEmployeeInfoUseCase: Middleware = (_httpRequest, httpBody) => {
-  const { userId: companyId, email } = httpBody
+  const { userId: companyAdminId, email } = httpBody
 
   const httpResponse = pipe(
-    { companyId, email },
+    { companyAdminId, email },
     createEmployeeInfoPropsValidate,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain((employee) => {
       return pipe(
         employee,
-        createEmployeeInfoService(createEmployeeInfoDB)(getEmployeeInfoByUserIdDB),
+        createEmployeeInfoService(createEmployeeInfoDB),
         TE.map((_userInfo) => {
           return ok()
         })

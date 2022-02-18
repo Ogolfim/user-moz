@@ -31,7 +31,7 @@ export const createUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
           }
 
           if (accountType === accountTypes.company) {
-            return createCompanyInfoUseCase({ userId, address, phone, name: companyName })
+            return createCompanyInfoUseCase({ adminId: userId, address, phone, name: companyName })
           }
 
           if (accountType === accountTypes.student) {

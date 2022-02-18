@@ -9,7 +9,7 @@ export const createUnipersonalInfoPropsValidate: CreateUnipersonalInfoValidator 
   return pipe(
     E.tryCatch(
       () => {
-        if (!data) throw new ValidationError('Nome, email e nome do servidor estão em falta')
+        if (!data) throw new ValidationError('Oops! Você não forneceu nenhum dado')
 
         return data
       },

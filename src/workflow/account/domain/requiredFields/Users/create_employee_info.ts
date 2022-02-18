@@ -1,10 +1,10 @@
 import * as t from 'io-ts'
-import { NameCodec } from '@account/domain/requiredFields/name'
+import { EmailCodec } from '@account/domain/requiredFields/email'
 import { UUID } from 'io-ts-types'
 
 export const CreateEmployeeInfoPropsCodec = t.type({
-  userId: UUID,
-  companyId: NameCodec
+  companyId: UUID,
+  email: EmailCodec
 })
 
 export type CreateEmployeeInfoProps = t.TypeOf<typeof CreateEmployeeInfoPropsCodec>

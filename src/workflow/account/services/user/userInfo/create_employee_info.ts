@@ -5,11 +5,11 @@ import { DatabaseFailError, EntityAlreadyExistError } from '@account/domain/enti
 import { CreateEmployeeInfoService } from '@account/domain/contracts/User/UserInfo/CreateEmployeeInfo'
 
 export const createEmployeeInfoService: CreateEmployeeInfoService = (createEmployeeInfoDB) => (getEmployeeInfoByUserIdDB) => (employee) => {
-  const { userId } = employee
+  const { companyId } = employee
 
   return pipe(
     TE.tryCatch(
-      async () => await getEmployeeInfoByUserIdDB(userId),
+      async () => await getEmployeeInfoByUserIdDB(companyId),
 
       (err) => {
         console.log(err)

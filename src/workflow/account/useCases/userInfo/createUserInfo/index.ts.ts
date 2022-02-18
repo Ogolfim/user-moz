@@ -8,12 +8,11 @@ import { accountTypes } from '@account/domain/entities/db'
 import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 import { getUserService } from '@account/services/user/userInfo/get_user'
 import { createUnipersonalInfoUseCase } from '@account/useCases/userInfo/createUserInfo//unipersonal'
-import { createEmployeeInfoUseCase } from '@account/useCases/userInfo/createUserInfo/employee'
 import { createCompanyInfoUseCase } from '@account/useCases/userInfo/createUserInfo/company'
 import { createStudentInfoUseCase } from '@account/useCases/userInfo/createUserInfo/student'
 
 export const createUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
-  const { userId, phone, address, companyId, name: companyName, bornAt, schoolName, studentId } = httpBody
+  const { userId, phone, address, name: companyName, bornAt, schoolName, studentId } = httpBody
 
   const httpResponse = pipe(
     userId,
@@ -29,10 +28,6 @@ export const createUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
 
           if (accountType === accountTypes.unipersonal) {
             return createUnipersonalInfoUseCase({ userId, address, phone })
-          }
-
-          if (accountType === accountTypes.employee) {
-            return createEmployeeInfoUseCase({ userId, companyId })
           }
 
           if (accountType === accountTypes.company) {

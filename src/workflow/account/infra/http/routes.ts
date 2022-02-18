@@ -12,6 +12,7 @@ import { updateUserNameController } from '@account/infra/http/controller/updateU
 import { updateUserEmailController } from '@account/infra/http/controller/updateUser/update_user_email'
 import { resetPasswordRequestController } from '@account/infra/http/controller/updateUser/reset_password_request'
 import { resetPasswordController } from '@account/infra/http/controller/updateUser/reset_password'
+import { createEmployeeInfoController } from './controller/userInfo/create_employee_info'
 
 const AccountRouter = Router()
 
@@ -24,6 +25,7 @@ AccountRouter.post('/tags', userAdderToTagsController)
 AccountRouter.put('/tags', removeUserFromTagsController)
 
 AccountRouter.get('/info', getUserInfoController)
+AccountRouter.post('/info/employee', createEmployeeInfoController)
 AccountRouter.post('/info', createUserInfoController)
 
 AccountRouter.get('/token', refreshTokenController)

@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="MozEconomia" height="80" title="MozEconomia" src=".github/logo.png" />
+  <img alt="MozEconomia" title="MozEconomia" src=".github/baner.png" />
 </h1>
 
 <p align="center">

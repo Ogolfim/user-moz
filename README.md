@@ -14,7 +14,7 @@ This is the USER MOZ, a user management system. Features:
 - Service invoices creation in user plans and payment of the invoices
 - Creation of user activity events on the system using Apache Kafka, for the following email notifications using the e-mail service [MAIL ME](https://github.com/bboa3/mail-me).
 
-#### Tipos de Usuários ou Contas:
+#### User Account Types:
 - Unipersonal
 - Business
 - Student

@@ -7,6 +7,7 @@ import { HttpSuccessResponse, ok } from '@core/infra/http_success_response'
 import { createUnipersonalInfoDB } from '@account/domain/entities/user/userInfo/create_unipersonal_info'
 import { createUnipersonalInfoService } from '@account/services/user/userInfo/create_unipersonal_info'
 import { UnValidatedUnipersonal } from '@account/domain/contracts/User/UserInfo/CreateUnipersonalInfo'
+import { getUnipersonalInfoByUserIdDB } from '@account/domain/entities/user/userInfo/get_unipersonal_by_user_id'
 
 export const createUnipersonalInfoUseCase = (unipersonal: UnValidatedUnipersonal):
 TE.TaskEither<HttpErrorResponse, HttpSuccessResponse> => {
@@ -18,7 +19,7 @@ TE.TaskEither<HttpErrorResponse, HttpSuccessResponse> => {
     TE.chain((unipersonal) => {
       return pipe(
         unipersonal,
-        createUnipersonalInfoService(createUnipersonalInfoDB),
+        createUnipersonalInfoService(createUnipersonalInfoDB)(getUnipersonalInfoByUserIdDB),
         TE.map((_userInfo) => {
           return ok()
         })

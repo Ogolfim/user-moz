@@ -19,6 +19,7 @@ export interface UnValidatedStudent {
 export type CreateStudentInfoValidator = (data: UnValidatedStudent) => E.Either<ValidationError, CreateStudentInfoProps>
 
 export type CreateStudentInfoDB = (user: CreateStudentInfoProps) => Promise<StudentSchema>
+export type GetStudentInfoByUserIdDB = (userId: UUID) => Promise<StudentSchema>
 
 export type CreateStudentInfoService = (createStudentInfoDB: CreateStudentInfoDB) =>
-(user: CreateStudentInfoProps) => TE.TaskEither<HttpErrorResponse, StudentSchema>
+(getStudentInfoByUserIdDB: GetStudentInfoByUserIdDB) => (user: CreateStudentInfoProps) => TE.TaskEither<HttpErrorResponse, StudentSchema>

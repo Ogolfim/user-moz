@@ -16,5 +16,7 @@ export interface UnValidatedUnipersonal {
 export type CreateUnipersonalInfoValidator = (data: UnValidatedUnipersonal) => E.Either<ValidationError, CreateUnipersonalInfoProps>
 
 export type CreateUnipersonalInfoDB = (user: CreateUnipersonalInfoProps) => Promise<UnipersonalSchema>
+export type GetUnipersonalInfoByUserIdDB = (userId: UUID) => Promise<UnipersonalSchema>
 
-export type CreateUnipersonalInfoService = (createUnipersonalInfoDB: CreateUnipersonalInfoDB) => (user: CreateUnipersonalInfoProps) => TE.TaskEither<HttpErrorResponse, UnipersonalSchema>
+export type CreateUnipersonalInfoService = (createUnipersonalInfoDB: CreateUnipersonalInfoDB) =>
+(getSUnipersonalInfoByUserIdDB: GetUnipersonalInfoByUserIdDB) => (user: CreateUnipersonalInfoProps) => TE.TaskEither<HttpErrorResponse, UnipersonalSchema>

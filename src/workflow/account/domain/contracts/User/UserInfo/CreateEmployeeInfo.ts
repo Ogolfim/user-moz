@@ -14,5 +14,7 @@ export interface UnValidatedEmployee {
 export type CreateEmployeeInfoValidator = (data: UnValidatedEmployee) => E.Either<ValidationError, CreateEmployeeInfoProps>
 
 export type CreateEmployeeInfoDB = (user: CreateEmployeeInfoProps) => Promise<EmployeeSchema>
+export type GetEmployeeInfoByUserIdDB = (userId: UUID) => Promise<EmployeeSchema>
 
-export type CreateEmployeeInfoService = (createEmployeeInfoDB: CreateEmployeeInfoDB) => (user: CreateEmployeeInfoProps) => TE.TaskEither<HttpErrorResponse, EmployeeSchema>
+export type CreateEmployeeInfoService = (createEmployeeInfoDB: CreateEmployeeInfoDB) =>
+(getEmployeeInfoByUserIdDB: GetEmployeeInfoByUserIdDB) => (user: CreateEmployeeInfoProps) => TE.TaskEither<HttpErrorResponse, EmployeeSchema>

@@ -7,6 +7,7 @@ import { HttpSuccessResponse, ok } from '@core/infra/http_success_response'
 import { createEmployeeInfoDB } from '@account/domain/entities/user/userInfo/create_employee_info'
 import { createEmployeeInfoService } from '@account/services/user/userInfo/create_employee_info'
 import { UnValidatedEmployee } from '@account/domain/contracts/User/UserInfo/CreateEmployeeInfo'
+import { getEmployeeInfoByUserIdDB } from '@account/domain/entities/user/userInfo/get_employee_by_user_id'
 
 export const createEmployeeInfoUseCase = (employee: UnValidatedEmployee):
 TE.TaskEither<HttpErrorResponse, HttpSuccessResponse> => {
@@ -18,7 +19,7 @@ TE.TaskEither<HttpErrorResponse, HttpSuccessResponse> => {
     TE.chain((employee) => {
       return pipe(
         employee,
-        createEmployeeInfoService(createEmployeeInfoDB),
+        createEmployeeInfoService(createEmployeeInfoDB)(getEmployeeInfoByUserIdDB),
         TE.map((_userInfo) => {
           return ok()
         })

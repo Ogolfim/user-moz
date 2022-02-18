@@ -17,6 +17,7 @@ export interface UnValidatedCompany {
 export type CreateCompanyInfoValidator = (data: UnValidatedCompany) => E.Either<ValidationError, CreateCompanyInfoProps>
 
 export type CreateCompanyInfoDB = (user: CreateCompanyInfoProps) => Promise<CompanySchema>
+export type GetCompanyInfoByUserIdDB = (userId: UUID) => Promise<CompanySchema>
 
 export type CreateCompanyInfoService = (createCompanyInfoDB: CreateCompanyInfoDB) =>
-(user: CreateCompanyInfoProps) => TE.TaskEither<HttpErrorResponse, CompanySchema>
+(getCompanyInfoByUserIdDB: GetCompanyInfoByUserIdDB) => (user: CreateCompanyInfoProps) => TE.TaskEither<HttpErrorResponse, CompanySchema>

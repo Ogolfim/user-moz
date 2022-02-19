@@ -18,7 +18,7 @@ model User {
   email               String         @unique 
   accountType         String  
   unipersonal         Unipersonal?
-  company             Company?
+  business            Business?
   student             Student?
   employee            Employee?
   tags                Tag[]
@@ -42,14 +42,14 @@ model UserServices {
 model Bill {
   id                  Int             @id @default(autoincrement())
   services            Json  
-  amount              Decimal
+  totalAmount         Decimal
   nextBillableDay     DateTime
   note                String
   payment             Payment?
   unipersonal         Unipersonal?     @relation(fields: [unipersonalId], references: [id])
   unipersonalId       String?
-  company             Company?         @relation(fields: [companyId], references: [id])
-  companyId           String? 
+  business            Business?         @relation(fields: [businessId], references: [id])
+  businessId          String? 
   student             Student?         @relation(fields: [studentId], references: [id])
   studentId           String?    
   createdAt           DateTime          @default(now())
@@ -85,26 +85,26 @@ model Unipersonal {
   @@map("unipersonal_info")
 }
 
-model Company {
+model Business {
   id                  String              @id @default(uuid())
   name                String
   phone               String
   address             Address?
   bill                Bill?
   employees           Employee[]
-  admin               User            @relation(fields: [adminId], references: [id])
+  admin               User                @relation(fields: [adminId], references: [id])
   adminId             String         
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @default(now())
 
-  @@map("conpany_info")
+  @@map("business_info")
 }
 
 model Student {
   id                  String              @id @default(uuid())
   verified            Boolean             @default(false)
   phone               String
-  bornAt              String
+  bornAt              DateTime
   schoolName          String
   studentId           String
   address             Address?
@@ -122,8 +122,8 @@ model Employee {
   verified            Boolean             @default(false)
   user                User                @relation(fields: [userId], references: [id])
   userId              String  
-  employer            Company             @relation(fields: [companyId], references: [id])
-  companyId           String              @unique
+  employer            Business            @relation(fields: [businessId], references: [id])
+  businessId          String              @unique
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @default(now())
 
@@ -140,8 +140,8 @@ model Address {
   postcode            String
   unipersonal         Unipersonal?    @relation(fields: [unipersonalId], references: [id], onDelete: Cascade)
   unipersonalId       String?  
-  company             Company?       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  companyId           String?  
+  business            Business?         @relation(fields: [businessId], references: [id])
+  businessId          String? 
   student             Student?       @relation(fields: [studentId], references: [id], onDelete: Cascade)
   studentId           String?
   createdAt           DateTime        @default(now())

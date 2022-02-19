@@ -2,7 +2,7 @@ import { GetCompanyInfoByUserIdDB } from '@account/domain/contracts/User/UserInf
 import { prisma } from '@account/infra/prisma/client'
 
 export const getCompanyInfoByUserIdDB: GetCompanyInfoByUserIdDB = async (adminId) => {
-  const company = await prisma.company.findUnique({
+  const company = await prisma.business.findUnique({
     where: { adminId }
   })
 

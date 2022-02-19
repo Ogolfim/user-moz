@@ -12,7 +12,7 @@ export const getUserInfoDB: GetUserInfoDB = async (userId) => {
         }
       },
       employee: true,
-      company: {
+      business: {
         include: {
           employees: true,
           address: true

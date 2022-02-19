@@ -1,15 +1,15 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
-import { ICreateCustomerCodec } from '@bills/domain/requiredFields/customers/create_customer'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
-import { IFindOrCreateCustomerValidator } from '@bills/domain/Contracts/Customer/FindOrCreateCustomer'
+import { ICreataBillValidator } from '@bills/domain/Contracts'
+import { ICreateBillPropsCodec } from '@bills/domain/requiredFields/bills/create_bill'
 
-export const findOrCreateCustomerValidate: IFindOrCreateCustomerValidator = (data) => {
+export const createBillValidate: ICreataBillValidator = (data) => {
   return pipe(
     E.tryCatch(
       () => {
-        if (!data) throw new ValidationError('Dados em falta')
+        if (!data) throw new ValidationError('Oops! Dados de faturação em falta')
 
         return data
       },
@@ -18,7 +18,7 @@ export const findOrCreateCustomerValidate: IFindOrCreateCustomerValidator = (dat
     ),
     E.chain(data => pipe(
       data,
-      ICreateCustomerCodec.decode,
+      ICreateBillPropsCodec.decode,
       E.mapLeft(errors => new ValidationError(failure(errors).join(', ') + ' invalido'))
     ))
   )

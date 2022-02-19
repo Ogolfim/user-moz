@@ -13,7 +13,7 @@ interface Student extends StudentSchema {
   address: AddressSchema
 }
 
-interface Company extends CompanySchema {
+interface Business extends CompanySchema {
   address: AddressSchema
   employees: EmployeeSchema[]
 }
@@ -21,7 +21,7 @@ interface Company extends CompanySchema {
 interface User {
   accountType: string;
   student: Student | null
-  company: Company | null
+  business: Business | null
   unipersonal: Unipersonal | null
   employee: EmployeeSchema | null
 }

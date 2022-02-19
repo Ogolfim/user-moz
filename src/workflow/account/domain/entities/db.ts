@@ -14,6 +14,6 @@ export const services: ServiceSchema = {
 export const accountTypes = {
   unipersonal: 'UNIPERSONAL',
   employee: 'EMPLOYEE',
-  company: 'COMPANY',
+  business: 'BUSINESS',
   student: 'STUDENT'
 }

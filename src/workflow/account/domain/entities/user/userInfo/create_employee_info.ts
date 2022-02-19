@@ -15,7 +15,7 @@ export const createEmployeeInfoDB: CreateEmployeeInfoDB = async ({ email, compan
 
   if (employeeInfo) return employeeInfo
 
-  const company = await prisma.company.findUnique({
+  const company = await prisma.business.findUnique({
     where: { adminId: companyAdminId }
   })
 
@@ -23,7 +23,7 @@ export const createEmployeeInfoDB: CreateEmployeeInfoDB = async ({ email, compan
 
   return await prisma.employee.create({
     data: {
-      companyId: company.id,
+      businessId: company.id,
       userId: employee.id
     }
   })

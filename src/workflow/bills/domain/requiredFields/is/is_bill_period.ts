@@ -1,7 +1,12 @@
+import { billPeriods } from '@bills/domain/entities/db'
+
 export const isBillPeriod = (value: string) => {
-  if (value === 'WEEKLY' ||
-      value === 'MONTHLY' ||
-      value === 'YEARLY'
+  const { weekly, monthly, biannual, yearly } = billPeriods
+
+  if (value === weekly ||
+      value === monthly ||
+      value === biannual ||
+      value === yearly
   ) {
     return true
   }

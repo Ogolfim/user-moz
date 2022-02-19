@@ -5,7 +5,7 @@
 <p align="center">
   <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=007D59&labelColor=01032C">
 
- <img src="https://img.shields.io/static/v1?label=USER-MOZ&message=06&color=007D59&labelColor=01032C" alt="USER MOZ" />
+ <img src="https://img.shields.io/static/v1?label=USER-MOZ&message=1.0.0&color=007D59&labelColor=01032C" alt="USER MOZ" />
 </p>
 
 

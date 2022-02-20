@@ -1,4 +1,4 @@
-import { EmployeeSchema } from '@account/infra/prisma/schemas'
+import { EmployeeSchema } from '@core/infra/prisma/schemas'
 
 export interface Employee {
   verified: boolean

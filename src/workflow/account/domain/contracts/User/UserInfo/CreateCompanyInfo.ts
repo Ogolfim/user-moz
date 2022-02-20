@@ -3,7 +3,7 @@ import * as E from 'fp-ts/lib/Either'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { CreateCompanyInfoProps } from '@account/domain/requiredFields/Users/create_Company_info'
-import { CompanySchema } from '@account/infra/prisma/schemas'
+import { CompanySchema } from '@core/infra/prisma/schemas'
 import { Address } from 'user-moz'
 import { UUID } from 'io-ts-types'
 

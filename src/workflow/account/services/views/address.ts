@@ -1,4 +1,4 @@
-import { AddressSchema } from '@account/infra/prisma/schemas'
+import { AddressSchema } from '@core/infra/prisma/schemas'
 
 export interface Address {
   country: string

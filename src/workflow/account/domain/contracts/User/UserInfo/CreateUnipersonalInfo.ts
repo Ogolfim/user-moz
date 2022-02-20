@@ -3,7 +3,7 @@ import * as E from 'fp-ts/lib/Either'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { CreateUnipersonalInfoProps } from '@account/domain/requiredFields/Users/create_unipersonal_info'
-import { UnipersonalSchema } from '@account/infra/prisma/schemas'
+import { UnipersonalSchema } from '@core/infra/prisma/schemas'
 import { Address } from 'user-moz'
 import { UUID } from 'io-ts-types'
 

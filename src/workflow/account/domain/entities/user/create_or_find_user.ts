@@ -1,4 +1,4 @@
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 import { CreateOrFindUserDB } from '@account/domain/contracts/User/Login/CreateOrFindUser'
 
 export const createOrFindUserDB: CreateOrFindUserDB = async ({ name, email, serverName, accountType }) => {

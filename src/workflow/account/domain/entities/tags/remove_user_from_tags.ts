@@ -1,5 +1,5 @@
 import { RemoveUserFromTagsDB } from '@account/domain/contracts/User/Tags/RemoveUserFromTagsService'
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 
 export const removeUserFromTagsDB: RemoveUserFromTagsDB = async ({ userId, tags }) => {
   for (const tag of tags) {

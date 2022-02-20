@@ -4,7 +4,7 @@ import { UUID } from 'io-ts-types'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { ResetPasswordProps } from '@account/domain/requiredFields/Users/reset_password_props'
-import { UserSchema } from '@account/infra/prisma/schemas'
+import { UserSchema } from '@core/infra/prisma/schemas'
 import { FindUserByIdDB } from '@account/domain/contracts/User/FindUserById'
 
 interface UnValidatedUser {

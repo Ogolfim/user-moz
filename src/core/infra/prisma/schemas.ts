@@ -8,9 +8,9 @@ export type BillSchema = Bill
 export type PaymentSchema = Payment
 
 export type ServiceSchema = {
-  api: string
-  webDownload: string
-}
+    api: string
+    webDownload: string
+  }
 
 export type UserServicesSchema = UserServices
 

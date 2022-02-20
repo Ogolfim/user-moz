@@ -1,5 +1,5 @@
 import { GetUnipersonalInfoByUserIdDB } from '@account/domain/contracts/User/UserInfo/CreateUnipersonalInfo'
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 
 export const getUnipersonalInfoByUserIdDB: GetUnipersonalInfoByUserIdDB = async (userId) => {
   const unipersonal = await prisma.unipersonal.findUnique({

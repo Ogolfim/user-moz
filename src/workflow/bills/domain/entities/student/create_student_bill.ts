@@ -1,4 +1,4 @@
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 import { CreateStudentBillDB } from '@bills/domain/Contracts/Student/CreateStudentBill'
 
 export const createStudentBillDB: CreateStudentBillDB = async (billInfo) => {

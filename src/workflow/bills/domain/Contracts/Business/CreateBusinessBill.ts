@@ -1,7 +1,7 @@
 import * as TE from 'fp-ts/lib/TaskEither'
-import { BillSchema } from '@bills/infra/prisma/schemas'
-import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { UUID } from 'io-ts-types'
+import { HttpErrorResponse } from '@core/infra/http_error_response'
+import { BillSchema } from '@core/infra/prisma/schemas'
 
 interface ICreateBusinessBill {
   businessId: UUID

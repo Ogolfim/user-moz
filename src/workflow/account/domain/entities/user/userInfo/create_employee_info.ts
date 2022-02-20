@@ -1,4 +1,4 @@
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 import { CreateEmployeeInfoDB } from '@account/domain/contracts/User/UserInfo/CreateEmployeeInfo'
 
 export const createEmployeeInfoDB: CreateEmployeeInfoDB = async ({ email, companyAdminId }) => {

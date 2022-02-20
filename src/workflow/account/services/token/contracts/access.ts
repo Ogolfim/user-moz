@@ -1,4 +1,4 @@
-import { UserSchema } from '@account/infra/prisma/schemas'
+import { UserSchema } from '@core/infra/prisma/schemas'
 import { JwtPayload } from 'jsonwebtoken'
 
 interface User extends UserSchema {

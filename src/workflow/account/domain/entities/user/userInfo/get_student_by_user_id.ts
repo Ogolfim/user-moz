@@ -1,5 +1,5 @@
 import { GetStudentInfoByUserIdDB } from '@account/domain/contracts/User/UserInfo/CreateStudentInfo'
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 
 export const getStudentInfoByUserIdDB: GetStudentInfoByUserIdDB = async (userId) => {
   const student = await prisma.student.findUnique({

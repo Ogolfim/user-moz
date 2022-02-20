@@ -1,4 +1,4 @@
-import { AddressSchema, CompanySchema, EmployeeSchema } from '@account/infra/prisma/schemas'
+import { AddressSchema, CompanySchema, EmployeeSchema } from '@core/infra/prisma/schemas'
 import { Address, addressView } from '@account/services/views/address'
 import { Employee } from '@account/services/views/userInfo/employee'
 

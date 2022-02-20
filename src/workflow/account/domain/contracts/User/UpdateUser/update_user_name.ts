@@ -4,7 +4,7 @@ import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { UpdateUserNameProps } from '@account/domain/requiredFields/Users/update_user_Name_props'
 import { Name } from '@account/domain/requiredFields/Name'
-import { UserSchema } from '@account/infra/prisma/schemas'
+import { UserSchema } from '@core/infra/prisma/schemas'
 import { UUID } from 'io-ts-types'
 import { FindUserByIdDB } from '@account/domain/contracts/User/FindUserById'
 

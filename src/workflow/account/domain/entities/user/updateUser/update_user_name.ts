@@ -1,4 +1,4 @@
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 import { UpdateUserNameDB } from '@account/domain/contracts/User/UpdateUser/update_user_name'
 
 export const updateUserNameDB: UpdateUserNameDB = async ({ name, userId }) => {

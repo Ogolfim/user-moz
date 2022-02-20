@@ -3,7 +3,7 @@ import * as E from 'fp-ts/lib/Either'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
 import { CreateStudentInfoProps } from '@account/domain/requiredFields/Users/create_Student_info'
-import { StudentSchema } from '@account/infra/prisma/schemas'
+import { StudentSchema } from '@core/infra/prisma/schemas'
 import { Address } from 'user-moz'
 import { UUID } from 'io-ts-types'
 

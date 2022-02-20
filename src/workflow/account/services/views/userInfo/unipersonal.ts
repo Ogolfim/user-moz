@@ -1,4 +1,4 @@
-import { AddressSchema, UnipersonalSchema } from '@account/infra/prisma/schemas'
+import { AddressSchema, UnipersonalSchema } from '@core/infra/prisma/schemas'
 import { Address, addressView } from '@account/services/views/address'
 
 interface IUnipersonal extends UnipersonalSchema {

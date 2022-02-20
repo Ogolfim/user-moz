@@ -1,4 +1,4 @@
-import { ServiceSchema } from '@account/infra/prisma/schemas'
+import { ServiceSchema } from '@core/infra/prisma/schemas'
 
 export const paymentStatus = {
   padding: 'PADDING',

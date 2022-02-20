@@ -1,4 +1,4 @@
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 import { CreateUnipersonalBillDB } from '@bills/domain/Contracts/Unipersonal/CreateUnipersonalBill'
 
 export const createUnipersonalBillDB: CreateUnipersonalBillDB = async (billInfo) => {

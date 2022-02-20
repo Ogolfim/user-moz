@@ -1,4 +1,4 @@
-import { UserServicesSchema } from '@account/infra/prisma/schemas'
+import { UserServicesSchema } from '@core/infra/prisma/schemas'
 
 interface UserServices {
   api: boolean

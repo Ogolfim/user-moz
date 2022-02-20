@@ -6,7 +6,7 @@ import { CreateUserProps } from '@account/domain/requiredFields/Users/register_u
 import { Name } from '@account/domain/requiredFields/name'
 import { Email } from '@account/domain/requiredFields/email'
 import { AccountType } from '@account/domain/requiredFields/account_type'
-import { UserSchema, UserServicesSchema } from '@account/infra/prisma/schemas'
+import { UserSchema, UserServicesSchema } from '@core/infra/prisma/schemas'
 import { FindUserByEmailDB } from '@account/domain/contracts/User/FindUserByEmail'
 
 interface UnValidatedUser {

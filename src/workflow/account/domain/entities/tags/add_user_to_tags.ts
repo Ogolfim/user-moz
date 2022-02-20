@@ -1,5 +1,5 @@
 import { AddUserToTagsDB } from '@account/domain/contracts/User/Tags/AddUserToTags'
-import { prisma } from '@account/infra/prisma/client'
+import { prisma } from '@core/infra/prisma/client'
 
 export const addUserToTagsDB: AddUserToTagsDB = async ({ userId, tags }) => {
   for (const tag of tags) {

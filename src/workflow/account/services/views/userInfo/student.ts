@@ -1,4 +1,4 @@
-import { AddressSchema, StudentSchema } from '@account/infra/prisma/schemas'
+import { AddressSchema, StudentSchema } from '@core/infra/prisma/schemas'
 import { Address, addressView } from '@account/services/views/address'
 
 interface IStudent extends StudentSchema {

@@ -5,7 +5,7 @@ import { ValidationError } from '@account/services/validate/errors/validation_er
 import { TagsProps } from '@account/domain/requiredFields/Users/tags_props'
 import { Tag } from '@account/domain/requiredFields/tag'
 import { FindUserByIdDB } from '@account/domain/contracts/User/FindUserById'
-import { UserSchema, UserServicesSchema } from '@account/infra/prisma/schemas'
+import { UserSchema, UserServicesSchema } from '@core/infra/prisma/schemas'
 import { UUID } from 'io-ts-types'
 
 interface UnValidatedUser {

@@ -1,5 +1,5 @@
 import { Email } from '@account/domain/requiredFields/email'
-import { UserSchema, UserServicesSchema } from '@account/infra/prisma/schemas'
+import { UserSchema, UserServicesSchema } from '@core/infra/prisma/schemas'
 
 interface User extends UserSchema {
   userServices: UserServicesSchema

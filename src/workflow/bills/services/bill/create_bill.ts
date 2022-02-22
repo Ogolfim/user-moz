@@ -4,12 +4,13 @@ import { pipe } from 'fp-ts/lib/function'
 import { findUserByIdService } from '@bills/services/bill/find_user_by_id'
 import { findUserByIdDB } from '@bills/domain/entities/user/find_user_by_id'
 import { accountTypes } from '@account/domain/entities/db'
+import { servicesCost } from '@bills/services/bill/servicesCost/services_cost'
 
 export const createBillService: CreateBillService =
 (servicesNumberDiscount) => (billPeriodDiscount) => (accountTypeDiscount) => (data) => {
   const { services, billPeriod, userId } = data
 
-  const servicesCost = 0
+  const cost = servicesCost(services)
 
   pipe(
     userId,
@@ -20,7 +21,7 @@ export const createBillService: CreateBillService =
       const bill = {
         servicesCost,
         accountType,
-        totalAmountToPay: servicesCost
+        totalAmountToPay: cost
       }
 
       if (accountType === accountTypes.business) {

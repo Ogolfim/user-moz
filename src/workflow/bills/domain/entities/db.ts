@@ -4,3 +4,8 @@ export const billPeriods = {
   biannual: 'BIANNUAL',
   yearly: 'YEARLY'
 }
+
+export const services = {
+  api: 'API',
+  webDownload: 'WEB_DOWNLOAD'
+}

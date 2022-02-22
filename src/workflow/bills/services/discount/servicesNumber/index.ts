@@ -1,12 +1,10 @@
 import { CreateServicesNumberDiscount } from '@bills/domain/Contracts'
+import { discountOnServices } from './discount'
 
 export const createServicesNumberDiscount: CreateServicesNumberDiscount = (bill) => {
   const { servicesCost, services, totalAmountToPay } = bill
 
-  const discountPercentage = Number(process.env.DISCOUNT_ON_NUMBER_OF_SERVICES)
-  const servicersNumber = services.length
-
-  const discount = servicesCost * discountPercentage / 100 * (servicersNumber - 1)
+  const discount = discountOnServices(services.length)(servicesCost)
 
   const billDiscounted = {
     ...bill,

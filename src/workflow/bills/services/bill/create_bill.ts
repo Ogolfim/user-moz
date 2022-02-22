@@ -5,6 +5,8 @@ import { findUserByIdService } from '@bills/services/bill/find_user_by_id'
 import { findUserByIdDB } from '@bills/domain/entities/user/find_user_by_id'
 import { accountTypes } from '@account/domain/entities/db'
 import { servicesCost } from '@bills/services/bill/servicesCost/services_cost'
+import { countEmployeesService } from '@bills/services/bill/business/count_employees'
+import { countEmployeesDB } from '@bills/domain/entities/business/count_employees'
 
 export const createBillService: CreateBillService =
 (servicesNumberDiscount) => (billPeriodDiscount) => (accountTypeDiscount) => (data) => {
@@ -17,21 +19,22 @@ export const createBillService: CreateBillService =
     findUserByIdService(findUserByIdDB),
     TE.chain(user => {
       const { accountType } = user
-
       const bill = {
         servicesCost,
         accountType,
+        billPeriod,
         totalAmountToPay: cost
       }
 
       if (accountType === accountTypes.business) {
-
-        employeesNumber
-
-        return { ...bill, employeesNumber }
+        return pipe(
+          userId,
+          countEmployeesService(countEmployeesDB),
+          TE.map(employeesNumber => {
+            return { ...bill, employeesNumber }
+          })
+        )
       }
-
-      return bill
     })
   )
 

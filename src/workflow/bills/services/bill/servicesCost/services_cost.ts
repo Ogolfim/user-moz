@@ -1,20 +1,28 @@
-import { services as s } from '@bills/domain/entities/db'
+import { billPeriods, services as s } from '@bills/domain/entities/db'
+import { BillPeriod } from '@bills/domain/requiredFields/bill_period'
 
-export const servicesCost = (services: string[]): number => {
+export const servicesCost = (services: string[]) => (billPeriod: BillPeriod): number => {
+  const { weekly, monthly, biannual, yearly } = billPeriods
   const downloadCost = Number(process.env.DOWNLOAD_COST)
   const apiCost = Number(process.env.API_COST)
 
-  let cost = 0
+  let initialCost = 0
 
   for (const service of services) {
     if (service === s.api) {
-      cost = cost + apiCost
+      initialCost = initialCost + apiCost
     }
 
     if (service === s.webDownload) {
-      cost = cost + downloadCost
+      initialCost = initialCost + downloadCost
     }
   }
 
-  return cost
+  const cost = new Map<string, number>()
+  cost.set(weekly, initialCost / 4)
+  cost.set(monthly, initialCost)
+  cost.set(biannual, initialCost * 6)
+  cost.set(yearly, initialCost * 12)
+
+  return cost.get(billPeriod)
 }

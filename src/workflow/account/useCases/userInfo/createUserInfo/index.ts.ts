@@ -8,7 +8,7 @@ import { accountTypes } from '@account/domain/entities/db'
 import { findUserByIdDB } from '@account/domain/entities/user/findUser/find_user_by_id'
 import { getUserService } from '@account/services/user/userInfo/get_user'
 import { createUnipersonalInfoUseCase } from '@account/useCases/userInfo/createUserInfo//unipersonal'
-import { createCompanyInfoUseCase } from '@account/useCases/userInfo/createUserInfo/company'
+import { createBusinessInfoUseCase } from '@account/useCases/userInfo/createUserInfo/business'
 import { createStudentInfoUseCase } from '@account/useCases/userInfo/createUserInfo/student'
 
 export const createUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
@@ -30,8 +30,8 @@ export const createUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
             return createUnipersonalInfoUseCase({ userId, address, phone })
           }
 
-          if (accountType === accountTypes.company) {
-            return createCompanyInfoUseCase({ adminId: userId, address, phone, name: companyName })
+          if (accountType === accountTypes.business) {
+            return createBusinessInfoUseCase({ adminId: userId, address, phone, name: companyName })
           }
 
           if (accountType === accountTypes.student) {

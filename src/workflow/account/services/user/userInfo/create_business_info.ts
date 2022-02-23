@@ -2,14 +2,14 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { pipe } from 'fp-ts/lib/function'
 import { clientError, fail } from '@core/infra/http_error_response'
 import { DatabaseFailError, EntityAlreadyExistError } from '@account/domain/entities/errors/db_error'
-import { CreateCompanyInfoService } from '@account/domain/contracts/User/UserInfo/CreateCompanyInfo'
+import { CreateBusinessInfoService } from '@account/domain/contracts/User/UserInfo/CreateBusinessInfo'
 
-export const createCompanyInfoService: CreateCompanyInfoService = (createCompanyInfoDB) => (getCompanyInfoByUserIdDB) => (company) => {
-  const { adminId } = company
+export const createBusinessInfoService: CreateBusinessInfoService = (createBusinessInfoDB) => (getBusinessInfoByUserIdDB) => (business) => {
+  const { adminId } = business
 
   return pipe(
     TE.tryCatch(
-      async () => await getCompanyInfoByUserIdDB(adminId),
+      async () => await getBusinessInfoByUserIdDB(adminId),
 
       (err) => {
         console.log(err)
@@ -30,7 +30,7 @@ export const createCompanyInfoService: CreateCompanyInfoService = (createCompany
       )
     }),
     TE.chain((_companyInfo) => TE.tryCatch(
-      async () => await createCompanyInfoDB(company),
+      async () => await createBusinessInfoDB(business),
 
       (err) => {
         console.log(err)

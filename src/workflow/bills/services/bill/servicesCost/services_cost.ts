@@ -1,8 +1,8 @@
 import { services as s } from '@bills/domain/entities/db'
 
 export const servicesCost = (services: string[]): number => {
-  const apiCost = Number(process.env.API_COST)
   const downloadCost = Number(process.env.DOWNLOAD_COST)
+  const apiCost = Number(process.env.API_COST)
 
   let cost = 0
 

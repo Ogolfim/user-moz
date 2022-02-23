@@ -28,9 +28,9 @@ export const getUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
         userInfoService(getUserInfoDB),
         TE.chain(user => TE.tryCatch(
           async () => {
-            const { unipersonal, company, student, accountType, employee } = user
+            const { unipersonal, business, student, accountType, employee } = user
 
-            if (!unipersonal && !company && !student && !employee) {
+            if (!unipersonal && !business && !student && !employee) {
               throw new EntityNotFoundError('Oops! Nenhuma informação do usuário encontrada')
             }
 
@@ -38,7 +38,7 @@ export const getUserInfoUseCase: Middleware = (_httpRequest, httpBody) => {
 
             if (accountType === accountTypes.employee) { return employeeView(employee) }
 
-            if (accountType === accountTypes.company) { return companyView(company) }
+            if (accountType === accountTypes.business) { return companyView(business) }
 
             if (accountType === accountTypes.student) { return studentView(student) }
           },

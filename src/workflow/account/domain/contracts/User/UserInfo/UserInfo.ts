@@ -3,7 +3,7 @@ import * as E from 'fp-ts/lib/Either'
 import { UUID } from 'io-ts-types'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
-import { StudentSchema, CompanySchema, EmployeeSchema, UnipersonalSchema, AddressSchema } from '@core/infra/prisma/schemas'
+import { StudentSchema, BusinessSchema, EmployeeSchema, UnipersonalSchema, AddressSchema } from '@core/infra/prisma/schemas'
 
 interface Unipersonal extends UnipersonalSchema {
   address: AddressSchema
@@ -13,7 +13,7 @@ interface Student extends StudentSchema {
   address: AddressSchema
 }
 
-interface Business extends CompanySchema {
+interface Business extends BusinessSchema {
   address: AddressSchema
   employees: EmployeeSchema[]
 }

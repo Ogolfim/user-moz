@@ -1,24 +1,19 @@
 import { CreateBillPeriodDiscount } from '@bills/domain/Contracts'
 import { billPeriods } from '@bills/domain/entities/db'
-import { biannualDiscount } from './biannual'
-import { monthlyDiscount } from './monthly'
-import { weeklyMarginalRate } from './weekly'
-import { yearlyDiscount } from './yearly'
+import { biannualDiscount } from '@bills/services/discount/billPeriod/biannual'
+import { monthlyDiscount } from '@bills/services/discount/billPeriod/monthly'
+import { weeklyMarginalRate } from '@bills/services/discount/billPeriod/weekly'
+import { yearlyDiscount } from '@bills/services/discount/billPeriod/yearly'
 
 export const createBillPeriodDiscount: CreateBillPeriodDiscount = (bill) => {
-  const { servicesCost, totalAmountToPay, billPeriod } = bill
+  const { servicesCost, discount, billPeriod } = bill
   const { weekly, monthly, biannual, yearly } = billPeriods
 
-  const discount = new Map<string, number>()
-  discount.set(weekly, weeklyMarginalRate(servicesCost))
-  discount.set(monthly, monthlyDiscount(servicesCost))
-  discount.set(biannual, biannualDiscount(servicesCost))
-  discount.set(yearly, yearlyDiscount(servicesCost))
+  const newDiscount = new Map<string, number>()
+  newDiscount.set(weekly, weeklyMarginalRate(servicesCost))
+  newDiscount.set(monthly, monthlyDiscount(servicesCost))
+  newDiscount.set(biannual, biannualDiscount(servicesCost))
+  newDiscount.set(yearly, yearlyDiscount(servicesCost))
 
-  const billDiscounted = {
-    ...bill,
-    totalAmountToPay: totalAmountToPay - discount.get(billPeriod)
-  }
-
-  return billDiscounted
+  return discount + newDiscount.get(billPeriod)
 }

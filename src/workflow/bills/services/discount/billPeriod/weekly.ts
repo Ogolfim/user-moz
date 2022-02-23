@@ -5,5 +5,5 @@ export const weeklyMarginalRate = (servicesCost: number): number => {
 
   const rate = servicesCost * weeklyMarginalRatePercentage / 100
 
-  return -rate
+  return (-rate)
 }

@@ -1,11 +1,11 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
-import { CreateCompanyInfoValidator } from '@account/domain/contracts/User/UserInfo/CreateCompanyInfo'
+import { CreateCompanyInfoValidator } from '@account/domain/contracts/User/UserInfo/CreateBusinessInfo'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
-import { CreateCompanyInfoPropsCodec } from '@account/domain/requiredFields/Users/create_company_info'
+import { CreateBusinessInfoPropsCodec } from '@account/domain/requiredFields/Users/create_business_info'
 
-export const createCompanyInfoPropsValidate: CreateCompanyInfoValidator = (data) => {
+export const createBusinessInfoPropsValidate: CreateCompanyInfoValidator = (data) => {
   return pipe(
     E.tryCatch(
       () => {
@@ -18,7 +18,7 @@ export const createCompanyInfoPropsValidate: CreateCompanyInfoValidator = (data)
     ),
     E.chain(data => pipe(
       data,
-      CreateCompanyInfoPropsCodec.decode,
+      CreateBusinessInfoPropsCodec.decode,
       E.mapLeft(errors => new ValidationError(failure(errors).join(', ') + ' invalido'))
     ))
   )

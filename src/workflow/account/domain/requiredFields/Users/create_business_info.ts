@@ -4,11 +4,11 @@ import { UUID } from 'io-ts-types'
 import { PhoneCodec } from '@account/domain/requiredFields/phone'
 import { AddressCodec } from '@account/domain/requiredFields/address'
 
-export const CreateCompanyInfoPropsCodec = t.type({
+export const CreateBusinessInfoPropsCodec = t.type({
   adminId: UUID,
   name: NameCodec,
   phone: PhoneCodec,
   address: AddressCodec
 })
 
-export type CreateCompanyInfoProps = t.TypeOf<typeof CreateCompanyInfoPropsCodec>
+export type CreateBusinessInfoProps = t.TypeOf<typeof CreateBusinessInfoPropsCodec>

@@ -1,7 +1,7 @@
 import { prisma } from '@core/infra/prisma/client'
-import { CreateCompanyInfoDB } from '@account/domain/contracts/User/UserInfo/CreateCompanyInfo'
+import { CreateBusinessInfoDB } from '@account/domain/contracts/User/UserInfo/CreateBusinessInfo'
 
-export const createCompanyInfoDB: CreateCompanyInfoDB = async ({ adminId, address, name, phone }) => {
+export const createBusinessInfoDB: CreateBusinessInfoDB = async ({ adminId, address, name, phone }) => {
   return await prisma.business.create({
     data: {
       adminId,

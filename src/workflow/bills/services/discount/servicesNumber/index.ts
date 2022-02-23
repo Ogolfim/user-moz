@@ -1,15 +1,10 @@
 import { CreateServicesNumberDiscount } from '@bills/domain/Contracts'
-import { discountOnServices } from './discount'
+import { discountOnServices } from '@bills/services/discount/servicesNumber/discount'
 
 export const createServicesNumberDiscount: CreateServicesNumberDiscount = (bill) => {
-  const { servicesCost, services, totalAmountToPay } = bill
+  const { servicesCost, services, discount } = bill
 
-  const discount = discountOnServices(services.length)(servicesCost)
+  const newDiscount = discountOnServices(services.length)(servicesCost)
 
-  const billDiscounted = {
-    ...bill,
-    totalAmountToPay: totalAmountToPay - discount
-  }
-
-  return billDiscounted
+  return discount + newDiscount
 }

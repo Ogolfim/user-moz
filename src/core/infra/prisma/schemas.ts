@@ -16,7 +16,7 @@ export type UserServicesSchema = UserServices
 
 export type AddressSchema = Address
 
-export type CompanySchema = Business
+export type BusinessSchema = Business
 export type UnipersonalSchema = Unipersonal
 export type StudentSchema = Student
 export type EmployeeSchema = Employee

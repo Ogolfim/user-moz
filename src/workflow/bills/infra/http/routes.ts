@@ -1,9 +1,9 @@
 import { Router } from 'express'
 
-import { findOrCreateCustomerController } from '@bills/infra/http/controller/customer/find_or_create_customer'
+import { createBillController } from '@bills/infra/http/controller/createBill'
 
 const BillsRouter = Router()
 
-BillsRouter.post('/customer', findOrCreateCustomerController)
+BillsRouter.post('/create', createBillController)
 
 export default BillsRouter

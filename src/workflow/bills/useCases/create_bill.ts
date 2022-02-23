@@ -4,10 +4,10 @@ import { pipe } from 'fp-ts/lib/function'
 import { Middleware } from '@core/infra/Middleware'
 import { clientError } from '@core/infra/http_error_response'
 import { createBillValidate } from '@bills/services/validate/bill/create_bill'
-import { createBillDB } from '@bills/domain/entities/unipersonal/create_unipersonal_bill'
 import { ok } from '@core/infra/http_success_response'
+import { createBillService } from '@bills/services/bill/create_bill'
 
-const createBill: Middleware = (_httpRequest, httpBody) => {
+export const createBillUseCase: Middleware = (_httpRequest, httpBody) => {
   const { services, billPeriod, userId } = httpBody
 
   const user = { services, billPeriod, userId }
@@ -18,9 +18,10 @@ const createBill: Middleware = (_httpRequest, httpBody) => {
     E.mapLeft(error => clientError(error)),
     TE.fromEither,
     TE.chain(validBillInfo => pipe(
-      createBillDB(validBillInfo)(createBillDB),
-      TE.map(customer => {
-        return ok(customer)
+      validBillInfo,
+      createBillService,
+      TE.map(cost => {
+        return ok({ cost })
       })
     ))
   )

@@ -1,10 +1,15 @@
 import * as E from 'fp-ts/lib/Either'
+import * as TE from 'fp-ts/lib/TaskEither'
 import { ValidationError } from '@bills/services/validate/errors/validation_error'
 import { ICreateBillProps } from '@bills/domain/requiredFields/Bills/create_Bill'
-import { BillSchema, PaymentSchema } from '@core/infra/prisma/schemas'
+import { PaymentSchema } from '@core/infra/prisma/schemas'
 import { PaymentStatus } from 'user-moz'
 import { BillPeriod } from '@bills/domain/requiredFields/bill_period'
-import { AccountType } from '@account/domain/requiredFields/account_type'
+import { UUID } from 'io-ts-types'
+import { FindUserByIdService } from '@bills/domain/Contracts/User/FindUserById'
+import { CountEmployeesService } from '@bills/domain/Contracts/Business/CountEmployees'
+import { HttpErrorResponse } from '@core/infra/http_error_response'
+import { TaskEither } from 'fp-ts/lib/TaskEither'
 
 interface UnValidatedBill {
   services: Array<string>
@@ -23,30 +28,28 @@ interface ICreatePaymentDB {
 interface IServicesNumberDiscount {
   servicesCost: number
   services: string[]
-  totalAmountToPay: number
+  discount: number
 }
 
 interface IBillPeriodDiscount {
   servicesCost: number
   billPeriod: BillPeriod
-  totalAmountToPay: number
+  discount: number
 }
 
 interface IAccountTypeDiscount {
   servicesCost: number
-  accountType: AccountType
-  totalAmountToPay: number
-  employeesNumber: number
+  discount: number,
+  userId: UUID
 }
 
 export type ICreataBillValidator = (data: UnValidatedBill) => E.Either<ValidationError, ICreateBillProps>
 
 export type CreatePaymentDB = (bill: ICreatePaymentDB) => Promise<PaymentSchema>
 
-export type CreateServicesNumberDiscount = (bill: IServicesNumberDiscount) => IServicesNumberDiscount
-export type CreateBillPeriodDiscount = (bill: IBillPeriodDiscount) => IBillPeriodDiscount
-export type CreateAccountTypeDiscount = (bill: IAccountTypeDiscount) => IAccountTypeDiscount
+export type CreateServicesNumberDiscount = (bill: IServicesNumberDiscount) => number
+export type CreateBillPeriodDiscount = (bill: IBillPeriodDiscount) => number
+export type CreateAccountTypeDiscount = (findUserByIdService: FindUserByIdService) =>
+(countEmployeesService: CountEmployeesService) => (bill: IAccountTypeDiscount) => TaskEither<HttpErrorResponse, number>
 
-export type CreateBillService = (servicesNumberDiscount: CreateServicesNumberDiscount) =>
-(billPeriodDiscount: CreateBillPeriodDiscount) => (accountTypeDiscount: CreateAccountTypeDiscount)
-=> (data: ICreateBillProps) => BillSchema
+export type CreateBillService = (data: ICreateBillProps) => TE.TaskEither<HttpErrorResponse, number>

@@ -11,6 +11,7 @@ interface ICreateBusinessBill {
   note: string
 }
 
+export type CountEmployeesDB = (adminId: UUID) => Promise<number | null>
 export type CreateBusinessBillDB = (bill: ICreateBusinessBill) => Promise<BillSchema>
 
 export type CreateBusinessBillService = (createBusinessBillDB: CreateBusinessBillDB) =>

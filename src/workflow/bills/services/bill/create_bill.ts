@@ -14,6 +14,7 @@ import { createStudentBillService } from './student/create_student_bill'
 import { createUnipersonalBillService } from './unipersonal/create_unipersonal_bill'
 import { createUnipersonalBillDB } from '@bills/domain/entities/unipersonal/create_unipersonal_bill'
 import { createStudentBillDB } from '@bills/domain/entities/student/create_student_bill'
+import { createBusinessBillDB } from '@bills/domain/entities/business/create_business_bill'
 
 export const createBillService: CreateBillService = (data) => {
   const { services, billPeriod, userId } = data
@@ -41,20 +42,18 @@ export const createBillService: CreateBillService = (data) => {
           const bill = {
             services,
             totalAmountToPay: cost,
-            nextBillableDay: new Date,
-            note: ''
-          }
-
-          const businessBill = {
-            ...bill,
-            businessId: userId
+            nextBillableDay: new Date(),
+            note: '',
+            userId
           }
 
           const createBill = new Map()
 
-          createBill.set(business, createBusinessBillService(createBusinessBillDB)())
-          createBill.set(unipersonal, createUnipersonalBillService(createUnipersonalBillDB)())
-          createBill.set(student, createStudentBillService(createStudentBillDB)())
+          createBill.set(business, createBusinessBillService(createBusinessBillDB)(bill))
+          createBill.set(unipersonal, createUnipersonalBillService(createUnipersonalBillDB)(bill))
+          createBill.set(student, createStudentBillService(createStudentBillDB)(bill))
+
+          return createBill.get(accountType)
         })
       )
     })

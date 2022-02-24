@@ -1,15 +1,15 @@
 import * as E from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/function'
 import { failure } from 'io-ts/lib/PathReporter'
-import { CreateUserPropsCodec } from '@account/domain/requiredFields/Users/register_user_props'
+import { CreateEmployeePropsCodec } from '@account/domain/requiredFields/Users/create_employee_props'
 import { ValidationError } from '@account/services/validate/errors/validation_error'
-import { CreateUserValidator } from '@account/domain/contracts/User/CreateUser/createUser'
+import { CreateEmployeeValidator } from '@account/domain/contracts/User/CreateUser/CreateEmployee'
 
-export const createUserPropsValidate: CreateUserValidator = (data) => {
+export const createEmployeePropsValidate: CreateEmployeeValidator = (data) => {
   return pipe(
     E.tryCatch(
       () => {
-        if (!data) throw new ValidationError('Nome, email e senha estão em falta')
+        if (!data) throw new ValidationError('Nome, email estão em falta')
 
         return data
       },
@@ -18,7 +18,7 @@ export const createUserPropsValidate: CreateUserValidator = (data) => {
     ),
     E.chain(data => pipe(
       data,
-      CreateUserPropsCodec.decode,
+      CreateEmployeePropsCodec.decode,
       E.mapLeft(errors => new ValidationError(failure(errors).join(', ') + ' invalido'))
     ))
   )

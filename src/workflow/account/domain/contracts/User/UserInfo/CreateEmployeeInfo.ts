@@ -6,7 +6,7 @@ import { CreateEmployeeInfoProps } from '@account/domain/requiredFields/Users/cr
 import { EmployeeSchema } from '@core/infra/prisma/schemas'
 
 export interface UnValidatedEmployee {
-  companyAdminId: string
+  businessAdminId: string
   email: string
 }
 

@@ -1,7 +1,7 @@
 import { prisma } from '@core/infra/prisma/client'
 import { CreateEmployeeInfoDB } from '@account/domain/contracts/User/UserInfo/CreateEmployeeInfo'
 
-export const createEmployeeInfoDB: CreateEmployeeInfoDB = async ({ email, companyAdminId }) => {
+export const createEmployeeInfoDB: CreateEmployeeInfoDB = async ({ email, businessAdminId }) => {
   const employee = await prisma.user.findUnique({
     where: { email },
     select: { id: true }
@@ -15,15 +15,15 @@ export const createEmployeeInfoDB: CreateEmployeeInfoDB = async ({ email, compan
 
   if (employeeInfo) return employeeInfo
 
-  const company = await prisma.business.findUnique({
-    where: { adminId: companyAdminId }
+  const business = await prisma.business.findUnique({
+    where: { adminId: businessAdminId }
   })
 
-  if (!company) return null
+  if (!business) return null
 
   return await prisma.employee.create({
     data: {
-      businessId: company.id,
+      businessId: business.id,
       userId: employee.id
     }
   })

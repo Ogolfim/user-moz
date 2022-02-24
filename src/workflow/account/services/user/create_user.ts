@@ -1,7 +1,7 @@
 import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { clientError, fail } from '@core/infra/http_error_response'
-import { CreateUserService } from '@account/domain/contracts/User/CreateUser/create_user'
+import { CreateUserService } from '@account/domain/contracts/User/CreateUser/createUser'
 import { hashPassword } from '@account/services/password/hash'
 import { DatabaseFailError, EntityAlreadyExistError } from '@account/domain/entities/errors/db_error'
 import { PasswordHashError } from '@account/services/password/errors/hash_errors'

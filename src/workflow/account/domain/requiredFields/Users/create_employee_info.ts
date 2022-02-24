@@ -3,7 +3,7 @@ import { EmailCodec } from '@account/domain/requiredFields/email'
 import { UUID } from 'io-ts-types'
 
 export const CreateEmployeeInfoPropsCodec = t.type({
-  companyAdminId: UUID,
+  businessAdminId: UUID,
   email: EmailCodec
 })
 

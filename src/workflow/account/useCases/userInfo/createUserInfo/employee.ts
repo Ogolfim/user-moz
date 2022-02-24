@@ -9,10 +9,10 @@ import { createEmployeeInfoService } from '@account/services/user/userInfo/creat
 import { Middleware } from '@core/infra/Middleware'
 
 export const createEmployeeInfoUseCase: Middleware = (_httpRequest, httpBody) => {
-  const { userId: companyAdminId, email } = httpBody
+  const { userId: businessAdminId, email } = httpBody
 
   const httpResponse = pipe(
-    { companyAdminId, email },
+    { businessAdminId, email },
     createEmployeeInfoPropsValidate,
     E.mapLeft(error => clientError(error)),
     TE.fromEither,

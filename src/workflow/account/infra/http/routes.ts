@@ -12,13 +12,15 @@ import { updateUserNameController } from '@account/infra/http/controller/updateU
 import { updateUserEmailController } from '@account/infra/http/controller/updateUser/update_user_email'
 import { resetPasswordRequestController } from '@account/infra/http/controller/updateUser/reset_password_request'
 import { resetPasswordController } from '@account/infra/http/controller/updateUser/reset_password'
-import { createEmployeeInfoController } from './controller/userInfo/create_employee_info'
+import { createEmployeeInfoController } from '@account/infra/http/controller/userInfo/create_employee_info'
+import { createEmployeeController } from '@account/infra/http/controller/createUser/create_employee'
 
 const AccountRouter = Router()
 
 AccountRouter.post('/login', userLoggerByPasswordController)
 AccountRouter.post('/login/:serverName', userLoggerByOauthController)
 AccountRouter.post('/create', userRegisterController)
+AccountRouter.post('/employee', createEmployeeController)
 
 AccountRouter.get('/tags', getUserTagsController)
 AccountRouter.post('/tags', userAdderToTagsController)

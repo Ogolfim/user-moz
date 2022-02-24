@@ -4,11 +4,11 @@ import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { BillSchema } from '@core/infra/prisma/schemas'
 
 interface ICreateBusinessBill {
-  businessId: UUID
   services: string[]
-  totalAmount: number
+  totalAmountToPay: number
   nextBillableDay: Date
   note: string
+  businessId: UUID
 }
 
 export type CountEmployeesDB = (adminId: UUID) => Promise<number | null>

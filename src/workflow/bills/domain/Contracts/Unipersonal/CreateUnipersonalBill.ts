@@ -4,11 +4,11 @@ import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { UUID } from 'io-ts-types'
 
 interface ICreateUnipersonalBill {
-  unipersonalId: UUID
   services: string[]
-  totalAmount: number
+  totalAmountToPay: number
   nextBillableDay: Date
   note: string
+  unipersonalId: UUID
 }
 
 export type CreateUnipersonalBillDB = (bill: ICreateUnipersonalBill) => Promise<BillSchema>

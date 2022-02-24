@@ -3,12 +3,12 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { UUID } from 'io-ts-types'
 import { ValidationError } from '@bills/services/validate/errors/validation_error'
 import { ICreateBillProps } from '@bills/domain/requiredFields/Bills/create_Bill'
-import { PaymentSchema } from '@core/infra/prisma/schemas'
+import { BillSchema, PaymentSchema } from '@core/infra/prisma/schemas'
 import { PaymentStatus } from 'user-moz'
 import { BillPeriod } from '@bills/domain/requiredFields/bill_period'
-import { FindUserByIdService } from '@bills/domain/Contracts/User/FindUserById'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
+import { AccountType } from '@account/domain/requiredFields/account_type'
 
 interface UnValidatedBill {
   services: Array<string>
@@ -39,7 +39,8 @@ interface IBillPeriodDiscount {
 interface IAccountTypeDiscount {
   servicesCost: number
   discount: number,
-  userId: UUID
+  userId: UUID,
+  accountType: AccountType
 }
 
 export type ICreataBillValidator = (data: UnValidatedBill) => E.Either<ValidationError, ICreateBillProps>
@@ -50,7 +51,9 @@ export type CreateServicesNumberDiscount = (bill: IServicesNumberDiscount) => nu
 export type CreateBillPeriodDiscount = (bill: IBillPeriodDiscount) => number
 
 export type CountEmployeesDB = (adminId: UUID) => Promise<number>
-export type CreateAccountTypeDiscount = (findUserByIdService: FindUserByIdService) =>
-(countEmployeesDB: CountEmployeesDB) => (bill: IAccountTypeDiscount) => TaskEither<HttpErrorResponse, number>
+export type CreateAccountTypeDiscount = (bill: IAccountTypeDiscount) => TaskEither<HttpErrorResponse, number>
+
+export type createUnipersonalBillDB = () => TaskEither<HttpErrorResponse, BillSchema>
+export type createStudentBillDB = () => TaskEither<HttpErrorResponse, BillSchema>
 
 export type CreateBillService = (data: ICreateBillProps) => TE.TaskEither<HttpErrorResponse, number>

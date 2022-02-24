@@ -2,7 +2,7 @@ import { prisma } from '@core/infra/prisma/client'
 import { CreateUnipersonalBillDB } from '@bills/domain/Contracts/Unipersonal/CreateUnipersonalBill'
 
 export const createUnipersonalBillDB: CreateUnipersonalBillDB = async (billInfo) => {
-  const { services, totalAmount, nextBillableDay, note, unipersonalId } = billInfo
+  const { services, totalAmountToPay, nextBillableDay, note, unipersonalId } = billInfo
 
   await prisma.bill.deleteMany({
     where: { unipersonalId }
@@ -11,7 +11,7 @@ export const createUnipersonalBillDB: CreateUnipersonalBillDB = async (billInfo)
   const newBill = await prisma.bill.create({
     data: {
       services,
-      totalAmount,
+      totalAmountToPay,
       nextBillableDay,
       note,
       unipersonalId

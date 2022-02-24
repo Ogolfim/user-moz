@@ -14,6 +14,7 @@ import { resetPasswordRequestController } from '@account/infra/http/controller/u
 import { resetPasswordController } from '@account/infra/http/controller/updateUser/reset_password'
 import { createEmployeeInfoController } from '@account/infra/http/controller/userInfo/create_employee_info'
 import { createEmployeeController } from '@account/infra/http/controller/createUser/create_employee'
+import { getEmployeesController } from './controller/userInfo/get_employees'
 
 const AccountRouter = Router()
 
@@ -21,6 +22,7 @@ AccountRouter.post('/login', userLoggerByPasswordController)
 AccountRouter.post('/login/:serverName', userLoggerByOauthController)
 AccountRouter.post('/create', userRegisterController)
 AccountRouter.post('/employee', createEmployeeController)
+AccountRouter.get('/employee', getEmployeesController)
 
 AccountRouter.get('/tags', getUserTagsController)
 AccountRouter.post('/tags', userAdderToTagsController)

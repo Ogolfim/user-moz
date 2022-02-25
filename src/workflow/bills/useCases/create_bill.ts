@@ -20,8 +20,8 @@ export const createBillUseCase: Middleware = (_httpRequest, httpBody) => {
     TE.chain(validBillInfo => pipe(
       validBillInfo,
       createBillService,
-      TE.map(cost => {
-        return ok({ cost })
+      TE.map(bill => {
+        return ok(bill)
       })
     ))
   )

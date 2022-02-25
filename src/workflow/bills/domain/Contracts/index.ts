@@ -56,4 +56,4 @@ export type CreateAccountTypeDiscount = (bill: IAccountTypeDiscount) => TaskEith
 export type createUnipersonalBillDB = () => TaskEither<HttpErrorResponse, BillSchema>
 export type createStudentBillDB = () => TaskEither<HttpErrorResponse, BillSchema>
 
-export type CreateBillService = (data: ICreateBillProps) => TE.TaskEither<HttpErrorResponse, number>
+export type CreateBillService = (data: ICreateBillProps) => TE.TaskEither<HttpErrorResponse, BillSchema>

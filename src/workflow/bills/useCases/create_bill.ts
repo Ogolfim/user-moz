@@ -21,7 +21,26 @@ export const createBillUseCase: Middleware = (_httpRequest, httpBody) => {
       validBillInfo,
       createBillService,
       TE.map(bill => {
-        return ok(bill)
+        const {
+          services,
+          totalAmountToPay,
+          nextBillableDay,
+          note,
+          payment
+        } = bill
+
+        const billPaymentStartedEvent = {
+          name: '',
+          email: '',
+          bill: {
+            services,
+            totalAmountToPay,
+            nextBillableDay,
+            note,
+            paymentDeadline: payment.paymentDeadline
+          }
+        }
+        return ok(billPaymentStartedEvent)
       })
     ))
   )

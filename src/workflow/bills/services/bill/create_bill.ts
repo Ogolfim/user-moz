@@ -7,12 +7,12 @@ import { createBillPeriodDiscount } from '@bills/services/discount/billPeriod'
 import { createAccountTypeDiscount } from '@bills/services/discount/accountType'
 import { servicesCost } from '@bills/services/bill/servicesCost/services_cost'
 import { createNextBillableDay } from '@bills/services/bill/billableDay/next_billable_day'
-import { findUserByIdService } from './find_user_by_id'
+import { findUserByIdService } from '@bills/services/bill/find_user_by_id'
 import { findUserByIdDB } from '@bills/domain/entities/user/find_user_by_id'
 import { accountTypes } from '@account/domain/entities/db'
-import { createBusinessBillService } from './business/create_business_bill'
-import { createStudentBillService } from './student/create_student_bill'
-import { createUnipersonalBillService } from './unipersonal/create_unipersonal_bill'
+import { createBusinessBillService } from '@bills/services/bill/business/create_business_bill'
+import { createStudentBillService } from '@bills/services/bill/student/create_student_bill'
+import { createUnipersonalBillService } from '@bills/services/bill/unipersonal/create_unipersonal_bill'
 import { createUnipersonalBillDB } from '@bills/domain/entities/unipersonal/create_unipersonal_bill'
 import { createStudentBillDB } from '@bills/domain/entities/student/create_student_bill'
 import { createBusinessBillDB } from '@bills/domain/entities/business/create_business_bill'
@@ -21,6 +21,11 @@ import { BillSchema } from '@core/infra/prisma/schemas'
 import { findBusinessByAdminIdDB } from '@bills/domain/entities/business/find_business_by_admin_id'
 import { findUnipersonalByUserIdDB } from '@bills/domain/entities/unipersonal/find_business_by_user_id'
 import { findStudentByUserIdDB } from '@bills/domain/entities/student/find_student_by_user_id'
+import { createBillPaymentService } from '@bills/services/payment/create_payment_bill'
+import { createBillPaymentDB } from '@bills/domain/entities/payment/create_payment_bill'
+import { paymentStatus } from '@bills/domain/entities/db'
+import dayjs from 'dayjs'
+import { Decimal } from 'user-moz'
 
 export const createBillService: CreateBillService = (data) => {
   const { services, billPeriod, userId } = data
@@ -49,9 +54,11 @@ export const createBillService: CreateBillService = (data) => {
 
           const nextBillableDay = createNextBillableDay(billPeriod)
 
+          const total = cost - discount
+
           const IBill = {
             services,
-            totalAmountToPay: cost - discount,
+            totalAmountToPay: total as unknown as Decimal,
             nextBillableDay,
             note: '',
             userId
@@ -64,6 +71,26 @@ export const createBillService: CreateBillService = (data) => {
           createBill.set(student, createStudentBillService(createStudentBillDB)(findStudentByUserIdDB)(IBill))
 
           return createBill.get(accountType)
+        }),
+        TE.chain(bill => {
+          const { id, totalAmountToPay } = bill
+          const { padding } = paymentStatus
+          const deadline = new Date(dayjs().add(7, 'day').format())
+
+          const IPaymentBill = {
+            paymentStatus: padding,
+            amount: totalAmountToPay,
+            paymentDeadline: deadline,
+            billId: id
+          }
+
+          return pipe(
+            IPaymentBill,
+            createBillPaymentService(createBillPaymentDB),
+            TE.map((payment) => {
+              return { ...bill, payment }
+            })
+          )
         })
       )
     })

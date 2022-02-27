@@ -2,10 +2,11 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { UUID } from 'io-ts-types'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { BillSchema, BusinessSchema } from '@core/infra/prisma/schemas'
+import { Decimal } from 'user-moz'
 
 interface ICreateBusinessBill {
   services: string[]
-  totalAmountToPay: number
+  totalAmountToPay: Decimal
   nextBillableDay: Date
   note: string
   userId: UUID
@@ -13,7 +14,7 @@ interface ICreateBusinessBill {
 
 interface ICreateBusinessBillDB {
   services: string[]
-  totalAmountToPay: number
+  totalAmountToPay: Decimal
   nextBillableDay: Date
   note: string
   businessId: UUID

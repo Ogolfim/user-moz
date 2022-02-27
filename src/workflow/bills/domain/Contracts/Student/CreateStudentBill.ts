@@ -2,10 +2,11 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { BillSchema, StudentSchema } from '@core/infra/prisma/schemas'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { UUID } from 'io-ts-types'
+import { Decimal } from 'user-moz'
 
 interface ICreateStudentBill {
   services: string[]
-  totalAmountToPay: number
+  totalAmountToPay: Decimal
   nextBillableDay: Date
   note: string
   userId: UUID
@@ -13,7 +14,7 @@ interface ICreateStudentBill {
 
 interface ICreateStudentBillDB {
   services: string[]
-  totalAmountToPay: number
+  totalAmountToPay: Decimal
   nextBillableDay: Date
   note: string
   studentId: UUID

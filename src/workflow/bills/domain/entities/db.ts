@@ -9,3 +9,9 @@ export const services = {
   api: 'API',
   webDownload: 'WEB_DOWNLOAD'
 }
+
+export const paymentStatus = {
+  padding: 'PADDING',
+  payed: 'PAYED',
+  failed: 'FAILED'
+}

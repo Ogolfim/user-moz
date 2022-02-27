@@ -13,9 +13,9 @@ datasource db {
 model User {
   id                  String         @id @default(uuid())
   name                String 
-  hash                String? 
+  hash                String?
   serverName          String?
-  email               String         @unique 
+  email               String         @unique
   accountType         String  
   unipersonal         Unipersonal?
   business            Business?
@@ -40,7 +40,7 @@ model UserServices {
 }
 
 model Bill {
-  id                  Int             @id @default(autoincrement())
+  id                  String             @id @default(uuid())
   services            Json  
   totalAmountToPay    Decimal
   nextBillableDay     DateTime
@@ -62,10 +62,10 @@ model Payment {
   id                  Int             @id @default(autoincrement())
   paymentStatus       String   
   amount              Decimal      
-  paymentStartedAt    DateTime
+  paymentStartedAt    DateTime        @default(now())
   paymentDeadline     DateTime
   bill                Bill            @relation(fields: [billId], references: [id], onDelete: Cascade)
-  billId              Int
+  billId              String
   createdAt           DateTime        @default(now())
   updatedAt           DateTime        @default(now())
 

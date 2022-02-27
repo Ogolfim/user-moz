@@ -3,25 +3,17 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { UUID } from 'io-ts-types'
 import { ValidationError } from '@bills/services/validate/errors/validation_error'
 import { ICreateBillProps } from '@bills/domain/requiredFields/Bills/create_Bill'
-import { BillSchema, PaymentSchema } from '@core/infra/prisma/schemas'
-import { PaymentStatus } from 'user-moz'
+import { BillSchema } from '@core/infra/prisma/schemas'
 import { BillPeriod } from '@bills/domain/requiredFields/bill_period'
 import { HttpErrorResponse } from '@core/infra/http_error_response'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { AccountType } from '@account/domain/requiredFields/account_type'
+import { Payment } from '@prisma/client'
 
 interface UnValidatedBill {
   services: Array<string>
   billPeriod: string
   userId: string
-}
-
-interface ICreatePaymentDB {
-  billId: number
-  paymentStatus: PaymentStatus
-  totalAmount: number
-  paymentStartedAt: Date
-  paymentDeadline: Date
 }
 
 interface IServicesNumberDiscount {
@@ -43,9 +35,11 @@ interface IAccountTypeDiscount {
   accountType: AccountType
 }
 
-export type ICreataBillValidator = (data: UnValidatedBill) => E.Either<ValidationError, ICreateBillProps>
+interface Bill extends BillSchema {
+  payment: Payment
+}
 
-export type CreatePaymentDB = (bill: ICreatePaymentDB) => Promise<PaymentSchema>
+export type ICreataBillValidator = (data: UnValidatedBill) => E.Either<ValidationError, ICreateBillProps>
 
 export type CreateServicesNumberDiscount = (bill: IServicesNumberDiscount) => number
 export type CreateBillPeriodDiscount = (bill: IBillPeriodDiscount) => number
@@ -56,4 +50,4 @@ export type CreateAccountTypeDiscount = (bill: IAccountTypeDiscount) => TaskEith
 export type createUnipersonalBillDB = () => TaskEither<HttpErrorResponse, BillSchema>
 export type createStudentBillDB = () => TaskEither<HttpErrorResponse, BillSchema>
 
-export type CreateBillService = (data: ICreateBillProps) => TE.TaskEither<HttpErrorResponse, BillSchema>
+export type CreateBillService = (data: ICreateBillProps) => TE.TaskEither<HttpErrorResponse, Bill>

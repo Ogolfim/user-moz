@@ -5,10 +5,10 @@ import dayjs from 'dayjs'
 export const createNextBillableDay = (billPeriod: BillPeriod): Date => {
   const { weekly, monthly, biannual, yearly } = billPeriods
 
-  const week = dayjs().add(7, 'day')
-  const OneMonth = dayjs().add(1, 'month')
-  const SixMonth = dayjs().add(6, 'months')
-  const year = dayjs().add(1, 'year')
+  const week = new Date(dayjs().add(7, 'day').format())
+  const OneMonth = new Date(dayjs().add(1, 'month').format())
+  const SixMonth = new Date(dayjs().add(6, 'months').format())
+  const year = new Date(dayjs().add(1, 'year').format())
 
   const billableDay = new Map()
   billableDay.set(weekly, week)

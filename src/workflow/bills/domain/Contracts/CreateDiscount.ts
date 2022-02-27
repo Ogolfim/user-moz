@@ -5,6 +5,7 @@ import { ICreateBillProps } from '@bills/domain/requiredFields/Bills/create_Bill
 
 interface ICreateDiscount extends ICreateBillProps {
   servicesCost: number
+  accountType: string
 }
 
 export type CreateDiscount = (servicesNumberDiscount: CreateServicesNumberDiscount) =>

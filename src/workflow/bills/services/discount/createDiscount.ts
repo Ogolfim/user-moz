@@ -1,11 +1,9 @@
 import { CreateDiscount } from '@bills/domain/Contracts/CreateDiscount'
 import { pipe } from 'fp-ts/lib/function'
-import { findUserByIdService } from '@bills/services/bill/find_user_by_id'
-import { countEmployeesService } from '@bills/services/bill/business/count_employees'
 
 export const createDiscount: CreateDiscount = (servicesNumberDiscount) =>
   (billPeriodDiscount) => (accountTypeDiscount) => (data) => {
-    const { services, billPeriod, userId, servicesCost } = data
+    const { services, billPeriod, userId, servicesCost, accountType } = data
 
     const initialBill = {
       servicesCost,
@@ -26,13 +24,17 @@ export const createDiscount: CreateDiscount = (servicesNumberDiscount) =>
         return billPeriodDiscount(periodBill)
       },
       (discount) => {
-        const accountTypeBill = {
+        const IAccountType = {
           servicesCost,
           userId,
-          discount
+          discount,
+          accountType
         }
 
-        return accountTypeDiscount(findUserByIdService)(countEmployeesService)(accountTypeBill)
+        return pipe(
+          IAccountType,
+          accountTypeDiscount
+        )
       }
     )
   }

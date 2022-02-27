@@ -34,7 +34,9 @@ export const createBillService: CreateBillService = (data) => {
       const { accountType } = user
 
       const ICreateDiscount = {
-        ...data,
+        services,
+        billPeriod,
+        userId,
         accountType,
         servicesCost: cost
       }
@@ -42,15 +44,14 @@ export const createBillService: CreateBillService = (data) => {
       return pipe(
         ICreateDiscount,
         createDiscount(createServicesNumberDiscount)(createBillPeriodDiscount)(createAccountTypeDiscount),
-        TE.chain(cost => {
+        TE.chain(discount => {
           const { business, unipersonal, student } = accountTypes
 
           const nextBillableDay = createNextBillableDay(billPeriod)
-          console.log(nextBillableDay)
 
           const IBill = {
             services,
-            totalAmountToPay: cost,
+            totalAmountToPay: cost - discount,
             nextBillableDay,
             note: '',
             userId

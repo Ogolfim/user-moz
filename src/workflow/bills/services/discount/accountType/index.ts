@@ -4,7 +4,7 @@ import { CreateAccountTypeDiscount } from '@bills/domain/Contracts'
 import { businessDiscount } from '@bills/services/discount/accountType/business'
 import { studentDiscount } from '@bills/services/discount/accountType/student'
 import { unipersonalDiscount } from '@bills/services/discount/accountType/unipersonal'
-import { fail } from '@core/infra/http_error_response'
+import { clientError } from '@core/infra/http_error_response'
 
 export const createAccountTypeDiscount: CreateAccountTypeDiscount = (bill) => {
   const { servicesCost, discount, userId, accountType } = bill
@@ -12,19 +12,19 @@ export const createAccountTypeDiscount: CreateAccountTypeDiscount = (bill) => {
 
   const costDiscounted = TE.tryCatch(
     async () => {
-      const newDiscount = new Map<string, number>()
-      newDiscount.set(business, await businessDiscount(userId)(servicesCost))
-      newDiscount.set(student, studentDiscount(servicesCost))
-      newDiscount.set(unipersonal, unipersonalDiscount(servicesCost))
+      if (accountType === student) {
+        return discount + studentDiscount(servicesCost)
+      }
 
-      const disco = discount + newDiscount.get(accountType)
+      if (accountType === unipersonal) {
+        return discount + unipersonalDiscount(servicesCost)
+      }
 
-      return disco
+      if (accountType === business) {
+        return discount + await businessDiscount(userId)(servicesCost)
+      }
     },
-    err => {
-      console.log(err)
-      return fail(new Error('Oops! Por favor, dê-nos informações da sua empresa'))
-    }
+    (_err) => clientError(new Error('Oops! Por favor, dê-nos informações da sua emprise'))
   )
 
   return costDiscounted

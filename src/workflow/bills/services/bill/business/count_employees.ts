@@ -17,7 +17,7 @@ export const countEmployeesService: CountEmployeesService = (countEmployeesDB) =
       return TE.tryCatch(
         async () => {
           if (!employeesNumber) {
-            throw new EntityNotFoundError('Oops! Você ainda não salvou informações da sua empresa')
+            throw new EntityNotFoundError('Oops! Por favor, dê-nos informações da sua empresa')
           }
 
           return employeesNumber

@@ -7,8 +7,6 @@ import { createBillPeriodDiscount } from '@bills/services/discount/billPeriod'
 import { createAccountTypeDiscount } from '@bills/services/discount/accountType'
 import { servicesCost } from '@bills/services/bill/servicesCost/services_cost'
 import { createNextBillableDay } from '@bills/services/bill/billableDay/next_billable_day'
-import { findUserByIdService } from '@bills/services/bill/find_user_by_id'
-import { findUserByIdDB } from '@bills/domain/entities/user/find_user_by_id'
 import { accountTypes } from '@account/domain/entities/db'
 import { createBusinessBillService } from '@bills/services/bill/business/create_business_bill'
 import { createStudentBillService } from '@bills/services/bill/student/create_student_bill'
@@ -28,69 +26,61 @@ import dayjs from 'dayjs'
 import { Decimal } from 'user-moz'
 
 export const createBillService: CreateBillService = (data) => {
-  const { services, billPeriod, userId } = data
+  const { services, billPeriod, userId, accountType } = data
 
   const cost = servicesCost(services)(billPeriod)
 
-  const bill = pipe(
+  const ICreateDiscount = {
+    services,
+    billPeriod,
     userId,
-    findUserByIdService(findUserByIdDB),
-    TE.chain(user => {
-      const { accountType } = user
+    accountType,
+    servicesCost: cost
+  }
 
-      const ICreateDiscount = {
+  const bill = pipe(
+    ICreateDiscount,
+    createDiscount(createServicesNumberDiscount)(createBillPeriodDiscount)(createAccountTypeDiscount),
+    TE.chain(discount => {
+      const { business, unipersonal, student } = accountTypes
+
+      const nextBillableDay = createNextBillableDay(billPeriod)
+
+      const total = cost - discount
+
+      const IBill = {
         services,
-        billPeriod,
-        userId,
-        accountType,
-        servicesCost: cost
+        totalAmountToPay: total as unknown as Decimal,
+        nextBillableDay,
+        note: '',
+        userId
+      }
+
+      const createBill = new Map<string, TE.TaskEither<HttpErrorResponse, BillSchema>>()
+
+      createBill.set(business, createBusinessBillService(createBusinessBillDB)(findBusinessByAdminIdDB)(IBill))
+      createBill.set(unipersonal, createUnipersonalBillService(createUnipersonalBillDB)(findUnipersonalByUserIdDB)(IBill))
+      createBill.set(student, createStudentBillService(createStudentBillDB)(findStudentByUserIdDB)(IBill))
+
+      return createBill.get(accountType)
+    }),
+    TE.chain(bill => {
+      const { id, totalAmountToPay } = bill
+      const { padding } = paymentStatus
+      const deadline = new Date(dayjs().add(7, 'day').format())
+
+      const IPaymentBill = {
+        paymentStatus: padding,
+        amount: totalAmountToPay,
+        paymentDeadline: deadline,
+        billId: id
       }
 
       return pipe(
-        ICreateDiscount,
-        createDiscount(createServicesNumberDiscount)(createBillPeriodDiscount)(createAccountTypeDiscount),
-        TE.chain(discount => {
-          const { business, unipersonal, student } = accountTypes
-
-          const nextBillableDay = createNextBillableDay(billPeriod)
-
-          const total = cost - discount
-
-          const IBill = {
-            services,
-            totalAmountToPay: total as unknown as Decimal,
-            nextBillableDay,
-            note: '',
-            userId
-          }
-
-          const createBill = new Map<string, TE.TaskEither<HttpErrorResponse, BillSchema>>()
-
-          createBill.set(business, createBusinessBillService(createBusinessBillDB)(findBusinessByAdminIdDB)(IBill))
-          createBill.set(unipersonal, createUnipersonalBillService(createUnipersonalBillDB)(findUnipersonalByUserIdDB)(IBill))
-          createBill.set(student, createStudentBillService(createStudentBillDB)(findStudentByUserIdDB)(IBill))
-
-          return createBill.get(accountType)
-        }),
-        TE.chain(bill => {
-          const { id, totalAmountToPay } = bill
-          const { padding } = paymentStatus
-          const deadline = new Date(dayjs().add(7, 'day').format())
-
-          const IPaymentBill = {
-            paymentStatus: padding,
-            amount: totalAmountToPay,
-            paymentDeadline: deadline,
-            billId: id
-          }
-
-          return pipe(
-            IPaymentBill,
-            createBillPaymentService(createBillPaymentDB),
-            TE.map((payment) => {
-              return { ...bill, payment }
-            })
-          )
+        IPaymentBill,
+        createBillPaymentService(createBillPaymentDB),
+        TE.map((payment) => {
+          return { ...bill, payment }
         })
       )
     })

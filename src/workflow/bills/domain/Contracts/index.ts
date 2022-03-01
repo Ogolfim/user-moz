@@ -39,6 +39,10 @@ interface Bill extends BillSchema {
   payment: Payment
 }
 
+interface ICreateBillService extends ICreateBillProps {
+  accountType: string
+}
+
 export type ICreataBillValidator = (data: UnValidatedBill) => E.Either<ValidationError, ICreateBillProps>
 
 export type CreateServicesNumberDiscount = (bill: IServicesNumberDiscount) => number
@@ -50,4 +54,4 @@ export type CreateAccountTypeDiscount = (bill: IAccountTypeDiscount) => TaskEith
 export type createUnipersonalBillDB = () => TaskEither<HttpErrorResponse, BillSchema>
 export type createStudentBillDB = () => TaskEither<HttpErrorResponse, BillSchema>
 
-export type CreateBillService = (data: ICreateBillProps) => TE.TaskEither<HttpErrorResponse, Bill>
+export type CreateBillService = (data: ICreateBillService) => TE.TaskEither<HttpErrorResponse, Bill>

@@ -20,4 +20,10 @@ This is the USER MOZ, a user management system. Features:
 - Student
 - Employee
 
-You can apply discounts on your services according to the account type of the user
+#### Bill Periods:
+- Weekly
+- Monthly
+- Biannual
+- Yearly
+
+You can apply discounts on your services according to the account type and Bill period of the user

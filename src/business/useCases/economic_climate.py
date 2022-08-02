@@ -1,6 +1,6 @@
 from pathlib import Path
 from datetime import datetime
-from ...plots.line import createLinePlot
+from src.plots.indicator import createIndicatorPlot
 import aiohttp
 
 path = str(Path(__file__).parent.joinpath('static/figure.svg'))
@@ -8,7 +8,7 @@ path = str(Path(__file__).parent.joinpath('static/figure.svg'))
 id = 'economic-climate'
 fromDate = '2015-02-01'
 toDate = '2024-01-01'
-api_url = f'http://localhost:3002/v1/business/economic-climate/monthly/many/{id}?fromDate={fromDate}&toDate={toDate}'
+api_url = f'http://localhost:3002/v1/business/economic-climate/many/{id}?fromDate={fromDate}&toDate={toDate}'
 
 async def economicClimateUseCase():
     async with aiohttp.ClientSession() as session:
@@ -26,6 +26,7 @@ async def economicClimateUseCase():
                 'x': date,
                 'y': value
             })
-        createLinePlot(plotData, path)
+            
+        createIndicatorPlot(plotData, path)
 
         return path

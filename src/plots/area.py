@@ -5,8 +5,8 @@ class PlotData:
   x: date
   y: float
 
-def createLinePlot(plotData: list[PlotData], path: str):
-    fig = px.line(
+def createAreaPlot(plotData: list[PlotData], path: str):
+    fig = px.area(
       plotData,
       x='x',
       y='y',

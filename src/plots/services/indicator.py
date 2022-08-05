@@ -1,4 +1,3 @@
-from datetime import date
 import plotly.graph_objects as go
 from src.plots.domain.requiredFields.indicator import PlotData
 

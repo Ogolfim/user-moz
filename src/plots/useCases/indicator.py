@@ -4,7 +4,7 @@ from src.plots.services.indicator import createIndicatorPlot
 
 
 async def indicatorUseCase(extension: str, body: PlotBody):
-    path = str(Path(__file__).parent.joinpath(f'static/figure.{extension}'))
+    path = str(Path(__file__).parent.joinpath(f'static/mozeconomia-info-grafico.{extension}'))
     data = body['data']
     
     createIndicatorPlot(data, path)

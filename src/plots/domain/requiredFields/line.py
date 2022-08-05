@@ -1,7 +1,6 @@
 from datetime import date
 from pydantic import BaseModel
 
-
 class PlotData(BaseModel):
   x: date
   y: float

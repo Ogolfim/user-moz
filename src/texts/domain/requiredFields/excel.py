@@ -1,12 +1,12 @@
 from datetime import date
 from pydantic import BaseModel
 
-class PlotData(BaseModel):
+class FileData(BaseModel):
   x: date
   y: float
-  
-class PlotBody(BaseModel):
-  data: list[PlotData]
+
+class FileBody(BaseModel):
+  data: list[FileData]
   
   class Config:
     schema_extra = { 

@@ -1,12 +1,11 @@
 from pydantic import BaseModel
 
-
-class PlotData(BaseModel):
+class FileData(BaseModel):
   x: str
   y: float
   
-class PlotBody(BaseModel):
-  data: list[PlotData]
+class FileBody(BaseModel):
+  data: list[FileData]
   total: float
   
   class Config:

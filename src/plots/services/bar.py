@@ -1,4 +1,3 @@
-from datetime import date
 import plotly.express as px
 from src.plots.domain.requiredFields.area import PlotData
 

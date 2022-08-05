@@ -7,7 +7,7 @@ from src.texts.useCases.csv import csvUseCase
 
 csvRouter = APIRouter(
     prefix='/texts',
-    tags=['Texts']
+    tags=['Texts File']
 )
 
 @csvRouter.post('/csv/{extension}/', response_class=FileResponse)

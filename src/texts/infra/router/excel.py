@@ -7,10 +7,10 @@ from src.texts.useCases.excel import excelUseCase
 
 excelRouter = APIRouter(
     prefix='/texts',
-    tags=['Texts']
+    tags=['Texts File']
 )
 
-@excelRouter.post('/double-bar/{extension}/', response_class=FileResponse)
+@excelRouter.post('/excel/{extension}/', response_class=FileResponse)
 async def controller(
   extension: str,
   body: FileBody = Body(embed=True)

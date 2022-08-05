@@ -1,12 +1,9 @@
 from datetime import date
 import plotly.express as px
+from src.plots.domain.requiredFields.line import PlotData
 
-class PlotData:
-  x: date
-  y: float
-
-def createBarPlot(plotData: list[PlotData], path: str):
-    fig = px.bar(
+def createLinePlot(plotData: list[PlotData], path: str):
+    fig = px.line(
       plotData,
       x='x',
       y='y',

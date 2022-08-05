@@ -1,20 +1,12 @@
-from datetime import date
-from turtle import color
 import plotly.express as px
+from src.plots.domain.requiredFields.area import PlotData
 
-class PlotData:
-  x: date
-  y: float
-  color: str
-
-def createDoubleBarPlot(plotData: list[PlotData], path: str):
-    fig = px.bar(
+def createAreaPlot(plotData: list[PlotData], path: str):    
+    fig = px.area(
       plotData,
       x='x',
       y='y',
-      barmode='group',
-      color='color',
-      labels={'x': 'x',  'y': 'y'},
+      labels={'x': 'Data',  'y': 'Variação do indicador'},
     )
 
     fig.update_layout(
@@ -48,13 +40,14 @@ def createDoubleBarPlot(plotData: list[PlotData], path: str):
                 color='#0f172a',
             ),
         ),
+        autosize=False,
         margin=dict(
             autoexpand=False,
             l=100,
-            r=110,
-            t=20,
+            r=20,
+            t=110,
         ),
-        showlegend=True,
+        showlegend=False,
         plot_bgcolor='white'
     )
 

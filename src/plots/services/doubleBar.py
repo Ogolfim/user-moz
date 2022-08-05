@@ -1,16 +1,15 @@
 from datetime import date
 import plotly.express as px
+from src.plots.domain.requiredFields.doubleBar import PlotData
 
-class PlotData:
-  x: date
-  y: float
-
-def createLinePlot(plotData: list[PlotData], path: str):
-    fig = px.line(
+def createDoubleBarPlot(plotData: list[PlotData], path: str):
+    fig = px.bar(
       plotData,
       x='x',
       y='y',
-      labels={'x': 'Data',  'y': 'Variação do indicador'},
+      barmode='group',
+      color='color',
+      labels={'x': 'x',  'y': 'y'},
     )
 
     fig.update_layout(
@@ -44,14 +43,13 @@ def createLinePlot(plotData: list[PlotData], path: str):
                 color='#0f172a',
             ),
         ),
-        autosize=False,
         margin=dict(
             autoexpand=False,
             l=100,
-            r=20,
-            t=110,
+            r=110,
+            t=20,
         ),
-        showlegend=False,
+        showlegend=True,
         plot_bgcolor='white'
     )
 

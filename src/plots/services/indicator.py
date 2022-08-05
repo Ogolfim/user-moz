@@ -1,9 +1,6 @@
 from datetime import date
 import plotly.graph_objects as go
-
-class PlotData:
-  x: date
-  y: float
+from src.plots.domain.requiredFields.indicator import PlotData
 
 def createIndicatorPlot(plotData: list[PlotData], path: str):
     reference = plotData[-2]['y']

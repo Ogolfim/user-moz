@@ -5,8 +5,7 @@ from src.plots.services.area import createAreaPlot
 
 async def areaUseCase(extension: str, body: PlotBody):
     path = str(Path(__file__).parent.joinpath(f'static/mozeconomia-info-grafico.{extension}'))
-    data = body['data']
     
-    createAreaPlot(data, path)
+    createAreaPlot(body, path)
 
     return path

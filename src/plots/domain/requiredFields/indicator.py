@@ -1,8 +1,9 @@
 from datetime import date
+from typing import Union
 from pydantic import BaseModel
 
 class PlotData(BaseModel):
-  x: date
+  x: Union[date, str]
   y: float
   
 class PlotBody(BaseModel):

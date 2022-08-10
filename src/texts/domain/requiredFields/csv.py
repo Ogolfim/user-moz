@@ -7,10 +7,10 @@ class FileBody(BaseModel):
     schema_extra = { 
       "example": {
         "data": [ 
-          ['Name', 'Profession'],
-          ['Derek', 'Software Developer'],
-          ['Steve', 'Software Developer'],
-          [7674, 8849]
+          ["Name Cliente","Email","Id da Fatura","Plano/Pacode","Valor","Estado"],
+          ["Derek","derek@gmail.com","001A","Unipessoal","2500","Pago"],
+          ["Tomas","derek@gmail.com","002A","Unipessoal","2500","Pago"],
+          ["Piter","derek@gmail.com","003A","Unipessoal","2500","Pago"]
         ]
       }
     }

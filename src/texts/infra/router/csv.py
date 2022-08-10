@@ -13,7 +13,7 @@ csvRouter = APIRouter(
 @csvRouter.post('/csv/{extension}/', response_class=FileResponse)
 async def controller(
   extension: str,
-  body: FileBody = Body(embed=True)
+  body: FileBody = Body(embed=False)
 ):
   if (is_text_extension(extension)):
     body = jsonable_encoder(body)

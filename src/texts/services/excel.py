@@ -24,7 +24,7 @@ def createExcelFile(fileData: list[list[str, float]], path: str):
         index = index + 1
 
 
-    worksheet.set_row(0, 30)
+    worksheet.set_row(0, 25)
     workbook.close()   
     
     return path

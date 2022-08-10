@@ -13,7 +13,7 @@ lineRouter = APIRouter(
 @lineRouter.post('/line/{extension}/', response_class=FileResponse)
 async def controller(
   extension: str,
-  body: PlotBody = Body(embed=True)
+  body: PlotBody = Body(embed=False)
 ):
   if (is_img_extension(extension)):
     body = jsonable_encoder(body)

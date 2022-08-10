@@ -13,7 +13,7 @@ excelRouter = APIRouter(
 @excelRouter.post('/excel/{extension}/', response_class=FileResponse)
 async def controller(
   extension: str,
-  body: FileBody = Body(embed=True)
+  body: FileBody = Body(embed=False)
 ):
   if (is_text_extension(extension)):
     body = jsonable_encoder(body)
@@ -23,6 +23,4 @@ async def controller(
     status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
     detail='Extension must be csv, or excel.'
   )
-  
-  
   

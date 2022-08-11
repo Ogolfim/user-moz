@@ -1,54 +1,26 @@
-import plotly.express as px
-from src.plots.domain.requiredFields.area import PlotData
+import plotly.graph_objects as go
+from src.plots.domain.requiredFields.pie import PlotBody
 
-def createPiePlot(plotData: list[PlotData], path: str):
-    fig = px.pie(
-      plotData,
-      x='x',
-      y='y',
-      labels={'x': 'Data',  'y': 'Variação do indicador'},
-    )
+fig = go.Figure()
 
+def createPiePlot(body: PlotBody, path: str):    
+    y = [d['y'] for d in body['data']]
+    x = [d['x'] for d in body['data']]
+
+    fig.add_trace(go.Pie(
+        values = y,
+        labels = x,
+    ))
+    
     fig.update_layout(
-        xaxis=dict(
-            dtick='M6',
-            tickformat='%b\n%Y',
-            ticklabelmode='period',
-            griddash='dot', 
-            gridcolor='#94a3b8',
-            showline=True,
-            showticklabels=True,
-            linecolor='#0f172a',
-            linewidth=2,
-            ticks='outside',
-            tickfont=dict(
-                family='Arial',
-                size=12,
-                color='#0f172a',
-            ),
-        ),
-        yaxis=dict(
-            griddash='dot', 
-            gridcolor='#94a3b8',
-            showline=False,
-            showticklabels=True,
-            linecolor='#0f172a',
-            linewidth=2,
-            tickfont=dict(
-                family='Arial',
-                size=13,
-                color='#0f172a',
-            ),
-        ),
-        autosize=False,
-        margin=dict(
-            autoexpand=False,
-            l=100,
-            r=20,
-            t=110,
-        ),
-        showlegend=False,
-        plot_bgcolor='white'
+        width = 840,
+        height = 400,
+        plot_bgcolor ='#f1f5f9',
+        margin = dict(
+          l = 35,
+          r = 20,
+          t = 10
+        )
     )
 
     fig.write_image(path)

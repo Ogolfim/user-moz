@@ -10,7 +10,7 @@ def createBarPlot(body: PlotBody, path: str):
     y = [d['y'] for d in body['data']]
     x = [d['x'] for d in body['data']]
   
-    fig.add_trace(go.bar(
+    fig.add_trace(go.Bar(
         x=x,
         y=y,
         marker = dict(color='#0369a1')
@@ -20,7 +20,7 @@ def createBarPlot(body: PlotBody, path: str):
         width = 840,
         height = 400,
         showlegend = False,
-        plot_bgcolor ='#f1f5f9',
+        plot_bgcolor = 'white',
         margin = dict(
           l = 35,
           r = 20,

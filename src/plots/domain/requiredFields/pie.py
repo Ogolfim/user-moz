@@ -1,12 +1,9 @@
-from datetime import date
-from typing import Union
 from pydantic import BaseModel
 
-
 class PlotData(BaseModel):
-  x: Union[date, str]
+  x: str
   y: float
-
+  
 class PlotBody(BaseModel):
   data: list[PlotData]
   
@@ -15,16 +12,20 @@ class PlotBody(BaseModel):
       "example": {
         "data": [
           {
-            "x": "2022-02-01",
-            "y": 0
+            "x": "Agricultura, Produção Animal, Caça, Silvicultura e Pesca",
+            "y": 74395.58725994006
           },
           {
-            "x": "2022-03-01",
-            "y": 4
+            "x": "Indústrias Extractivas",
+            "y": 3341.195719616515
           },
           {
-            "x": "2022-04-01",
-            "y": 2
+            "x": "Construção",
+            "y": 4445.7351683828465
+          },
+          {
+            "x": "Transportes, Armazenagem",
+            "y": 18952.55797516886
           }
         ]
       }

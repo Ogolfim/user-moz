@@ -6,6 +6,10 @@ from src.plots.infra.router.bar import barRouter
 from src.plots.infra.router.pie import pieRouter
 from src.plots.infra.router.funnel import funnelRouter
 from src.plots.infra.router.indicator import indicatorRouter
+from src.plots.infra.router.group.area import groupAreaRouter
+from src.plots.infra.router.group.line import groupLineRouter
+from src.plots.infra.router.group.bar import groupBarRouter
+
 from src.texts.infra.router.csv import csvRouter
 from src.texts.infra.router.excel import excelRouter
 
@@ -30,6 +34,9 @@ app.include_router(barRouter)
 app.include_router(pieRouter)
 app.include_router(funnelRouter)
 app.include_router(indicatorRouter)
+app.include_router(groupAreaRouter)
+app.include_router(groupLineRouter)
+app.include_router(groupBarRouter)
 
 app.include_router(csvRouter)
 app.include_router(excelRouter)

@@ -5,8 +5,7 @@ from src.texts.services.excel import createExcelFile
 
 async def excelUseCase(extension: str, body: FileBody):
     path = str(Path(__file__).parent.joinpath(f'static/mozeconomia-dados.{extension}'))
-    data = body['data']
     
-    createExcelFile(data, path)
+    createExcelFile(body, path)
 
     return path

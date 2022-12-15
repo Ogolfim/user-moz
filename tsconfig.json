@@ -1,43 +1,27 @@
 {
-    "compilerOptions": {
-      "target": "es2017",
-      "module": "commonjs",
-      "sourceMap": true,
-      "outDir": "dist",
-      "rootDir": "src",
-      "removeComments": true,
-      "typeRoots": [
-        "./node_modules/@types",
-        "./src/@types"
-      ],
-      "baseUrl": ".",
-      "paths": {
-        "@core/*": ["src/core/*"],
-        "@account/domain/*": ["src/workflow/account/domain/*"],
-        "@account/infra/*": ["src/workflow/account/infra/*"],
-        "@account/services/*": ["src/workflow/account/services/*"],
-        "@account/useCases/*": ["src/workflow/account/useCases/*"],
-
-        "@meAdmin/domain/*": ["src/workflow/meAdmin/domain/*"],
-        "@meAdmin/infra/*": ["src/workflow/meAdmin/infra/*"],
-        "@meAdmin/services/*": ["src/workflow/meAdmin/services/*"],
-        "@meAdmin/useCases/*": ["src/workflow/meAdmin/useCases/*"],
-
-        "@bills/domain/*": ["src/workflow/bills/domain/*"],
-        "@bills/infra/*": ["src/workflow/bills/infra/*"],
-        "@bills/services/*": ["src/workflow/bills/services/*"],
-        "@bills/useCases/*": ["src/workflow/bills/useCases/*"],
-
-        "@payment/domain/*": ["src/workflow/payments/*"],
-        "@payment/infra/*": ["src/workflow/payments/*"],
-        "@payment/services/*": ["src/workflow/payments/*"],
-        "@payment/useCases/*": ["src/workflow/payments/*"]
-      },
-      "strict": false,
-      "lib": ["esnext"],
-      "esModuleInterop": true,
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "CommonJS",
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "removeComments": true,
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@core/*": ["src/core/*"],
+      "@bill/*": ["src/workflow/bill/*"],
+      "@user/*": ["src/workflow/user/*"],
+      "@design/*": ["src/workflow/design/*"]
     },
-    "include": [
-      "src"
-    ]
-  }
+    "strict": true,
+    "lib": ["esnext"],
+    "esModuleInterop": true
+  },
+  "include": [
+    "src/**/*"
+  ]
+}

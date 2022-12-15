@@ -1,33 +1,19 @@
-import cors from 'cors'
-import express from 'express'
-import cookieParser from 'cookie-parser'
-import helmet from 'helmet'
+import { billRouter } from '@bill/infra/http/routes'
+import cors from '@fastify/cors'
+import helmet from '@fastify/helmet'
+import { fastifySchedule } from '@fastify/schedule'
+import { userRouter } from '@user/infra/http/routes'
 import { config } from 'dotenv'
-import dotenvExpand from 'dotenv-expand'
+import fastify from 'fastify'
+config()
 
-import router from '@core/infra/http/routes'
+const app = fastify()
 
-dotenvExpand(config())
+app.register(helmet)
+app.register(cors)
+app.register(fastifySchedule)
 
-const app = express()
-
-app.use(helmet())
-app.disable('etag')
-
-app.use(
-  express.json({
-    type: ['application/json', 'text/plain']
-  })
-)
-
-app.use(cookieParser())
-
-app.use(
-  cors({
-    exposedHeaders: ['x-total-count', 'Content-Type', 'Content-Length']
-  })
-)
-
-app.use(router)
+app.register(userRouter)
+app.register(billRouter)
 
 export default app

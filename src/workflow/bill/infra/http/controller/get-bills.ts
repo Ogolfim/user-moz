@@ -1,4 +1,4 @@
-import { getAllBillsUseCase } from '@bill/useCases/get-all-bills'
+import { getBillsUseCase } from '@bill/useCases/get-bills'
 import { verifyClient } from '@core/infra/middleware/auth/verify-client'
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { pipe } from 'fp-ts/lib/function'
@@ -7,7 +7,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 export const getBillsController = (request: FastifyRequest, response: FastifyReply) => {
   pipe(
     verifyClient(request, request.body),
-    TE.chain(body => getAllBillsUseCase(request, body)),
+    TE.chain(body => getBillsUseCase(request, body)),
     TE.match(
       (httpErrorResponse) => {
         const { statusCode, body } = httpErrorResponse

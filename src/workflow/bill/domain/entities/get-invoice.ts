@@ -5,10 +5,10 @@ import { BillEntity } from 'bill'
 import { ObjectId } from 'mongodb'
 
 export const getInvoiceDB: GetInvoiceDB = async ({ billId, invoiceCode }) => {
-  const id = new ObjectId(billId)
+  const _id = new ObjectId(billId)
   const collection = (await clientDB).db().collection('bills')
 
-  const foundBill = await collection.findOne({ _id: id }) as unknown as BillEntity
+  const foundBill = await collection.findOne({ _id }) as unknown as BillEntity
 
   if (!foundBill) {
     throw new EntityNotFoundError()

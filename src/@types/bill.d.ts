@@ -4,7 +4,7 @@ declare module 'bill' {
     en: string
   }
 
-  export type Period = 'week' | 'month' | 'year'
+  export type Period = 'month' | 'year'
 
   export interface ServiceEntity {
     _id: any

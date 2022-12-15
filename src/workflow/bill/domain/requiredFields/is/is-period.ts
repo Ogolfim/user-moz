@@ -2,7 +2,6 @@ export const isPeriod = (value: string) => {
   const name = value.toLowerCase()
 
   if (
-    name.match(/week/i) ||
     name.match(/month/i) ||
     name.match(/year/i)
   ) {

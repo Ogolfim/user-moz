@@ -8,10 +8,6 @@ interface Props {
 export const getNextPayDate = ({ period }: Props) => {
   const today = dayjs(new Date())
 
-  if (period === 'week') {
-    return today.add(7, 'day').format('YYYY-MM-DDTHH:mm:ssZ[Z]')
-  }
-
   if (period === 'month') {
     return today.add(1, 'month').format('YYYY-MM-DDTHH:mm:ssZ[Z]')
   }

@@ -11,13 +11,9 @@ interface Props {
 export const subTotalCalculator = ({ price, teamMemberLimit, teamMemberBaseLimit, period }: Props) => {
   const teamTotal = teamTotalCalculator({ price, teamMemberBaseLimit, teamMemberLimit })
 
-  if (period === 'week') {
+  if (period === 'month') {
     return teamTotal * 1
   }
 
-  if (period === 'month') {
-    return teamTotal * 4
-  }
-
-  return (teamTotal * 4) * 12
+  return teamTotal * 12
 }

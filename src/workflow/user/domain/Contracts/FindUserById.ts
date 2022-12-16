@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@core/infra/middleware/http_error_response'
 import { Id } from '@user/domain/requiredFields/id'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { User } from 'ingadi'
+import { User } from 'mozeconomia'
 
 interface FindUserByIdProps {
   id: Id

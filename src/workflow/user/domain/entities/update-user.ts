@@ -2,8 +2,8 @@ import clientDB from '@core/domain/entities/db'
 import { EntityNotFoundError } from '@core/domain/errors/domain_error'
 import { UpdateUserDB } from '@user/domain/Contracts/UpdateUser'
 import dayjs from 'dayjs'
-import { UserEntity } from 'ingadi'
 import { ObjectId } from 'mongodb'
+import { UserEntity } from 'mozeconomia'
 
 export const updateUserDB: UpdateUserDB = async (data) => {
   const { userId, name, phoneNumber, image, address } = data

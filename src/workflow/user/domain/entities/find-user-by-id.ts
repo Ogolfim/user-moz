@@ -1,8 +1,8 @@
 import clientDB from '@core/domain/entities/db'
 import { EntityNotFoundError } from '@core/domain/errors/domain_error'
 import { FindUserByIdDB } from '@user/domain/Contracts/FindUserById'
-import { UserEntity } from 'ingadi'
 import { ObjectId } from 'mongodb'
+import { UserEntity } from 'mozeconomia'
 
 export const findUserByIdDB: FindUserByIdDB = async ({ id }) => {
   const _id = new ObjectId(id)

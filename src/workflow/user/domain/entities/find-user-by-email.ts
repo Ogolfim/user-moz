@@ -1,7 +1,7 @@
 import clientDB from '@core/domain/entities/db'
 import { EntityNotFoundError } from '@core/domain/errors/domain_error'
 import { FindUserByEmailDB } from '@user/domain/Contracts/FindUserByEmail'
-import { UserEntity } from 'ingadi'
+import { UserEntity } from 'mozeconomia'
 
 export const findUserByEmailDB: FindUserByEmailDB = async ({ email }) => {
   const collection = (await clientDB).db().collection('users')

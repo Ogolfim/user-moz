@@ -3,7 +3,7 @@ import { HttpErrorResponse } from '@core/infra/middleware/http_error_response'
 import { UpdateUserProps } from '@user/domain/requiredFields/update-user'
 import * as E from 'fp-ts/lib/Either'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { Address, User } from 'ingadi'
+import { Address, User } from 'mozeconomia'
 
 interface Data {
   userId: string

@@ -2,7 +2,6 @@ import { CreateBillService } from '@bill/domain/Contracts/CreateBill'
 import { createEnvices } from '@bill/services/invoice/create-invoices'
 import { DatabaseFailError, EntityNotFoundError } from '@core/domain/errors/domain_error'
 import { clientError, fail, notFound } from '@core/infra/middleware/http_error_response'
-import { Id } from '@user/domain/requiredFields/id'
 import { Period, PreBill } from 'bill'
 import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
@@ -14,13 +13,12 @@ export const createBillService: CreateBillService = (createBillDB) => (createInv
     TE.tryCatch(
       async () => {
         const pricing = await getPricingDB({ pricingId, locale: 'pt' })
-        const user = await findUserByIdDB({ id: userId as unknown as Id })
 
         if (!pricing) {
           throw new EntityNotFoundError()
         }
 
-        return { pricing, user }
+        return { pricing }
       },
       (err: any) => {
         if (err.name === 'EntityNotFound') {
@@ -31,7 +29,7 @@ export const createBillService: CreateBillService = (createBillDB) => (createInv
         return fail(new DatabaseFailError())
       }
     ),
-    TE.chain(({ pricing, user }) => pipe(
+    TE.chain(({ pricing }) => pipe(
       { pricing, teamMemberLimit, period },
       createEnvices(createInvoiceIdDB),
       TE.chain(invoice => TE.tryCatch(
@@ -46,7 +44,7 @@ export const createBillService: CreateBillService = (createBillDB) => (createInv
             nextPayDate: invoice.nextPayDate
           }
 
-          return { bill, user, invoice, pricing }
+          return { bill, invoice }
         },
         (err: any) => {
           if (err.name === 'EntityNotFound') {
@@ -58,11 +56,14 @@ export const createBillService: CreateBillService = (createBillDB) => (createInv
         }
       ))
     )),
-    TE.chain(({ bill, user, invoice, pricing }) => TE.tryCatch(
+    TE.chain(({ bill, invoice }) => TE.tryCatch(
       async () => {
-        await createBillDB(bill)
+        const newBill = await createBillDB(bill)
 
-        return { invoice, user, pricing }
+        return {
+          billId: newBill.id,
+          invoiceCode: invoice.invoiceCode
+        }
       },
 
       (err: any) => {

@@ -76,10 +76,8 @@ export const paymentMethods: PaymentMethod[] = [
 ]
 
 export const isPaymentMethodId = (value: string) => {
-  const name = value.toLowerCase()
-
   for (const method of paymentMethods) {
-    if (method.id === name) {
+    if (method.id === value) {
       return true
     }
   }

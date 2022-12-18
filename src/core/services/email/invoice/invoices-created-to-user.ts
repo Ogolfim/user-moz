@@ -1,10 +1,10 @@
 import sendMail from '@core/services/email/config/send-mail'
 import { MailDataRequired } from '@sendgrid/mail'
-import { Invoice, Pricing } from 'bill'
+import { Invoice, PaymentMethod, Pricing } from 'bill'
 import { config } from 'dotenv'
 import fs from 'fs'
 import handlebars from 'handlebars'
-import { User } from 'mozeconomia'
+import { Address, User } from 'mozeconomia'
 import { resolve } from 'path'
 
 config()
@@ -13,10 +13,13 @@ interface SendInvoiceProps {
   user: User
   invoice: Invoice
   pricing: Pricing
+  paymentMethod: PaymentMethod
 }
 
 interface TempletePros {
   name: string
+  userEmail: string
+  userPhoneNumber: string
   plan: string
   invoiceCode: string
   teamMemberLimit: number
@@ -27,6 +30,8 @@ interface TempletePros {
   nextPayDate: string
   services: string[]
   fromEmail: string
+  address: Address
+  paymentMethodName: string
 }
 
 const SERVER_URL = process.env.SERVER_URL
@@ -42,13 +47,16 @@ const userTemplete = fs.readFileSync(userTempletePath).toString('utf-8')
 
 const mailTemplateParse = handlebars.compile(userTemplete)
 
-export const sendInvoicesToUser = async ({ user, invoice, pricing }: SendInvoiceProps) => {
+export const sendInvoicesToUser = async ({ user, invoice, pricing, paymentMethod }: SendInvoiceProps) => {
   const services = pricing.services.map(({ description }) => description)
 
   const { invoiceCode, teamMemberLimit, subTotal, total, dueAt, nextPayDate, createdAt } = invoice
 
   const templetePros: TempletePros = {
     name: user.name!,
+    userEmail: user.email,
+    userPhoneNumber: user.phoneNumber!,
+    address: user.address!,
     plan: pricing.name,
     invoiceCode,
     teamMemberLimit,
@@ -58,13 +66,14 @@ export const sendInvoicesToUser = async ({ user, invoice, pricing }: SendInvoice
     createdAt,
     nextPayDate,
     services: services,
-    fromEmail
+    fromEmail,
+    paymentMethodName: paymentMethod.name
   }
 
   const html = mailTemplateParse(templetePros)
 
   const msg: MailDataRequired = {
-    to: user.email,
+    to: [user.email, 'team@mozeconomia.co.mz'],
     from: {
       name: 'MozEconomia',
       email: fromEmail

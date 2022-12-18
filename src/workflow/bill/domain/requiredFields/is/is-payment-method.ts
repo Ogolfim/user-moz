@@ -1,3 +1,4 @@
+import { EntityNotFoundError } from '@core/domain/errors/domain_error'
 import { PaymentMethod } from 'bill'
 
 export const paymentMethods: PaymentMethod[] = [
@@ -86,9 +87,11 @@ export const isPaymentMethodId = (value: string) => {
 }
 
 export const getPaymentMethod = (value: string) => {
-  for (const method of paymentMethods) {
-    if (method.id === value) {
-      return method
-    }
+  const method = paymentMethods.find(({ id }) => id === value)
+
+  if (!method) {
+    throw new EntityNotFoundError()
   }
+
+  return method
 }

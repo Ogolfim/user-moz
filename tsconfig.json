@@ -15,7 +15,7 @@
       "@core/*": ["src/core/*"],
       "@bill/*": ["src/workflow/bill/*"],
       "@user/*": ["src/workflow/user/*"],
-      "@design/*": ["src/workflow/design/*"]
+      "@smartSheet/*": ["src/workflow/smartSheet/*"]
     },
     "strict": true,
     "lib": ["esnext"],

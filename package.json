@@ -24,6 +24,7 @@
     "@fastify/cors": "^8.0.0",
     "@fastify/helmet": "^9.1.0",
     "@fastify/schedule": "^4.0.0",
+    "@fastify/static": "^6.6.0",
     "@sendgrid/mail": "^7.7.0",
     "aws4": "^1.11.0",
     "cors": "^2.8.5",

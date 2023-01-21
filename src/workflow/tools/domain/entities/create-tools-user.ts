@@ -5,7 +5,7 @@ import dayjs from 'dayjs'
 import { ToolsUserEntity } from 'tools'
 
 export const createToolsUserDB: CreateToolsUserDB = async ({ userId }) => {
-  const collection = (await clientDB).db().collection('tools')
+  const collection = (await clientDB).db().collection('tools-users')
 
   const today = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ssZ[Z]')
 

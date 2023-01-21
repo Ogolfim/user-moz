@@ -4,7 +4,7 @@ import { GetToolsUserDB } from '@tools/domain/Contracts/GetToolsUser'
 import { ToolsUserEntity } from 'tools'
 
 export const getToolsUserDB: GetToolsUserDB = async ({ userId }) => {
-  const collection = (await clientDB).db().collection('tools')
+  const collection = (await clientDB).db().collection('tools-users')
 
   const found = await collection.findOne({ userId }) as unknown as ToolsUserEntity
 

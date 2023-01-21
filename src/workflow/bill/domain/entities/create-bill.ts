@@ -3,7 +3,7 @@ import clientDB from '@core/domain/entities/db'
 import dayjs from 'dayjs'
 
 export const createBillDB: CreateBillDB = async (data) => {
-  const { userId, period, pricingId, teamMemberLimit, invoices, status } = data
+  const { userId, period, pricingId, teamMemberLimit, invoices, status, nextPayDate } = data
   const collection = (await clientDB).db().collection('bills')
 
   const today = dayjs(new Date())
@@ -23,11 +23,12 @@ export const createBillDB: CreateBillDB = async (data) => {
   return {
     id,
     userId,
+    teamMemberLimit,
     period,
     pricingId,
-    teamMemberLimit,
     invoices,
     status,
+    nextPayDate,
     createdAt
   }
 }

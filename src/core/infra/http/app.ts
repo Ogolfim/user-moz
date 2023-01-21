@@ -3,6 +3,7 @@ import cors from '@fastify/cors'
 import helmet from '@fastify/helmet'
 import { fastifySchedule } from '@fastify/schedule'
 import fastifyStatic from '@fastify/static'
+import { toolsRouter } from '@tools/infra/http/routes'
 import { userRouter } from '@user/infra/http/routes'
 import { config } from 'dotenv'
 import fastify from 'fastify'
@@ -21,5 +22,6 @@ app.register(fastifyStatic, {
 
 app.register(userRouter)
 app.register(billRouter)
+app.register(toolsRouter)
 
 export default app

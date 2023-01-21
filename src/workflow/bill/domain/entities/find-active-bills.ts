@@ -14,8 +14,28 @@ export const findActiveBillsDB: FindActiveBillsDB = async () => {
   }
 
   const bills = foundBills.map((bill) => {
-    const { _id, userId, userName, services, discount, subTotal, total, invoices, status, createdAt } = bill
-    return { id: _id, userId, userName, services, discount, subTotal, total, invoices, status, createdAt }
+    const {
+      _id,
+      userId,
+      teamMemberLimit,
+      period,
+      pricingId,
+      invoices,
+      status,
+      nextPayDate,
+      createdAt
+    } = bill
+    return {
+      id: _id,
+      userId,
+      teamMemberLimit,
+      period,
+      pricingId,
+      invoices,
+      status,
+      nextPayDate,
+      createdAt
+    }
   })
 
   return bills.reverse()

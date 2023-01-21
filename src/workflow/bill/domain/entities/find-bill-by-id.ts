@@ -14,18 +14,26 @@ export const findBillByIdDB: FindBillByIdDB = async (id) => {
     throw new EntityNotFoundError()
   }
 
-  const { userId, userName, services, discount, subTotal, total, invoices, status, createdAt } = foundBill
+  const {
+    userId,
+    teamMemberLimit,
+    period,
+    pricingId,
+    invoices,
+    status,
+    nextPayDate,
+    createdAt
+  } = foundBill
 
   return {
     id,
     userId,
-    userName,
-    services,
-    discount,
-    subTotal,
-    total,
+    teamMemberLimit,
+    period,
+    pricingId,
     invoices,
     status,
+    nextPayDate,
     createdAt
   }
 }

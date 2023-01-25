@@ -2,7 +2,7 @@ import { FailUnpaidInvoiceService } from '@bill/domain/Contracts/FailUnpaidInvoi
 import { isDueDate } from '@bill/services/utils/is-due-date'
 import { DatabaseFailError } from '@core/domain/errors/domain_error'
 import { fail, notFound } from '@core/infra/middleware/http_error_response'
-import { InvoiceStatus, ViewBill } from 'bill'
+import { Bill, InvoiceStatus } from 'bill'
 import { pipe } from 'fp-ts/lib/function'
 import * as TE from 'fp-ts/lib/TaskEither'
 
@@ -21,7 +21,7 @@ export const failUnpaidInvoiceService: FailUnpaidInvoiceService = (updateBillDB)
     ),
     TE.chain(bills => TE.tryCatch(
       async () => {
-        const newBills: ViewBill[] = []
+        const newBills: Bill[] = []
 
         for (const bill of bills) {
           const { invoices } = bill

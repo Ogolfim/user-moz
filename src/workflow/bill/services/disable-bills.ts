@@ -24,8 +24,8 @@ export const disableBillsService: DisableBillsService = (updateBillDB) => (delet
         const newBills: Bill[] = []
 
         for (const bill of bills) {
-          const { id, invoices, services: { eventDate } } = bill
-          const passedEvent = isDueDate({ dueAt: eventDate })
+          const { id, invoices, nextPayDate } = bill
+          const passedEvent = isDueDate({ dueAt: nextPayDate })
 
           let failedInvoices = true
 

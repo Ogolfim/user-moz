@@ -157,13 +157,11 @@
                           <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                             <tr>
                               <td class="pad" style="padding-bottom:30px;padding-left:40px;padding-right:40px;padding-top:70px;width:100%;">
-                                <h1 style="margin: 0; color: #020b22; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;"><span>Sua Fatura</span></h1>
+                                <h1 style="margin: 0; color: #020b22; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
+                                  <span>Mensagem</span>
+                                </h1>
                                 <p style="margin: 0; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
-                                  <span>Esta fatura deve ser paga até {{dueAt}}</span>
-                                </p>
-                                <p style="margin: 0; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
-                                  <span>Obrigado pela sua preferência.</span>
-                                  <span>Aqui está sua fatura:</span>
+                                  <span>{{message}}</span>
                                 </p>
                               </td>
                             </tr>
@@ -187,70 +185,23 @@
                           <table border="0" cellpadding="0" cellspacing="0" class="paragraph_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                             <tr>
                               <td class="pad" style="padding-bottom:5px;padding-left:40px;padding-right:10px;padding-top:5px;">
-                                <h1>Fatura a</h1>
+                                <h1>Serviços</h1>
                                 <div style="border-top:1px solid #94a3b8; width: 100%; margin-bottom: 20px;"></div>
                                 <div style="color:#334155; direction:ltr;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:120%;mso-line-height-alt:19.2px;">
                                   <p style="margin: 0;">
-                                    {{name}} <br>
-                                    {{address.streetAddress}}, {{address.address1}}, {{address.cityOrDistrict}}, {{address.provinceOrState}}, {{address.postalCode}}, <br>
-                                    {{address.country}} <br>
-                                    {{userEmail}} <br>
-                                    {{userPhoneNumber}}
+                                    {{service}}
                                   </p>
                                 </div>
                               </td>
                               <td class="pad" style="padding-bottom:5px;padding-left:40px;padding-right:40px;padding-top:5px;">
-                                <h1>Pagamento</h1>
+                                <h1>Dados do cliente</h1>
                                 <div style="border-top:1px solid #94a3b8; width: 100%; margin-bottom: 20px;"></div>
                                 <div style="color:#334155;direction:ltr;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:120%;mso-line-height-alt:19.2px;">
                                   <p style="margin: 0;">
-                                    <span>Comerciante:</span> MozEconomia <br>
-                                    <span>ID da fatura:</span> {{invoiceCode}}  <br>
-                                    <span>Forma de Pagamento:</span> {{paymentMethodName}} <br>
-                                    <span>Plano:</span> {{plan}} <br>
-                                    <span>Limite de membros da equipe:</span> {{teamMemberLimit}} <br>
-                                  </p>
-                                </div>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-
-          <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-4" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-            <tbody>
-              <tr>
-                <td>
-                  <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content stack" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; color: #000000; width: 680px;" width="680">
-                    <tbody>
-                      <tr>
-                        <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 60px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                          <table border="0" cellpadding="0" cellspacing="0" class="paragraph_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
-                            <tr style="width: 100%; background-color: #94a3b8;">
-                              <td class="pad" style="padding-bottom:5px;padding-left:40px;padding-right:10px;padding-top:5px;">
-                                <div style="color:#334155;direction:ltr;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:18px;font-weight:400;letter-spacing:0px;line-height:120%;mso-line-height-alt:19.2px;">
-                                  <p style="margin: 0; color: #FFFFFF;">
-                                    Serviços
-                                  </p>
-                                </div>
-                              </td>
-                            </tr>
-                            <tr style="width: 100%;">
-                              <td class="pad" style="padding-bottom:5px;padding-left:40px;padding-right:10px;padding-top:5px;">
-                                <div style="color:#334155;direction:ltr;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:18px;font-weight:400;letter-spacing:0px;line-height:120%;mso-line-height-alt:19.2px;">
-                                  <p style="margin: 0;">
-                                    {{#each services as |value key|}}
-																			<span style="font-size:20px;">
-																				<span style="color:#16a34a;">> </span>
-																				{{value}}
-																			</span><br/><br/>
-																		{{/each}}
+                                    <span>Nome:</span>{{name}}<br>
+                                    <span>Email:</span> {{email}}  <br>
+                                    <span>Telefone:</span> {{phoneNumber}} <br>
+                                    <span>Data do envio:</span> {{date}}
                                   </p>
                                 </div>
                               </td>

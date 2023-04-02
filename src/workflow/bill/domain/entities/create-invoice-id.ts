@@ -10,7 +10,7 @@ export const createInvoiceIdDB: CreateInvoiceNumberDB = async () => {
 
   const found = await collection.find().sort({ _id: -1 }).limit(1).toArray() as unknown as InvoiceIdEntity[]
 
-  if (!found) {
+  if (!found[0]) {
     throw new EntityNotFoundError()
   }
 

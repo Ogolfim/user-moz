@@ -6,11 +6,12 @@ import fastifyStatic from '@fastify/static'
 import { toolsRouter } from '@tools/infra/http/routes'
 import { userRouter } from '@user/infra/http/routes'
 import { config } from 'dotenv'
-import fastify from 'fastify'
+import Fastify from 'fastify'
 import { resolve } from 'path'
+
 config()
 
-const app = fastify()
+const app = Fastify()
 
 app.register(helmet)
 app.register(cors)
@@ -20,8 +21,8 @@ app.register(fastifyStatic, {
   prefix: '/v1/sheet/'
 })
 
-app.register(userRouter)
+app.register(userRouter, { prefix: '/v1/user' })
 app.register(billRouter)
-app.register(toolsRouter)
+app.register(toolsRouter, { prefix: '/v1/tools' })
 
 export default app

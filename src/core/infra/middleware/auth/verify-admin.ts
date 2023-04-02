@@ -1,5 +1,4 @@
-import { findAdminDB } from '@core/domain/entities/find-admin'
-import { findSessionDB } from '@core/domain/entities/find-session'
+import { verifyJWT } from '@core/infra/middleware/auth/jwt'
 import { unauthorized } from '@core/infra/middleware/http_error_response'
 import { Middleware } from '@core/infra/middleware/middleware'
 import { FastifyRequest } from 'fastify'
@@ -14,14 +13,16 @@ export const verifyAdmin: Middleware = (request: FastifyRequest, _httpBody) => {
 
         if (!bearerHeader) throw new Error('Not authorized')
 
-        const bearerToken = bearerHeader.split(' ')[1]
+        const token = bearerHeader.split(' ')[1]
 
-        const { userId } = await findSessionDB(bearerToken)
+        const { sub, admin } = await verifyJWT({ token })
+
+        if (!admin) {
+          throw new Error('Not authorized')
+        }
+
         const body = request.body as any
-
-        const { id } = await findAdminDB(userId)
-
-        return { ...body, adminId: id }
+        return { ...body, adminId: sub }
       },
       (_err) => {
         return unauthorized(new Error('Not authorized'))

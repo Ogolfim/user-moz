@@ -39,6 +39,7 @@
     "invoice-number": "^1.0.6",
     "io-ts": "^2.2.16",
     "io-ts-types": "^0.5.16",
+    "jose": "^4.13.1",
     "mongodb": "^4.9.0",
     "monocle-ts": "^2.3.13",
     "newtype-ts": "^0.3.5",

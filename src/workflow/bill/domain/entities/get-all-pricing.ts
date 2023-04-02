@@ -9,7 +9,7 @@ export const getAllPricingDB: GetAllPricingDB = async ({ locale }) => {
 
   const found = await collection.find().toArray() as unknown as PricingEntity[]
 
-  if (!found) {
+  if (!found[0]) {
     throw new EntityNotFoundError()
   }
 

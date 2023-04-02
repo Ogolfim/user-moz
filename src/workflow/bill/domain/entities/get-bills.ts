@@ -8,7 +8,7 @@ export const getBillsDB: GetBillsDB = async ({ userId }) => {
 
   const found = await collection.find({ userId }).sort({ _id: -1 }).limit(10).toArray() as unknown as BillEntity[]
 
-  if (!found) {
+  if (!found[0]) {
     throw new EntityNotFoundError()
   }
 

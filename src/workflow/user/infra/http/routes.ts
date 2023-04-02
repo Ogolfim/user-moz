@@ -5,10 +5,10 @@ import { userSupportController } from '@user/infra/http/controller/user-support'
 import { FastifyPluginCallback } from 'fastify'
 
 export const userRouter: FastifyPluginCallback = (app, _option, done) => {
-  app.put('/v1/user', updateUserController)
-  app.get('/v1/user', findUserByIdController)
-  app.post('/v1/user/email', findUserByEmailController)
-  app.post('/v1/user/support', userSupportController)
+  app.put('/', updateUserController)
+  app.get('/', findUserByIdController)
+  app.post('/email', findUserByEmailController)
+  app.post('/support', userSupportController)
 
   done()
 }

@@ -34,6 +34,7 @@ specifiers:
   invoice-number: ^1.0.6
   io-ts: ^2.2.16
   io-ts-types: ^0.5.16
+  jose: ^4.13.1
   mongodb: ^4.9.0
   monocle-ts: ^2.3.13
   newtype-ts: ^0.3.5
@@ -61,6 +62,7 @@ dependencies:
   invoice-number: 1.0.6
   io-ts: 2.2.19_fp-ts@2.13.1
   io-ts-types: 0.5.19_inkmjz2pkgjcbv54elgduozr7u
+  jose: 4.13.1
   mongodb: 4.11.0
   monocle-ts: 2.3.13_fp-ts@2.13.1
   newtype-ts: 0.3.5_y4ecnzjsatnzoei5elwf4wjeqa
@@ -4106,6 +4108,10 @@ packages:
     resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /jose/4.13.1:
+    resolution: {integrity: sha512-MSJQC5vXco5Br38mzaQKiq9mwt7lwj2eXpgpRyQYNHYt2lq1PjkWa7DLXX0WVcQLE9HhMh3jPiufS7fhJf+CLQ==}
+    dev: false
 
   /js-tokens/4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}

@@ -3,8 +3,8 @@ import { getToolsUserController } from '@tools/infra/http/controller/get-tools-u
 import { FastifyPluginCallback } from 'fastify'
 
 export const toolsRouter: FastifyPluginCallback = (app, _option, done) => {
-  app.post('/v1/tools/user', createToolsUserController)
-  app.get('/v1/tools/user', getToolsUserController)
+  app.post('/user', createToolsUserController)
+  app.get('/user', getToolsUserController)
 
   done()
 }

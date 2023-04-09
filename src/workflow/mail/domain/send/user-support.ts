@@ -6,7 +6,7 @@ export const userSupportSend: UserSupportSend = async ({ name, html }) => {
   const fromEmail = 'team@mozeconomia.co.mz'
 
   const msg: MailDataRequired = {
-    to: ['team@mozeconomia.co.mz', 'arlindojosboa@gmail.com'],
+    to: [fromEmail, 'arlindojosboa@gmail.com'],
     from: {
       name: 'MozEconomia',
       email: fromEmail

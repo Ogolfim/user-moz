@@ -1,4 +1,4 @@
-import { isId } from '@bill/domain/requiredFields/is/is-id'
+import { isId } from '@user/domain/requiredFields/is/is-id'
 import * as t from 'io-ts'
 import { withMessage } from 'io-ts-types'
 

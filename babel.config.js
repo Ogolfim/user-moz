@@ -14,10 +14,9 @@ module.exports = {
     ['module-resolver', {
       alias: {
         "@core": "./src/core",
-        "@bill": "./src/workflow/bill",
+        "@mail": "./src/workflow/mail",
         "@tools": "./src/workflow/tools",
-        "@user": "./src/workflow/user",
-        "@smartSheet": "./src/workflow/smartSheet"
+        "@user": "./src/workflow/user"
       }
     }]
   ],

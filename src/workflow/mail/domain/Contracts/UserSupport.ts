@@ -14,6 +14,7 @@ interface Data {
 
 interface SendProps {
   name: string
+  email: string
   html: string
 }
 

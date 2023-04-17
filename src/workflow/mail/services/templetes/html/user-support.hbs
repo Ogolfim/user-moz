@@ -90,26 +90,11 @@
       display: table !important;
       max-height: none !important;
       }
-      .row-2 .column-1 .block-2.heading_block td.pad {
-      padding: 10px 60px 30px !important;
+
+      .icon {
+        width: 170px !important;
       }
-      .row-2 .column-1 .block-2.heading_block h1 {
-      font-size: 33px !important;
-      }
-      .row-4 .column-1 .block-1.paragraph_block td.pad {
-      padding: 5px 30px !important;
-      }
-      .row-5 .column-1 .block-2.heading_block h2,
-      .row-9 .column-1 .block-1.heading_block h2 {
-      	font-size: 20px !important;
-      }
-      .row-5 .column-1 .block-1.heading_block h3 {
-      	font-size: 26px !important;
-      }
-      .row-6 .column-2 {
-      	padding: 30px 30px 30px 50px !important;
-      }
-      }
+    }
     </style>
   </head>
   <body style="margin: 0; background-color: #f9fafb; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
@@ -117,35 +102,6 @@
     <tbody>
       <tr>
         <td>
-          <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-            <tbody>
-              <tr>
-                <td>
-                  <table align="center" border="0" cellpadding="0" cellspacing="0" class="row-content" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f9fafb; color: #000000; width: 680px;" width="680">
-                    <tbody>
-                      <tr>
-                        <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 20px; padding-bottom: 10px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
-                          <table border="0" cellpadding="0" cellspacing="0" class="icons_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
-                            <tr>
-                              <td class="pad" style="vertical-align: middle; color: #000000; font-family: inherit; font-size: 14px; text-align: center;">
-                                <table align="center" cellpadding="0" cellspacing="0" class="alignment" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
-                                  <tr>
-                                    <td style="vertical-align: middle; text-align: center; padding-top: 20px; padding-bottom: 20px; padding-left: 20px; padding-right: 20px;">
-                                      <!-- <img align="center" alt="" class="icon" height="32" src="images/Logo.png" style="display: block; height: auto; margin: 0 auto; border: 0;" width="120"/> -->
-                                    </td>
-                                  </tr>
-                                </table>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
           <table align="center" border="0" cellpadding="0" cellspacing="0" class="row row-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto;" width="100%">
             <tbody>
               <tr>
@@ -157,11 +113,16 @@
                           <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-2" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                             <tr>
                               <td class="pad" style="padding-bottom:30px;padding-left:40px;padding-right:40px;padding-top:70px;width:100%;">
-                                <h1 style="margin: 0; color: #020b22; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
-                                  <span>Mensagem</span>
-                                </h1>
-                                <p style="margin: 0; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 12px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
-                                  <span>{{message}}</span>
+                                <h1 style="margin: 0; color: #020b22; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 700; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;"><span>Saudações MozEconomia</span></h1>
+                                <p style="margin: 0; padding-top:20px; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 14px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
+                                  <span>Um client precisa de suporte no serviço de
+                                    <span style="color: #020b22; font-weight: 700;">{{service}}</span>.
+                                  </span>
+                                </p>
+                                <p style="margin: 0; padding-top:15px; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 14px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
+                                  <span>
+                                    <span style="color: #020b22; font-weight: 700;">{{message}}</span>
+                                  </span>
                                 </p>
                               </td>
                             </tr>
@@ -184,26 +145,25 @@
                         <td class="column column-1" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; padding-top: 0px; padding-bottom: 60px; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;" width="100%">
                           <table border="0" cellpadding="0" cellspacing="0" class="paragraph_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;" width="100%">
                             <tr>
-                              <td class="pad" style="padding-bottom:5px;padding-left:40px;padding-right:10px;padding-top:5px;">
-                                <h1>Serviços</h1>
-                                <div style="border-top:1px solid #94a3b8; width: 100%; margin-bottom: 20px;"></div>
-                                <div style="color:#334155; direction:ltr;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:120%;mso-line-height-alt:19.2px;">
-                                  <p style="margin: 0;">
-                                    {{service}}
-                                  </p>
-                                </div>
-                              </td>
-                              <td class="pad" style="padding-bottom:5px;padding-left:40px;padding-right:40px;padding-top:5px;">
-                                <h1>Dados do cliente</h1>
-                                <div style="border-top:1px solid #94a3b8; width: 100%; margin-bottom: 20px;"></div>
-                                <div style="color:#334155;direction:ltr;font-family:Poppins, Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:120%;mso-line-height-alt:19.2px;">
-                                  <p style="margin: 0;">
-                                    <span>Nome:</span>{{name}}<br>
-                                    <span>Email:</span> {{email}}  <br>
-                                    <span>Telefone:</span> {{phoneNumber}} <br>
-                                    <span>Data do envio:</span> {{date}}
-                                  </p>
-                                </div>
+                              <td class="pad" style="padding-bottom:30px;padding-left:40px;padding-right:40px;padding-top:0px;width:100%;">
+                                <p style="margin: 0; padding-top:20px; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 14px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
+                                  <span>Client:</span>
+                                </p>
+                                <p style="margin: 0; padding-top:15px; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 14px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
+                                  <span>
+                                    {{name}}
+                                  </span>
+                                </p>
+                                <p style="margin: 0; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 14px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
+                                  <span>
+                                    {{phoneNumber}}
+                                  </span>
+                                </p>
+                                <p style="margin: 0; color: #334155; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 14px; letter-spacing: normal; line-height: 150%; margin-top: 0; margin-bottom: 0;">
+                                  <span>
+                                    {{email}}
+                                  </span>
+                                </p>
                               </td>
                             </tr>
                           </table>
@@ -233,7 +193,7 @@
                           <table border="0" cellpadding="0" cellspacing="0" class="heading_block block-1" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%">
                             <tr>
                               <td class="pad" style="padding-bottom:20px;padding-top:20px;text-align:center;width:100%;">
-                                <h2 style="margin: 0; color: #475569; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 20px; font-weight: 700; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><span class="tinyMce-placeholder">www.mozeconomia.co.mz</span></h2>
+                                <img align="center" class="icon" alt="Logo" src="cid:logo@mozeconomia.co.mz" style="display: block; height: auto; margin: 0 auto; border: 0;" width="230"/>
                               </td>
                             </tr>
                           </table>
@@ -258,8 +218,8 @@
                               <td class="pad">
                                 <div style="font-family: sans-serif">
                                   <div class="" style="font-size: 12px; font-family: Poppins, Arial, Helvetica, sans-serif; mso-line-height-alt: 18px; color: #64748b; line-height: 1.5;">
-                                    <p style="margin: 0; font-size: 10px; text-align: center; mso-line-height-alt: 15px;"><span style="font-size:10px;">© 2022 MozEconomia, LDA. </span><span style="font-size:10px;">Todos os direitos reservados.</span></p>
-                                    <p style="margin: 0; font-size: 10px; text-align: center; mso-line-height-alt: 15px;"><a href="https://mozeconomia.co.mz/termos-e-condicoes" style="font-size:10px; color: #64748b; text-decoration: none;">Termos e condições </a></p>
+                                    <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 15px;"><span>© 2022 MozEconomia, S.A - Todos os direitos reservados.</span></p>
+                                    <p style="margin: 0; font-size: 14px; text-align: center; mso-line-height-alt: 15px;"><a href="https://mozeconomia.co.mz/termos-e-condicoes" style="color: #64748b; text-decoration: none;">Termos e condições </a></p>
                                   </div>
                                 </div>
                               </td>

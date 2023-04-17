@@ -1,15 +1,17 @@
-import sgMail, { MailDataRequired } from '@sendgrid/mail'
-import { config } from 'dotenv'
+import { emailServerHost, emailServerPassword, emailServerPort, emailServerUser } from '@utils/env'
+import nodemailer from 'nodemailer'
+import { Options } from 'nodemailer/lib/mailer'
 
-config()
+const transporter = nodemailer.createTransport({
+  host: emailServerHost,
+  port: Number(emailServerPort),
+  auth: {
+    user: emailServerUser,
+    pass: emailServerPassword
+  }
+})
 
-if (!process.env.SENDGRID_API_KEY) {
-  throw new Error('Email environment Variable are not set')
-}
-
-const sendMail = async (msg: MailDataRequired) => {
-  sgMail.setApiKey(process.env.SENDGRID_API_KEY!)
-
-  await sgMail.send(msg)
+const sendMail = async (msg: Options) => {
+  await transporter.sendMail(msg)
 }
 export default sendMail

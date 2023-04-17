@@ -4,7 +4,7 @@ import fs from 'fs/promises'
 import { Options } from 'nodemailer/lib/mailer'
 import { resolve } from 'path'
 
-const logoPath = resolve(__dirname, '..', '..', '..', '..', 'view', 'logo.svg')
+const logoPath = resolve(__dirname, '..', '..', '..', '..', 'view', 'logo.png')
 
 export const userSupportSend: UserSupportSend = async ({ name, email, html }) => {
   const teamEmail = 'team@mozeconomia.co.mz'
@@ -17,7 +17,7 @@ export const userSupportSend: UserSupportSend = async ({ name, email, html }) =>
     html: html,
     attachments: [
       {
-        filename: 'mozeconomia-logo.svg',
+        filename: 'mozeconomia-logo.png',
         content: logoFile,
         cid: 'logo@mozeconomia.co.mz'
       }

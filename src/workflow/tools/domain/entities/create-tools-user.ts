@@ -1,13 +1,13 @@
 import clientDB from '@core/domain/entities/db'
 import { EntityNotFoundError } from '@core/domain/errors/domain_error'
 import { CreateToolsUserDB } from '@tools/domain/Contracts/CreateToolsUser'
-import dayjs from 'dayjs'
+import { createDateUTC } from '@utils/date'
 import { ToolsUserEntity } from 'tools'
 
 export const createToolsUserDB: CreateToolsUserDB = async ({ userId }) => {
   const collection = (await clientDB).db().collection('tools-users')
 
-  const today = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ssZ[Z]')
+  const today = createDateUTC().format()
 
   const { insertedId } = await collection.insertOne({
     userId,

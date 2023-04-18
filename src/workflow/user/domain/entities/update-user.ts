@@ -1,7 +1,7 @@
 import clientDB from '@core/domain/entities/db'
 import { EntityNotFoundError } from '@core/domain/errors/domain_error'
 import { UpdateUserDB } from '@user/domain/Contracts/UpdateUser'
-import dayjs from 'dayjs'
+import { createDateUTC } from '@utils/date'
 import { ObjectId } from 'mongodb'
 import { UserEntity } from 'mozeconomia'
 
@@ -10,7 +10,7 @@ export const updateUserDB: UpdateUserDB = async (data) => {
   const collection = (await clientDB).db().collection('users')
   const id = new ObjectId(userId)
 
-  const updatedAt = dayjs(new Date()).format('YYYY-MM-DDTHH:mm:ssZ[Z]')
+  const updatedAt = createDateUTC().format()
 
   if (name) {
     await collection.updateOne({ _id: id }, {
